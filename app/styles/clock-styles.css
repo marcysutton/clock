@@ -21,10 +21,10 @@ li {
 }
 @font-face {
     font-family: 'TelegramaRender';
-    src: url('inc/fonts/telegrama_render.eot?') format('eot'),
-         url('inc/fonts/telegrama_render.woff') format('woff'),
-         url('inc/fonts/telegrama_render.ttf') format('truetype'),
-         url('inc/fonts/telegrama_render.svg#webfontoYkAniKV') format('svg');
+    src: url('/fonts/telegrama_render.eot?') format('eot'),
+         url('/fonts/telegrama_render.woff') format('woff'),
+         url('/fonts/telegrama_render.ttf') format('truetype'),
+         url('/fonts/telegrama_render.svg#webfontoYkAniKV') format('svg');
     font-weight: normal;
     font-style: normal;
 
@@ -75,7 +75,7 @@ h2#site-cred.visible {
 	cursor:pointer;
 }
 	h2#site-cred span.icon {
-		background: transparent url(inc/info_icon.png) no-repeat 0 0;
+		background: transparent url(/images/info_icon.png) no-repeat 0 0;
 		display:block;
 		cursor:pointer;
 		margin:0 10px;
@@ -99,7 +99,7 @@ h2#site-cred.visible {
 
 
 div#loader {
-	background:transparent url(inc/ajax-loader.gif) no-repeat 10px 20px;
+	background:transparent url(/images/ajax-loader.gif) no-repeat 10px 20px;
 	display:block;
 	height:100%;
 	margin-top:30px;
@@ -198,15 +198,15 @@ div#container {
 					margin: 0 auto;
 				}
 				li.stack ul li.current {
-					height: 340px; 
+					height: 340px;
 				}
-				
-				li.stack img { 
+
+				li.stack img {
 					display:table; /* moar center hack */
 					margin:0 auto;
 				}
-				
+
 				li.stack ul li.current div {
 					width:500px;
 				}
-				
+
