@@ -1,7 +1,7 @@
 Clock v2
 ===========
 
-Refactor of POP Clock
+Refactor of [POP Clock](http://marcysutton.com/pop/clock)
 
 ##Project Setup##
 
