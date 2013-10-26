@@ -7,7 +7,11 @@ Refactor of POP Clock
 
 To work with this code-base, you must have [Node.js](http://nodejs.org/), [Ruby](http://ruby-lang.org/) and [Compass](http://compass-style.org/install) installed.
 
-To install the remainder of the required tools, run:
+To install the Grunt CLI globally, run:
+
+`npm install -g grunt-cli`
+
+To install the required tools for this project, run:
 
 `npm install`
 
