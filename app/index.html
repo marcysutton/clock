@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>TimeFrame</title>
+	<meta name="description" content="TimeFrame, a Flickr-integrated web clock" />
+	<meta name="keywords" content="Marcy Sutton, Flickr app garden, web clock, interactive clock, global image slideshow, Flickr JSON integration" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="http://marcysutton.com/pop/clock" />
+	<meta property="og:image" content="http://marcysutton.com/pop/clock/images/pop_clock.jpg" />
+	<meta property="og:site_name" content="Flickr_Clock" />
+	<script type="text/javascript" src="vendor/scripts/jquery-1.5.min.js"></script>
+	<script type="text/javascript" src="vendor/scripts/image-loader.js"></script>
+	<script type="text/javascript" src="scripts/MS-Clock.js"></script>
+	<link rel="stylesheet" type="text/css" href="styles/clock-styles.css" />
+	<script type="text/javascript">
+		$(document).ready(function(){
+			var clock = new MS.POP_Clock($('div'));
+		})
+	</script>
+</head>
+<body class="no-js">
+	<h1 id="current-info">
+		<a href="/pop/clock/">TimeFrame</a>
+		<noscript>requires Javascript.</noscript>
+		<span></span>
+	</h1>
+	<h2 id="site-cred">
+		<span class="icon"></span>
+		<span class="info">
+			Location-based Flickr Clock using jQuery. Concept and development by <a href="http://marcysutton.com/" target="_blank">Marcy Sutton</a>,
+			with art direction and design by <a href="http://optimistic.nthiel.com/blog/" target="_blank">Nick Thiel</a>
+		</span>
+	</h2>
+	<div id="loader">
+		<span class="loading-text">loading images from <span class="city-loading"></span>...</span>
+	</div>
+	<div id="container">
+		<form id="city-picker" method="get">
+			<fieldset>
+			  <legend>pick a city:</legend>
+			</fieldset>
+			 <input type="submit" value="Show" id="submit" />
+		</form>
+		<ul>
+			<li id="hours" class="stack"></li>
+			<li id="minutes" class="stack"></li>
+			<li id="seconds" class="stack"></li>
+		</ul>
+	</div>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-12190082-1");
+pageTracker._setDomainName(".marcysutton.com");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+</body>
+</html>

@@ -1,0 +1,212 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 100%;
+	font-weight:normal;
+	vertical-align: baseline;
+	background: transparent;
+}
+li {
+	list-style-type:none;
+}
+@font-face {
+    font-family: 'TelegramaRender';
+    src: url('inc/fonts/telegrama_render.eot?') format('eot'),
+         url('inc/fonts/telegrama_render.woff') format('woff'),
+         url('inc/fonts/telegrama_render.ttf') format('truetype'),
+         url('inc/fonts/telegrama_render.svg#webfontoYkAniKV') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+body {
+	background-color:#000;
+	color:#666;
+	font-family: Helvetica, Arial, sans-serif;
+	overflow:hidden;
+}
+a:link, a:visited {
+	color:#666;
+}
+noscript,
+a:hover {
+	color:#c6ff00;
+}
+body h1#current-info {
+	font-family:TelegramaRender;
+	font-size:24px;
+	padding:10px;
+	text-transform:lowercase;
+}
+	body h1#current-info a {
+		border-bottom:1px solid #666;
+		padding-bottom:1px;
+		color:#666;
+		text-decoration:none;
+	}
+	body h1#current-info a:hover {
+		border-bottom:1px solid #c6ff00;
+		color:#c6ff00;
+	}
+body h1#current-info span {
+	display:block;
+	font-family:Helvetica;
+	font-size:13px;
+	margin-top:5px;
+	text-transform:capitalize;
+}
+h2#site-cred {
+	font-size:12px;
+	min-height:40px;
+	position:relative;
+	width:290px;
+}
+h2#site-cred.visible {
+	cursor:pointer;
+}
+	h2#site-cred span.icon {
+		background: transparent url(inc/info_icon.png) no-repeat 0 0;
+		display:block;
+		cursor:pointer;
+		margin:0 10px;
+		height:20px;
+		width:20px;
+	}
+	h2#site-cred:hover span.icon {
+		background-position:0 -21px;
+	}
+	h2#site-cred span.info {
+		display:block;
+		position:absolute;
+		line-height:16px;
+		left:-50000px;
+		top:10px;
+	}
+	h2#site-cred:hover span.info {
+		left:40px;
+		width:250px;
+	}
+
+
+div#loader {
+	background:transparent url(inc/ajax-loader.gif) no-repeat 10px 20px;
+	display:block;
+	height:100%;
+	margin-top:30px;
+	display:none;
+	position:absolute;
+	width:100%;
+}
+	div#loader span.loading-text {
+		display:block;
+		font-size:12px;
+		margin-left:10px;
+	}
+div#container {
+	height:100%;
+	position:relative;
+	width:100%;
+}
+	body.no-js form {
+		display:none;
+	}
+	form {
+		background-color:#ccc;
+		padding:15px;
+		line-height:22px;
+		height:auto;
+		margin-left:10px;
+		margin-top:35px;
+		width:180px;
+	}
+		fieldset legend {
+			font-family:TelegramaRender;
+			font-size:14px;
+			padding:0 0 10px 0;
+		}
+		fieldset label {
+			float:left;
+			font-size:13px;
+			text-transform:capitalize;
+		}
+		fieldset label:hover {
+			text-decoration:underline;
+		}
+		fieldset input[type=radio] {
+			clear:left;
+			float:left;
+		}
+		#submit {
+			clear:both;
+			float:none;
+			margin-top:10px;
+		}
+	ul {
+		margin:0px auto 0;
+		position:relative;
+		width:1600px;
+	}
+		ul li.stack {
+			position:absolute;
+			top:0;
+			width:400px;
+		}
+		li#hours {
+			left:0;
+			margin-right:10px;
+		}
+		li#minutes {
+			left:510px;
+			margin-right:10px;
+		}
+		li#seconds {
+			left:1020px;
+		}
+			li.stack h3 {
+				color:#fff;
+				font-family:TelegramaRender;
+				font-size:210px;
+				top:250px;
+				position:absolute;
+				text-align:center;
+				width:500px;
+				z-index:1;
+			}
+			li.stack ul {
+				overflow:hidden;
+				top:230px;
+				width:500px;
+			}
+				li.stack ul li {
+					height:10px;
+					margin-bottom:5px;
+					overflow:hidden;
+				}
+				li.stack ul li.flickr div {
+					overflow:hidden;
+					width:400px;
+					margin: 0 auto;
+				}
+				li.stack ul li.current {
+					height: 340px; 
+				}
+				
+				li.stack img { 
+					display:table; /* moar center hack */
+					margin:0 auto;
+				}
+				
+				li.stack ul li.current div {
+					width:500px;
+				}
+				
