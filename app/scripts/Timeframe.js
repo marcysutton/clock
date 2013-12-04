@@ -5,7 +5,7 @@
  * 12/5/13
  **/
 
-var MS = {}
+var MS = {};
 
 var ie = (navigator.userAgent.indexOf('MSIE')>=0) ? true : false;
 
@@ -13,7 +13,7 @@ if(typeof Date.prototype.getHours12 == 'undefined') {
 	Date.prototype.getHours12 = function() {
 		var hours = this.getHours();
 		return (hours > 12 ? hours - 12 : hours);
-	}
+	};
 }
 
 MS.Timeframe = function(target){
@@ -31,19 +31,19 @@ MS.Timeframe = function(target){
 	this.cityLoading = $('.city-loading');
 	this.elList = $(this.elContainer).find('ul');
 	this.elListItems = this.elList.children('li');
-	this.targetParent;
-	this.listItems;
-	this.currentListItem;
+  this.targetParent = null;
+  this.listItems = null;
+  this.currentListItem = null;
 
 	// variables
-	this.interval;
+	this.interval = null;
 
 	// WANT: include place_id instead of tag
 	this.cities =  [
-				'seattle','portland','san francisco','honolulu','mexico city',
-				'chicago','new york','london','stockholm','paris',
-				'moscow','shanghai','tokyo','sydney','wellington'
-				];
+		'seattle','portland','san francisco','honolulu','mexico city',
+		'chicago','new york','london','stockholm','paris',
+		'moscow','shanghai','tokyo','sydney','wellington'
+	];
 	this.numCities = this.cities.length;
 	this.apiKey = 'beb8b17f735b6a404dbe120fd7300460';
 	this.numImages = [12, 60, 60];
@@ -63,7 +63,7 @@ MS.Timeframe = function(target){
 		self.city = $(this).find('input:radio:checked').val();
 
 		self.initialize();
-	})
+	});
 };
 
 MS.Timeframe.prototype = {
@@ -124,7 +124,7 @@ MS.Timeframe.prototype = {
 			[ 12, 17, 'afternoon' ],
 			[ 17, 20, 'evening' ],
 			[ 20, 24, 'night' ]
-		]
+		];
 		var currentTagArr;
 		var currentTag;
 		var currentHour = this.date.getHours();
@@ -136,7 +136,7 @@ MS.Timeframe.prototype = {
 				break;
 			}
 		}
-		console.log('showing '+self.cityName+','+ currentTag);
+		console.log('showing '+self.cityName+', '+ currentTag);
 
 		// load Flickr json data. caching would be nice.
 		$.getJSON('http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key='+self.apiKey+'&tags='+self.city.replace(' ','+')+','+ currentTag+'&tag_mode=all&per_page=132&format=json&jsoncallback=?',
@@ -161,7 +161,7 @@ MS.Timeframe.prototype = {
 
 					t_url = "http://farm" + photo.farm + ".static.flickr.com/" + photo.server + "/" + photo.id + "_" + photo.secret + "_" + "z.jpg";
 
-	      			photoUrls.push(t_url);
+          photoUrls.push(t_url);
 				});
 
 				// load all 132 images! sheesh.
@@ -171,7 +171,7 @@ MS.Timeframe.prototype = {
 
 					var relevantTime = self.date.getHours12();
 
-	    			for(var i = 0; i < photoUrls.length; i++) {
+          for(var i = 0; i < photoUrls.length; i++) {
 
 						if (i > 12 && i < 72) {
 							self.moveStack(list, list.children('li'), relevantTime);
@@ -183,12 +183,12 @@ MS.Timeframe.prototype = {
 						} else if (i >= 72) {
 							self.moveStack(list, list.children('li'), relevantTime);
 
-			    			list = self.secondsList;
+              list = self.secondsList;
 
-	    					relevantTime = self.date.getSeconds();
+              relevantTime = self.date.getSeconds();
 						}
-						list.append($('<li>').addClass('flickr').append($('<div />').append($('<img />').attr('src', photoUrls[i]))));
-	    			}
+            list.append($('<li>').addClass('flickr').append($('<div />').append($('<img />').attr('src', photoUrls[i]))));
+          }
 
 					// WANT: client-specific timezone string. right now it's hard-coded as PST, which will be wrong for a lot of peeps.
 					self.elCurrentInfo.text('Currently viewing: '+self.cityName+' '+currentTag+', time is '+self.timezone);
@@ -198,12 +198,9 @@ MS.Timeframe.prototype = {
 
 					self.interval = window.setInterval(function(){ self.printTime(); }, 1000);
 
-
-	    		});
-
-	    	}
-
-      	});
+        });
+      }
+    });
 	},
 	moveStack: function(stack, listItems, relevantTime) {
 
@@ -228,23 +225,23 @@ MS.Timeframe.prototype = {
 		var seconds = this.date.getSeconds();
 		var formattedSeconds = (seconds < 10 ? '0' + seconds : seconds);
 		this.secondsLabel.text(formattedSeconds);
-	    this.secondsListItems = this.secondsList.children('li');
+    this.secondsListItems = this.secondsList.children('li');
 
 		this.moveStack(this.secondsList, this.secondsListItems, seconds);
 
 		var minutes = this.date.getMinutes();
 		var formattedMinutes = (minutes < 10 ? '0' + minutes : minutes);
 		this.minutesLabel.text(formattedMinutes);
-		if(seconds == 0) {
-	   		this.minutesListItems = this.minutesList.children('li');
+    if(seconds === 0) {
+      this.minutesListItems = this.minutesList.children('li');
 			this.moveStack(this.minutesList, this.minutesListItems, minutes);
 		}
 
 		var hours = this.date.getHours12();
-		var formattedHour = (hours < 10 ? ( hours == 0 ? 12 : '0' + hours ) : hours);
+		var formattedHour = (hours < 10 ? ( hours === 0 ? 12 : '0' + hours ) : hours);
 		this.hoursLabel.text(formattedHour);
-		if(minutes == 0) {
-	  	  	this.hoursListItems = this.hoursList.children('li');
+		if(minutes === 0) {
+      this.hoursListItems = this.hoursList.children('li');
 			this.moveStack(this.hoursList,this.hoursListItems, hours);
 		}
 
@@ -255,8 +252,7 @@ MS.Timeframe.prototype = {
 		this.date.setSeconds(this.date.getSeconds() +1);
 
 		// NEED: string representation of each Time Zone: EST, PST, etc.
-		this.timezoneOffset =  this.date.getTimezoneOffset()/60
-
+    this.timezoneOffset = this.date.getTimezoneOffset()/60;
 
 		//console.log(this.timezoneOffset);
 
