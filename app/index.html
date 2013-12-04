@@ -8,15 +8,9 @@
 	<meta property="og:url" content="http://marcysutton.com/pop/clock" />
 	<meta property="og:image" content="http://marcysutton.com/pop/clock/images/pop_clock.jpg" />
 	<meta property="og:site_name" content="Timeframe" />
-	<script type="text/javascript" src="scripts/vendor/jquery.min.js"></script>
-	<script type="text/javascript" src="scripts/vendor/image-loader.js"></script>
-	<script type="text/javascript" src="scripts/Timeframe.js"></script>
+  <!-- build:css(.tmp) styles/main.css-->
 	<link rel="stylesheet" type="text/css" href="styles/clock-styles.css" />
-	<script type="text/javascript">
-		$(document).ready(function(){
-			var clock = new MS.Timeframe($('div'));
-		})
-	</script>
+  <!-- endbuild-->
 </head>
 <body class="no-js">
 	<h1 id="current-info">
@@ -47,6 +41,10 @@
 			<li id="seconds" class="stack"></li>
 		</ul>
 	</div>
+<!-- build:js scripts/vendor.js-->
+<script src="/vendor_scripts/jquery.min.js"></script>
+<script src="/vendor_scripts/underscore-min.js"></script>
+<!-- endbuild -->
 <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
 document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
@@ -57,5 +55,8 @@ var pageTracker = _gat._getTracker("UA-12190082-1");
 pageTracker._setDomainName(".marcysutton.com");
 pageTracker._trackPageview();
 } catch(err) {}</script>
+<!-- build:js({.tmp, app}) scripts/main.js-->
+<script src="scripts/application.js"></script>
+<!-- endbuild-->
 </body>
 </html>

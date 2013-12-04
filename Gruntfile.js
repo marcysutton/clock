@@ -89,14 +89,16 @@ module.exports = function(grunt) {
       },
       server: '.tmp'
     },
-    uglify: {
+    jshint: {
       options: {
-        banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+        jshintrc: '.jshintrc'
       },
-      build: {
-        src: 'src/<%= pkg.name %>.js',
-        dest: 'build/<%= pkg.name %>.min.js'
-      }
+      all: [
+        'Gruntfile.js',
+        '<%= config.app %>/scripts/{,*/}*.js',
+        '!<%= config.app %>/scripts/vendor/*',
+        'test/spec/{,*/}*.js'
+      ]
     },
     mocha: {
       all: {
@@ -144,11 +146,37 @@ module.exports = function(grunt) {
         }]
       }
     },
+    rev: {
+      dist: {
+        files: {
+          src: [
+            '<%= config.dist %>/scripts/{,*/}*.js',
+            '<%= config.dist %>/styles/{,*/}*.css',
+            '<%= config.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}',
+            '<%= config.dist %>/styles/fonts/{,*/}*.*'
+          ]
+        }
+      }
+    },
+    useminPrepare: {
+      options: {
+        dest: '<%= config.dist %>'
+      },
+      html: '<%= config.app %>/index.html'
+    },
+    usemin: {
+      options: {
+        dirs: ['<%= config.dist %>']
+      },
+      html: ['<%= config.dist %>/{,*/}*.html'],
+      css: ['<%= config.dist %>/styles/{,*/}*.css']
+    },
     browserify: {
       basic: {
         src: ['<%= config.app %>/scripts/**/*.js', '<%= config.app %>/scripts/**/*.coffee'],
         options: {
-          transform: ['coffeeify']
+          transform: ['coffeeify'],
+          extensions: ['.js', '.coffee']
         },
         dest: '.tmp/scripts/application.js'
       }
@@ -216,11 +244,12 @@ module.exports = function(grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
+    'useminPrepare',
     'concurrent:dist',
     'autoprefixer',
-    'concat',
-    'uglify',
-    'copy:dist'
+    'copy:dist',
+    'rev',
+    'usemin'
   ]);
 
   grunt.registerTask('default', [
