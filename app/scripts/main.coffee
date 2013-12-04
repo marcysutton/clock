@@ -1,4 +1,4 @@
 Timeframe = require './Timeframe'
 
 $(document).ready ->
-  Timeframe $('div')
+  new Timeframe '.app'
