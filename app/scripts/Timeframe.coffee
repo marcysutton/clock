@@ -21,6 +21,8 @@ module.exports = class Timeframe
 
     _.defaults(options, @options)
 
+    @loadUtility = skone.util.ImageLoader.LoadImageSet
+
     @totalImages = @options.numImages.reduce (a, b) ->
       a + b
 
@@ -69,7 +71,7 @@ module.exports = class Timeframe
     @elLoader.fadeIn()
 
     @setTime()
-    @getFlickr()
+    @queryAPI()
 
   citySubmitHandler: (e) =>
     e.preventDefault()
@@ -102,11 +104,45 @@ module.exports = class Timeframe
         break
       i++
 
-  getTime: () ->
-    @currentTag
+  getJSONURL: () ->
+    "http://api.flickr.com/services/rest/?method=flickr.photos.search&" +
+    "api_key=#{@options.apiKey}&" +
+    "tags=#{@cityName}.replace(' ','+'),#{@currentTag}&" +
+    "tag_mode=all&per_page=132&format=json&jsoncallback=?"
 
-  getFlickr: () ->
-    console.log('showing '+@cityName+' in the '+ @getTime())
+  getPhotoURL: (photo) ->
+    "http://farm#{photo.farm}.static.flickr.com/" +
+    "#{photo.server}/" +
+    "#{photo.id}_#{photo.secret}_z.jpg"
+
+  queryAPI: () ->
+    console.log('showing '+@cityName+' in the '+ @currentTag)
+
+    $.getJSON @getJSONURL(), (response) =>
+      @response = response
+
+      if response.code == 100
+        @showErrorMessage response.message
+
+      else
+        @fetchImages response
+
+  showErrorMessage: (message) ->
+    alert message
+
+  fetchImages: (response) ->
+    photoUrls = []
+
+    $.each response.photos.photo, (n, item) =>
+      photo = response.photos.photo[n]
+
+      t_url = @getPhotoURL(photo)
+
+      photoUrls.push t_url
+
+    @loadUtility photoUrls, () =>
+      list = @hoursList
+
 
   printTime: () ->
 
