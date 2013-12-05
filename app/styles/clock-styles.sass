@@ -1,0 +1,191 @@
+@import reset
+@import config
+@import utilities
+
+li
+  list-style-type: none
+
+body
+  background-color: $c_background
+  color: $c_default
+  font-family: $fonts_default
+  overflow: hidden
+
+a:link, a:visited
+  color: $c_default
+
+noscript, a:hover
+  color: $c_hover
+
+h1.current-info
+  font-family: TelegramaRender
+  font-size: 2em
+  padding: $default_margin
+  text-transform: lowercase
+
+  a
+    border-bottom: 1px solid $c_default
+    padding-bottom: 1px
+    color: $c_default
+    text-decoration: none
+
+    &:hover
+      border-bottom: 1px solid $c_hover
+      color: $c_hover
+
+  span
+    display: block
+    font-family: $fonts_default
+    font-size: 13px
+    margin-top: 5px
+    text-transform: capitalize
+
+h2.site-cred
+  font-weight: normal
+  font-size: 12px
+  min-height: 40px
+  position: relative
+  width: 290px
+
+  &.visible
+    cursor: pointer
+
+  span.icon
+    background: transparent url(/images/info_icon.png) no-repeat 0 0
+    display: block
+    cursor: pointer
+    margin: 0 $default_margin
+    height: 20px
+    width: 20px
+
+  &:hover span.icon
+    background-position: 0 -21px
+
+  span.info
+    display: block
+    position: absolute
+    line-height: 16px
+    left: -50000px
+    top: $default_margin
+
+  &:hover span.info
+    left: 40px
+    width: 250px
+
+.loader
+  background: transparent url(/images/ajax-loader.gif) no-repeat 10px 20px
+  display: block
+  height: 100%
+  margin-top: 30px
+  display: none
+  position: absolute
+  width: 100%
+
+  span.loading-text
+    display: block
+    font-size: 12px
+    margin-left: $default_margin
+
+.app
+  height: 100%
+  position: relative
+  width: 100%
+
+body.no-js form.city-picker
+  display: none
+  visibility: hidden
+
+form.city-picker
+  background-color: #ccc
+  padding: $default_margin
+  line-height: 22px
+  height: auto
+  margin-left: $default_margin
+  margin-top: 35px
+  width: 250px
+
+  input
+    font-family: TelegramaRender
+    border: none
+    font-size: 1em
+    font-weight: normal
+    height: 2em
+    line-height: 1.25em
+
+    &#city
+      display: block
+      float: left
+      padding-left: 5px
+      margin-right: 3%
+      width: 70%
+
+    &#submit
+      background-color: $c_default
+      color: $c_white
+      display: inline-block
+      text-transform: lowercase
+      -webkit-appearance: none
+      width: 22%
+
+      &:hover
+        background-color: $c_hover
+        color: $c_background
+        cursor: pointer
+
+ul
+  margin: 0px auto 0
+  position: relative
+  width: 100%
+
+  li.stack
+    margin-right: $default_margin
+    position: absolute
+    top: 0
+    width: 33%
+
+    &:last-child
+      margin-right: 0
+
+    &#hours
+      left: 0
+
+    &#minutes
+      left: 33%
+
+    &#seconds
+      left: 66%
+
+    h3
+      color: $c_white
+      font-family: $headline_font
+      font-size: 210px
+      top: 250px
+      position: absolute
+      text-align: center
+      width: 500px
+      z-index: 1
+
+    ul
+      overflow: hidden
+      top: 230px
+      width: 500px
+
+      li
+        height: $default_margin
+        margin-bottom: 5px
+        overflow: hidden
+
+      &.flickr div
+        overflow: hidden
+        width: 100%
+        margin: 0 auto
+
+      &.current
+        height: 340px
+
+        div
+          width: 110%
+
+    img
+      display: table
+      margin: 0 auto

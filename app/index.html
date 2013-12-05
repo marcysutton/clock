@@ -7,46 +7,48 @@
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content="http://marcysutton.com/pop/clock" />
 	<meta property="og:image" content="http://marcysutton.com/pop/clock/images/pop_clock.jpg" />
-	<meta property="og:site_name" content="Flickr_Clock" />
-	<script type="text/javascript" src="scripts/vendor/jquery-1.5.min.js"></script>
-	<script type="text/javascript" src="scripts/vendor/image-loader.js"></script>
-	<script type="text/javascript" src="scripts/MS-Clock.js"></script>
+	<meta property="og:site_name" content="Timeframe" />
+  <!-- build:css(.tmp) styles/main.css-->
 	<link rel="stylesheet" type="text/css" href="styles/clock-styles.css" />
-	<script type="text/javascript">
-		$(document).ready(function(){
-			var clock = new MS.POP_Clock($('div'));
-		})
-	</script>
+  <!-- endbuild-->
 </head>
 <body class="no-js">
-	<h1 id="current-info">
-		<a href="/pop/clock/">TimeFrame</a>
-		<noscript>requires Javascript.</noscript>
-		<span></span>
-	</h1>
-	<h2 id="site-cred">
-		<span class="icon"></span>
-		<span class="info">
-			Location-based Flickr Clock using jQuery. Concept and development by <a href="http://marcysutton.com/" target="_blank">Marcy Sutton</a>,
-			with art direction and design by <a href="http://optimistic.nthiel.com/blog/" target="_blank">Nick Thiel</a>
-		</span>
-	</h2>
-	<div id="loader">
-		<span class="loading-text">loading images from <span class="city-loading"></span>...</span>
-	</div>
-	<div id="container">
-		<form id="city-picker" method="get">
+  <header>
+  	<h1 class="current-info">
+  		<a href="./">TimeFrame</a>
+  		<noscript>requires Javascript.</noscript>
+  		<span></span>
+  	</h1>
+  	<h2 class="site-cred">
+  		<span class="icon"></span>
+  		<span class="info">
+  			Location-based Flickr Clock using jQuery. Concept and development by <a href="http://marcysutton.com/" target="_blank">Marcy Sutton</a>,
+  			with art direction and design by <a href="http://optimistic.nthiel.com/blog/" target="_blank">Nick Thiel</a>
+  		</span>
+  	</h2>
+  </header>
+  <figure class="loader">
+    <span class="loading-text">loading images from <span class="city-loading"></span>...</span>
+  </figure>
+  <section class="app">
+		<form class="city-picker" method="get">
 			<fieldset>
-			  <legend>pick a city:</legend>
+			  <label for="city" class="offscreen">pick a city:</label>
+        <input type="text" id="city" name="city" placeholder="Pick a city" value="Seattle" />
+        <input type="submit" value="go" id="submit" />
 			</fieldset>
-			 <input type="submit" value="Show" id="submit" />
 		</form>
 		<ul>
 			<li id="hours" class="stack"></li>
 			<li id="minutes" class="stack"></li>
 			<li id="seconds" class="stack"></li>
 		</ul>
-	</div>
+  </section>
+<!-- build:js scripts/vendor.js-->
+<script src="/vendor_scripts/image-loader.js"></script>
+<script src="/vendor_scripts/jquery.min.js"></script>
+<script src="/vendor_scripts/underscore-min.js"></script>
+<!-- endbuild -->
 <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
 document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
@@ -57,5 +59,8 @@ var pageTracker = _gat._getTracker("UA-12190082-1");
 pageTracker._setDomainName(".marcysutton.com");
 pageTracker._trackPageview();
 } catch(err) {}</script>
+<!-- build:js({.tmp, app}) scripts/main.js-->
+<script src="scripts/application.js"></script>
+<!-- endbuild-->
 </body>
 </html>
