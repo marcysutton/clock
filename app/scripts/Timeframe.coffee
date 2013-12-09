@@ -107,7 +107,7 @@ module.exports = class Timeframe
   getJSONURL: () ->
     "http://api.flickr.com/services/rest/?method=flickr.photos.search&" +
     "api_key=#{@options.apiKey}&" +
-    "tags=#{@cityName}.replace(' ','+'),#{@currentTag}&" +
+    "tags=#{@cityName.replace(' ','+')},#{@currentTag}&" +
     "tag_mode=all&per_page=132&format=json&jsoncallback=?"
 
   getPhotoURL: (photo) ->
