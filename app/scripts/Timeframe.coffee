@@ -71,6 +71,7 @@ module.exports = class Timeframe
     @elLoader.fadeIn()
 
     @setTime()
+    @setTags()
     @queryAPI()
 
   citySubmitHandler: (e) =>
@@ -87,9 +88,10 @@ module.exports = class Timeframe
   setTime: () ->
     @date.setSeconds(@date.getSeconds() + 1)
 
-    # NEED: string representation of each Time Zone: EST, PST, etc.
+    # TODO: visual representation of time zone: EST, PST, etc.
     @timezoneOffset = @date.getTimezoneOffset() / 60
 
+  setTags: () ->
     currentTagArr = undefined
     currentHour = @date.getHours()
     tags = @options.timesOfDay
