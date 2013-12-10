@@ -90,14 +90,17 @@ module.exports = function(grunt) {
       },
       server: '.tmp'
     },
-    jshint: {
+    coffeelint: {
       options: {
-        jshintrc: '.jshintrc'
+        max_line_length: {
+          level: 'ignore'
+        }
       },
-      all: [
-        '<%= config.app %>/scripts/{,*/}*.js',
-        '!<%= config.app %>/scripts/vendor_scripts/*',
-        '<%= config.test %>/spec/{,*/}*.js'
+      app: [
+        '<%= config.app %>/scripts/{,*/}*.coffee'
+      ],
+      test: [
+        '<%= config.test %>/spec/{,*/}*.coffee'
       ]
     },
     mocha: {
@@ -213,6 +216,7 @@ module.exports = function(grunt) {
     }
 
     grunt.task.run([
+      'coffeelint:app',
       'clean:server',
       'concurrent:server',
       'connect:livereload',
@@ -221,15 +225,16 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('test', [
-    'jshint',
     'clean:server',
     'concurrent:test',
+    'coffeelint:test',
+    'coffeelint:app',
     'connect:test',
     'mocha'
   ]);
 
   grunt.registerTask('build', [
-    'jshint',
+    'coffeelint:app',
     'clean:dist',
     'useminPrepare',
     'concurrent:dist',
