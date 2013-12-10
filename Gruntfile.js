@@ -17,7 +17,8 @@ module.exports = function(grunt) {
     // configurable paths
     config: {
       app: 'app',
-      dist: 'dist'
+      dist: 'dist',
+      test: 'test'
     },
     watch: {
       coffee: {
@@ -105,7 +106,8 @@ module.exports = function(grunt) {
         options: {
           run: true,
           urls: ['http://<%= connect.test.options.hostname %>:<%= connect.test.options.port %>/index.html']
-        }
+        },
+        src: ['<%= config.test %>/**/*.html']
       }
     },
     compass: {
