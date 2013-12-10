@@ -106,7 +106,7 @@ module.exports = function(grunt) {
           run: true,
           urls: ['http://<%= connect.test.options.hostname %>:<%= connect.test.options.port %>/index.html']
         },
-        src: ['<%= config.test %>/**/*.html']
+        src: ['.tmp/spec/{,*/}.js']
       }
     },
     compass: {
@@ -149,13 +149,17 @@ module.exports = function(grunt) {
       css: ['<%= config.dist %>/styles/{,*/}*.css']
     },
     browserify: {
+      options: {
+        transform: ['coffeeify'],
+        extensions: ['.js', '.coffee']
+      },
       basic: {
         src: ['<%= config.app %>/scripts/**/*.js', '<%= config.app %>/scripts/**/*.coffee'],
-        options: {
-          transform: ['coffeeify'],
-          extensions: ['.js', '.coffee']
-        },
         dest: '.tmp/scripts/application.js'
+      },
+      test: {
+        src: ['<%= config.test %>/spec/{,*/}.coffee'],
+        dest: '.tmp/spec/spec.js'
       }
     },
     concurrent: {
@@ -166,7 +170,7 @@ module.exports = function(grunt) {
       test: [
         'compass:dist',
         'browserify',
-        'copy:styles'
+        'browserify:test'
       ],
       dist: [
         'compass:dist',
