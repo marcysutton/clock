@@ -103,15 +103,6 @@ module.exports = function(grunt) {
         '<%= config.test %>/spec/{,*/}*.coffee'
       ]
     },
-    mocha: {
-      all: {
-        options: {
-          run: true,
-          urls: ['http://<%= connect.test.options.hostname %>:<%= connect.test.options.port %>/index.html']
-        },
-        src: ['.tmp/spec/{,*/}.js']
-      }
-    },
     compass: {
       options: {
         sassDir: '<%= config.app %>/styles',
@@ -163,6 +154,15 @@ module.exports = function(grunt) {
       test: {
         src: ['<%= config.test %>/spec/{,*/}.coffee'],
         dest: '.tmp/spec/spec.js'
+      }
+    },
+    mocha: {
+      all: {
+        options: {
+          run: true,
+          urls: ['http://<%= connect.test.options.hostname %>:<%= connect.test.options.port %>/index.html']
+        },
+        src: ['.tmp/spec/{,*/}.js']
       }
     },
     concurrent: {
@@ -226,9 +226,9 @@ module.exports = function(grunt) {
 
   grunt.registerTask('test', [
     'clean:server',
-    'concurrent:test',
     'coffeelint:test',
     'coffeelint:app',
+    'concurrent:test',
     'connect:test',
     'mocha'
   ]);

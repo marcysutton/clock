@@ -1,12 +1,15 @@
-/*global describe, it */
-/*jslint node: true */
-'use strict';
-(function () {
-  describe('Give it some context', function () {
-    describe('maybe a bit more context here', function () {
-      it('should run here few assertions', function () {
+# global $, describe, it
+# jslint node: true
 
-      });
-    });
-  });
-})();
+describe 'Initializing the clock', () ->
+  describe 'element setup', () ->
+
+    elList = null
+
+    beforeEach () ->
+
+      # elList = $('<ul><li></li><li></li><li></li></ul>')
+      # elList.each
+
+    it 'should append elements for the image stacks', () ->
+      expect(true).toBe true
