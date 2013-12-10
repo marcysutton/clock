@@ -27,11 +27,11 @@ module.exports = function(grunt) {
       },
       compass: {
         files: ['<%= config.app %>/styles/{,*/}/*.{scss,sass}'],
-        tasks: ['compass:server', 'autoprefixer']
+        tasks: ['compass:server']
       },
       styles: {
         files: ['<%= config.app %>/styles/{,*/}*.css'],
-        tasks: ['copy:styles', 'autoprefixer']
+        tasks: ['copy:styles']
       },
       livereload: {
         options: {
@@ -83,7 +83,7 @@ module.exports = function(grunt) {
           dot: true,
           src: [
             '.tmp',
-            '<%= config.dist %>/*',
+            '<%= config.dist %>',
             '!<%= config.dist %>/.git*'
           ]
         }]
@@ -95,10 +95,9 @@ module.exports = function(grunt) {
         jshintrc: '.jshintrc'
       },
       all: [
-        'Gruntfile.js',
         '<%= config.app %>/scripts/{,*/}*.js',
-        '!<%= config.app %>/scripts/vendor/*',
-        'test/spec/{,*/}*.js'
+        '!<%= config.app %>/scripts/vendor_scripts/*',
+        '<%= config.test %>/spec/{,*/}*.js'
       ]
     },
     mocha: {
@@ -126,37 +125,13 @@ module.exports = function(grunt) {
       },
       dist: {
         options: {
-          generatedImagesDir: '<%= config.dist %>/images/generated'
+          generatedImagesDir: '<%= config.dist %>/images/generated',
+          debugInfo: false
         }
       },
       server: {
         options: {
           debugInfo: true
-        }
-      }
-    },
-    autoprefixer: {
-      options: {
-        browsers: ['last 1 version']
-      },
-      dist: {
-        files: [{
-          expand: true,
-          cwd: '.tmp/styles/',
-          src: '{,*/}*.css',
-          dest: '.tmp/styles/'
-        }]
-      }
-    },
-    rev: {
-      dist: {
-        files: {
-          src: [
-            '<%= config.dist %>/scripts/{,*/}*.js',
-            '<%= config.dist %>/styles/{,*/}*.css',
-            '<%= config.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}',
-            '<%= config.dist %>/styles/fonts/{,*/}*.*'
-          ]
         }
       }
     },
@@ -183,21 +158,40 @@ module.exports = function(grunt) {
         dest: '.tmp/scripts/application.js'
       }
     },
-    // Put files not handled in other tasks here
-    copy: {
+    concurrent: {
+      server: [
+        'compass:dist',
+        'browserify'
+      ],
+      test: [
+        'compass:dist',
+        'browserify',
+        'copy:styles'
+      ],
+      dist: [
+        'compass:dist',
+        'browserify',
+        'copy:styles',
+        'htmlmin'
+      ]
+    },
+    htmlmin: {
       dist: {
         files: [{
           expand: true,
-          dot: true,
           cwd: '<%= config.app %>',
-          dest: '<%= config.dist %>',
-          src: [
-              '*.{ico,png,txt}',
-              '.htaccess',
-              'images/{,*/}*.{webp,gif}',
-              'styles/fonts/{,*/}*.*'
-          ]
+          src: '*.html',
+          dest: '<%= config.dist %>'
         }]
+      }
+    },
+    // Put files not handled in other tasks here
+    copy: {
+      main: {
+        expand: true,
+        cwd: '/',
+        dest: '<%= config.dist %>',
+        src: ['.tmp/**']
       },
       styles: {
         expand: true,
@@ -206,22 +200,9 @@ module.exports = function(grunt) {
         dest: '.tmp/styles/',
         src: '{,*/}*.css'
       }
-    },
-    concurrent: {
-      server: [
-        'compass',
-        'copy:styles',
-        'browserify'
-      ],
-      test: [
-        'copy:styles'
-      ],
-      dist: [
-        'compass',
-        'copy:styles'
-      ]
     }
   });
+
   grunt.registerTask('server', function (target) {
     if (target === 'dist') {
         return grunt.task.run(['build', 'connect:dist:keepalive']);
@@ -230,33 +211,29 @@ module.exports = function(grunt) {
     grunt.task.run([
       'clean:server',
       'concurrent:server',
-      'autoprefixer',
       'connect:livereload',
       'watch'
     ]);
   });
 
   grunt.registerTask('test', [
+    'jshint',
     'clean:server',
     'concurrent:test',
-    'autoprefixer',
     'connect:test',
     'mocha'
   ]);
 
   grunt.registerTask('build', [
+    'jshint',
     'clean:dist',
     'useminPrepare',
     'concurrent:dist',
-    'autoprefixer',
-    'copy:dist',
-    'rev',
-    'usemin'
+    'usemin',
+    'copy:main'
   ]);
 
   grunt.registerTask('default', [
-    'jshint',
-    'test',
     'build'
   ]);
 
