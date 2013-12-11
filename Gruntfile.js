@@ -9,6 +9,9 @@
 module.exports = function(grunt) {
   // show elapsed time at the end
   require('time-grunt')(grunt);
+
+  grunt.loadNpmTasks('grunt-notify');
+
   require('load-grunt-tasks')(grunt);
 
   // Project configuration.
@@ -32,6 +35,10 @@ module.exports = function(grunt) {
       styles: {
         files: ['<%= config.app %>/styles/{,*/}*.css'],
         tasks: ['copy:styles']
+      },
+      tests: {
+        files: ['<%= config.test %>/specs/*.coffee'],
+        tasks: ['browserify', 'mocha']
       },
       livereload: {
         options: {
@@ -63,6 +70,8 @@ module.exports = function(grunt) {
       },
       test: {
         options: {
+          hostname: 'localhost',
+          port: 3000,
           base: [
             '.tmp',
             'test',
@@ -129,6 +138,16 @@ module.exports = function(grunt) {
         }
       }
     },
+    htmlmin: {
+      dist: {
+        files: [{
+          expand: true,
+          cwd: '<%= config.app %>',
+          src: '*.html',
+          dest: '<%= config.dist %>'
+        }]
+      }
+    },
     useminPrepare: {
       options: {
         dest: '<%= config.dist %>'
@@ -142,12 +161,28 @@ module.exports = function(grunt) {
       html: ['<%= config.dist %>/{,*/}*.html'],
       css: ['<%= config.dist %>/styles/{,*/}*.css']
     },
+    // Put files not handled in other tasks here
+    copy: {
+      main: {
+        expand: true,
+        cwd: '/',
+        dest: '<%= config.dist %>',
+        src: ['.tmp/**']
+      },
+      styles: {
+        expand: true,
+        dot: true,
+        cwd: '<%= config.app %>/styles',
+        dest: '.tmp/styles/',
+        src: '{,*/}*.css'
+      }
+    },
     browserify: {
       options: {
         transform: ['coffeeify'],
         extensions: ['.js', '.coffee']
       },
-      basic: {
+      app: {
         src: ['<%= config.app %>/scripts/**/*.js', '<%= config.app %>/scripts/**/*.coffee'],
         dest: '.tmp/scripts/application.js'
       },
@@ -168,44 +203,23 @@ module.exports = function(grunt) {
     concurrent: {
       server: [
         'compass:dist',
-        'browserify'
+        'browserify:app'
       ],
       test: [
-        'compass:dist',
-        'browserify',
         'browserify:test'
       ],
       dist: [
         'compass:dist',
-        'browserify',
+        'browserify:app',
         'copy:styles',
         'htmlmin'
       ]
     },
-    htmlmin: {
-      dist: {
-        files: [{
-          expand: true,
-          cwd: '<%= config.app %>',
-          src: '*.html',
-          dest: '<%= config.dist %>'
-        }]
-      }
-    },
-    // Put files not handled in other tasks here
-    copy: {
-      main: {
-        expand: true,
-        cwd: '/',
-        dest: '<%= config.dist %>',
-        src: ['.tmp/**']
-      },
-      styles: {
-        expand: true,
-        dot: true,
-        cwd: '<%= config.app %>/styles',
-        dest: '.tmp/styles/',
-        src: '{,*/}*.css'
+    notify: {
+      mocha: {
+        options: {
+          message: 'All tests passed!'
+        }
       }
     }
   });
@@ -216,8 +230,9 @@ module.exports = function(grunt) {
     }
 
     grunt.task.run([
-      'coffeelint:app',
       'clean:server',
+      'coffeelint:app',
+      'test',
       'concurrent:server',
       'connect:livereload',
       'watch'
@@ -227,10 +242,10 @@ module.exports = function(grunt) {
   grunt.registerTask('test', [
     'clean:server',
     'coffeelint:test',
-    'coffeelint:app',
     'concurrent:test',
     'connect:test',
-    'mocha'
+    'mocha',
+    'notify'
   ]);
 
   grunt.registerTask('build', [

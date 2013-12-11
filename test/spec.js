@@ -9298,13 +9298,15 @@ $ = require('../../bower_components/jquery/jquery');
 
 chai_jq = require('chai-jq');
 
+chai.use(chai_jq);
+
 "use strict";
 
 (function() {
   return describe('Initializing the clock', function() {
     return describe('element setup', function() {
       return it('should append elements for the image stacks', function() {
-        return expect($("<div style=\"display: none\" />")).to.be.$hidden;
+        return expect($("<div class=\"hodala\" />")).to.have.$class('hodala');
       });
     });
   });
