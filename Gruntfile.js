@@ -163,11 +163,11 @@ module.exports = function(grunt) {
     },
     // Put files not handled in other tasks here
     copy: {
-      main: {
+      dist: {
         expand: true,
-        cwd: '/',
+        cwd: '.tmp',
         dest: '<%= config.dist %>',
-        src: ['.tmp/**']
+        src: ['{,*/}*.css', '{,*/}*.js']
       },
       styles: {
         expand: true,
@@ -254,7 +254,7 @@ module.exports = function(grunt) {
     'useminPrepare',
     'concurrent:dist',
     'usemin',
-    'copy:main'
+    'copy:dist'
   ]);
 
   grunt.registerTask('default', [
