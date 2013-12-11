@@ -5,6 +5,8 @@
  * 12/5/13
 ###
 
+# global $
+
 module.exports = class Timeframe
   constructor: (target, options = {}) ->
     @options =

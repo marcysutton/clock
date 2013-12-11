@@ -1,15 +1,13 @@
-# global describe, it
+# global $, describe, it
 # jslint node: true
 
-jsdom = require('jsdom').jsdom
-doc = jsdom('')
-window = doc.createWindow()
+$ = require('../../bower_components/jquery/jquery')
+chai_jq = require('chai-jq')
 
 "use strict"
 (->
   describe 'Initializing the clock', () ->
     describe 'element setup', () ->
       it 'should append elements for the image stacks', () ->
-        someVar = true
-        expect(someVar).to.equal true
+        expect($("<div style=\"display: none\" />")).to.be.$hidden
 )()

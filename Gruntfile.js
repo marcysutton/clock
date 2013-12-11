@@ -152,7 +152,7 @@ module.exports = function(grunt) {
         dest: '.tmp/scripts/application.js'
       },
       test: {
-        src: '<%= config.test %>/specs/*.coffee',
+        src: ['<%= config.test %>/specs/*.js', '<%= config.test %>/specs/*.coffee'],
         dest: '<%= config.test %>/spec.js'
       }
     },

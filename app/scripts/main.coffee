@@ -1,3 +1,5 @@
+# global $
+
 Timeframe = require './Timeframe'
 
 $(document).ready ->
