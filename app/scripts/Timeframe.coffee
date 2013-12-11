@@ -5,6 +5,8 @@
  * 12/5/13
 ###
 
+# global $
+
 module.exports = class Timeframe
   constructor: (target, options = {}) ->
     @options =
@@ -71,6 +73,7 @@ module.exports = class Timeframe
     @elLoader.fadeIn()
 
     @setTime()
+    @setTags()
     @queryAPI()
 
   citySubmitHandler: (e) =>
@@ -87,9 +90,10 @@ module.exports = class Timeframe
   setTime: () ->
     @date.setSeconds(@date.getSeconds() + 1)
 
-    # NEED: string representation of each Time Zone: EST, PST, etc.
+    # TODO: visual representation of time zone: EST, PST, etc.
     @timezoneOffset = @date.getTimezoneOffset() / 60
 
+  setTags: () ->
     currentTagArr = undefined
     currentHour = @date.getHours()
     tags = @options.timesOfDay
@@ -107,7 +111,7 @@ module.exports = class Timeframe
   getJSONURL: () ->
     "http://api.flickr.com/services/rest/?method=flickr.photos.search&" +
     "api_key=#{@options.apiKey}&" +
-    "tags=#{@cityName}.replace(' ','+'),#{@currentTag}&" +
+    "tags=#{@cityName.replace(' ','+')},#{@currentTag}&" +
     "tag_mode=all&per_page=132&format=json&jsoncallback=?"
 
   getPhotoURL: (photo) ->

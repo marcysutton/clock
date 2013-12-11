@@ -9,6 +9,9 @@
 module.exports = function(grunt) {
   // show elapsed time at the end
   require('time-grunt')(grunt);
+
+  grunt.loadNpmTasks('grunt-notify');
+
   require('load-grunt-tasks')(grunt);
 
   // Project configuration.
@@ -17,7 +20,8 @@ module.exports = function(grunt) {
     // configurable paths
     config: {
       app: 'app',
-      dist: 'dist'
+      dist: 'dist',
+      test: 'test'
     },
     watch: {
       coffee: {
@@ -26,11 +30,15 @@ module.exports = function(grunt) {
       },
       compass: {
         files: ['<%= config.app %>/styles/{,*/}/*.{scss,sass}'],
-        tasks: ['compass:server', 'autoprefixer']
+        tasks: ['compass:server']
       },
       styles: {
         files: ['<%= config.app %>/styles/{,*/}*.css'],
-        tasks: ['copy:styles', 'autoprefixer']
+        tasks: ['copy:styles']
+      },
+      tests: {
+        files: ['<%= config.test %>/specs/*.coffee'],
+        tasks: ['browserify', 'mocha']
       },
       livereload: {
         options: {
@@ -62,6 +70,8 @@ module.exports = function(grunt) {
       },
       test: {
         options: {
+          hostname: 'localhost',
+          port: 3000,
           base: [
             '.tmp',
             'test',
@@ -82,31 +92,25 @@ module.exports = function(grunt) {
           dot: true,
           src: [
             '.tmp',
-            '<%= config.dist %>/*',
+            '<%= config.dist %>',
             '!<%= config.dist %>/.git*'
           ]
         }]
       },
       server: '.tmp'
     },
-    jshint: {
+    coffeelint: {
       options: {
-        jshintrc: '.jshintrc'
-      },
-      all: [
-        'Gruntfile.js',
-        '<%= config.app %>/scripts/{,*/}*.js',
-        '!<%= config.app %>/scripts/vendor/*',
-        'test/spec/{,*/}*.js'
-      ]
-    },
-    mocha: {
-      all: {
-        options: {
-          run: true,
-          urls: ['http://<%= connect.test.options.hostname %>:<%= connect.test.options.port %>/index.html']
+        max_line_length: {
+          level: 'ignore'
         }
-      }
+      },
+      app: [
+        '<%= config.app %>/scripts/{,*/}*.coffee'
+      ],
+      test: [
+        '<%= config.test %>/specs/{,*/}*.coffee'
+      ]
     },
     compass: {
       options: {
@@ -124,7 +128,8 @@ module.exports = function(grunt) {
       },
       dist: {
         options: {
-          generatedImagesDir: '<%= config.dist %>/images/generated'
+          generatedImagesDir: '<%= config.dist %>/images/generated',
+          debugInfo: false
         }
       },
       server: {
@@ -133,29 +138,14 @@ module.exports = function(grunt) {
         }
       }
     },
-    autoprefixer: {
-      options: {
-        browsers: ['last 1 version']
-      },
+    htmlmin: {
       dist: {
         files: [{
           expand: true,
-          cwd: '.tmp/styles/',
-          src: '{,*/}*.css',
-          dest: '.tmp/styles/'
+          cwd: '<%= config.app %>',
+          src: '*.html',
+          dest: '<%= config.dist %>'
         }]
-      }
-    },
-    rev: {
-      dist: {
-        files: {
-          src: [
-            '<%= config.dist %>/scripts/{,*/}*.js',
-            '<%= config.dist %>/styles/{,*/}*.css',
-            '<%= config.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}',
-            '<%= config.dist %>/styles/fonts/{,*/}*.*'
-          ]
-        }
       }
     },
     useminPrepare: {
@@ -171,31 +161,13 @@ module.exports = function(grunt) {
       html: ['<%= config.dist %>/{,*/}*.html'],
       css: ['<%= config.dist %>/styles/{,*/}*.css']
     },
-    browserify: {
-      basic: {
-        src: ['<%= config.app %>/scripts/**/*.js', '<%= config.app %>/scripts/**/*.coffee'],
-        options: {
-          transform: ['coffeeify'],
-          extensions: ['.js', '.coffee']
-        },
-        dest: '.tmp/scripts/application.js'
-      }
-    },
     // Put files not handled in other tasks here
     copy: {
       dist: {
-        files: [{
-          expand: true,
-          dot: true,
-          cwd: '<%= config.app %>',
-          dest: '<%= config.dist %>',
-          src: [
-              '*.{ico,png,txt}',
-              '.htaccess',
-              'images/{,*/}*.{webp,gif}',
-              'styles/fonts/{,*/}*.*'
-          ]
-        }]
+        expand: true,
+        cwd: '.tmp',
+        dest: '<%= config.dist %>',
+        src: ['{,*/}*.css', '{,*/}*.js']
       },
       styles: {
         expand: true,
@@ -205,21 +177,53 @@ module.exports = function(grunt) {
         src: '{,*/}*.css'
       }
     },
+    browserify: {
+      options: {
+        transform: ['coffeeify'],
+        extensions: ['.js', '.coffee']
+      },
+      app: {
+        src: ['<%= config.app %>/scripts/**/*.js', '<%= config.app %>/scripts/**/*.coffee'],
+        dest: '.tmp/scripts/application.js'
+      },
+      test: {
+        src: ['<%= config.test %>/specs/*.js', '<%= config.test %>/specs/*.coffee'],
+        dest: '<%= config.test %>/spec.js'
+      }
+    },
+    mocha: {
+      all: {
+        options: {
+          run: true,
+          urls: ['http://<%= connect.test.options.hostname %>:<%= connect.test.options.port %>/index.html']
+        },
+        src: ['<%= config.test %>/specs/{,*/}.js']
+      }
+    },
     concurrent: {
       server: [
-        'compass',
-        'copy:styles',
-        'browserify'
+        'compass:dist',
+        'browserify:app'
       ],
       test: [
-        'copy:styles'
+        'browserify:test'
       ],
       dist: [
-        'compass',
-        'copy:styles'
+        'compass:dist',
+        'browserify:app',
+        'copy:styles',
+        'htmlmin'
       ]
+    },
+    notify: {
+      mocha: {
+        options: {
+          message: 'All tests passed!'
+        }
+      }
     }
   });
+
   grunt.registerTask('server', function (target) {
     if (target === 'dist') {
         return grunt.task.run(['build', 'connect:dist:keepalive']);
@@ -227,8 +231,9 @@ module.exports = function(grunt) {
 
     grunt.task.run([
       'clean:server',
+      'coffeelint:app',
+      'test',
       'concurrent:server',
-      'autoprefixer',
       'connect:livereload',
       'watch'
     ]);
@@ -236,25 +241,23 @@ module.exports = function(grunt) {
 
   grunt.registerTask('test', [
     'clean:server',
+    'coffeelint:test',
     'concurrent:test',
-    'autoprefixer',
     'connect:test',
-    'mocha'
+    'mocha',
+    'notify'
   ]);
 
   grunt.registerTask('build', [
+    'coffeelint:app',
     'clean:dist',
     'useminPrepare',
     'concurrent:dist',
-    'autoprefixer',
-    'copy:dist',
-    'rev',
-    'usemin'
+    'usemin',
+    'copy:dist'
   ]);
 
   grunt.registerTask('default', [
-    'jshint',
-    'test',
     'build'
   ]);
 

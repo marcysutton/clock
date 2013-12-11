@@ -1,0 +1,20 @@
+{
+  "name": "Timeframe",
+  "version": "0.0.0",
+  "homepage": "https://github.com/marcysutton/clock",
+  "authors": [
+    "Marcy Sutton <marcy@substantial.com>"
+  ],
+  "description": "A location-based Flickr clock",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.0.3"
+  }
+}
