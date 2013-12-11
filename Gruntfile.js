@@ -100,7 +100,7 @@ module.exports = function(grunt) {
         '<%= config.app %>/scripts/{,*/}*.coffee'
       ],
       test: [
-        '<%= config.test %>/spec/{,*/}*.coffee'
+        '<%= config.test %>/specs/{,*/}*.coffee'
       ]
     },
     compass: {
@@ -152,8 +152,8 @@ module.exports = function(grunt) {
         dest: '.tmp/scripts/application.js'
       },
       test: {
-        src: ['<%= config.test %>/spec/{,*/}.coffee'],
-        dest: '.tmp/spec/spec.js'
+        src: '<%= config.test %>/specs/*.coffee',
+        dest: '<%= config.test %>/spec.js'
       }
     },
     mocha: {
@@ -162,7 +162,7 @@ module.exports = function(grunt) {
           run: true,
           urls: ['http://<%= connect.test.options.hostname %>:<%= connect.test.options.port %>/index.html']
         },
-        src: ['.tmp/spec/{,*/}.js']
+        src: ['<%= config.test %>/specs/{,*/}.js']
       }
     },
     concurrent: {
