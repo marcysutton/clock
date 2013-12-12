@@ -7,7 +7,12 @@
 
 # global $
 
-module.exports = class Timeframe
+Backbone = require 'backbone'
+Backbone.$ = $
+
+CitySearchView = require './CitySearch'
+
+class Timeframe extends Backbone.View
   constructor: (target, options = {}) ->
     @options =
       apiKey: 'beb8b17f735b6a404dbe120fd7300460'
@@ -25,29 +30,30 @@ module.exports = class Timeframe
 
     @loadUtility = skone.util.ImageLoader.LoadImageSet
 
-    @totalImages = @options.numImages.reduce (a, b) ->
+    @elTarget = $(target)
+    @elLoader = $('.loader')
+    @elCityLoading = @elLoader.find('.city-loading')
+
+    @initSearchBox()
+    @setupClockUI()
+
+  getTotalImages: () ->
+    @options.numImages.reduce (a, b) ->
       a + b
 
-    @elTarget = $(target)
+  initSearchBox: () ->
+    @citySearch = new CitySearchView
 
-    @elCityPicker = @elTarget.find('form.city-picker')
-    @elCityInput = @elCityPicker.find('input[type=text]')
-    @elCityPickerSubmit = @elCityPicker.find('input[type=submit]')
+    @dispatcher.bind 'city_name_change', () =>
+      @initializeApp()
 
-    @elLoader = @elTarget.find('#loader')
-    @elCityLoading = @elLoader.find('.city-loading')
+  setupClockUI: () ->
+    $('body').removeClass('no-js')
+      .addClass('initialized')
 
     @elImgContainer = @elTarget
     @elImgList = @elImgContainer.find('ul')
     @elImgListItems = @elImgList.find('li')
-
-    @setup()
-
-  setup: () ->
-    $('body').removeClass('no-js')
-      .addClass('initialized')
-
-    @elCityPicker.on 'submit', @citySubmitHandler
 
     @elImgListItems.each (index, value) ->
       $(this).append '<h3 /><ul />'
@@ -63,29 +69,23 @@ module.exports = class Timeframe
     @elSecondsList = @elSeconds.find 'ul'
     @elSecondsLabel = @elSeconds.find 'h3'
 
-  initialize: () ->
-    @elCityLoading.text @cityName
+  initializeApp: () ->
+    @cityName = @citySearch.getCityName()
+
+    @updateUIWithCityChange @cityName
 
     @date = new Date
     @timezone = @date.toString().replace(/^.*\(|\)$/g, "").replace(/[^A-Z]/g, "")
 
-    @elCityPicker.fadeOut().remove()
+    @citySearch.elCityPicker.fadeOut().remove()
     @elLoader.fadeIn()
 
     @setTime()
     @setTags()
     @queryAPI()
 
-  citySubmitHandler: (e) =>
-    e.preventDefault()
-
-    input = @elCityInput.val()
-
-    if input isnt ""
-      @cityName = input
-      @initialize()
-    else
-      alert "Please enter a city."
+  updateUIWithCityChange: (cityName) ->
+    @elCityLoading.text cityName
 
   setTime: () ->
     @date.setSeconds(@date.getSeconds() + 1)
@@ -94,7 +94,7 @@ module.exports = class Timeframe
     @timezoneOffset = @date.getTimezoneOffset() / 60
 
   setTags: () ->
-    currentTagArr = undefined
+    currentTagArr = []
     currentHour = @date.getHours()
     tags = @options.timesOfDay
     numTags = tags.length
@@ -151,3 +151,5 @@ module.exports = class Timeframe
   printTime: () ->
 
   moveStack: () ->
+
+  module.exports = Timeframe
