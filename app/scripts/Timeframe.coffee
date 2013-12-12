@@ -34,12 +34,8 @@ class Timeframe extends Backbone.View
     @elLoader = $('.loader')
     @elCityLoading = @elLoader.find('.city-loading')
 
-    @elImgContainer = @elTarget
-    @elImgList = @elImgContainer.find('ul')
-    @elImgListItems = @elImgList.find('li')
-
     @initSearchBox()
-    @setup()
+    @setupClockUI()
 
   getTotalImages: () ->
     @options.numImages.reduce (a, b) ->
@@ -49,11 +45,15 @@ class Timeframe extends Backbone.View
     @citySearch = new CitySearchView
 
     @dispatcher.bind 'city_name_change', () =>
-      @initialize()
+      @initializeApp()
 
-  setup: () ->
+  setupClockUI: () ->
     $('body').removeClass('no-js')
       .addClass('initialized')
+
+    @elImgContainer = @elTarget
+    @elImgList = @elImgContainer.find('ul')
+    @elImgListItems = @elImgList.find('li')
 
     @elImgListItems.each (index, value) ->
       $(this).append '<h3 /><ul />'
@@ -69,7 +69,7 @@ class Timeframe extends Backbone.View
     @elSecondsList = @elSeconds.find 'ul'
     @elSecondsLabel = @elSeconds.find 'h3'
 
-  initialize: () ->
+  initializeApp: () ->
     @cityName = @citySearch.getCityName()
 
     @updateUIWithCityChange @cityName
@@ -94,7 +94,7 @@ class Timeframe extends Backbone.View
     @timezoneOffset = @date.getTimezoneOffset() / 60
 
   setTags: () ->
-    currentTagArr = undefined
+    currentTagArr = []
     currentHour = @date.getHours()
     tags = @options.timesOfDay
     numTags = tags.length
