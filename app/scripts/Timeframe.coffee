@@ -11,6 +11,7 @@ Backbone = require 'backbone'
 Backbone.$ = $
 
 CitySearchView = require './CitySearch'
+Stack = require './Stack'
 
 class Timeframe extends Backbone.View
   constructor: (target, options = {}) ->
@@ -62,12 +63,9 @@ class Timeframe extends Backbone.View
     @elMinutes = @elImgListItems.eq 1
     @elSeconds = @elImgListItems.eq 2
 
-    @elHoursList = @elHours.find 'ul'
-    @elHoursLabel = @elHours.find 'h3'
-    @elMinutesList = @elMinutes.find 'ul'
-    @elMinutesLabel = @elMinutes.find 'h3'
-    @elSecondsList = @elSeconds.find 'ul'
-    @elSecondsLabel = @elSeconds.find 'h3'
+    @hoursStack = new Stack @elHours
+    @minutesStack = new Stack @elMinutes
+    @secondsStack = new Stack @elSeconds
 
   initializeApp: () ->
     @cityName = @citySearch.getCityName()
