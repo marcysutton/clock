@@ -110,7 +110,9 @@ class Timeframe extends Backbone.View
     "http://api.flickr.com/services/rest/?method=flickr.photos.search&" +
     "api_key=#{@options.apiKey}&" +
     "tags=#{@cityName.replace(' ','+')},#{@currentTag}&" +
-    "tag_mode=all&per_page=132&format=json&jsoncallback=?"
+    "tag_mode=all&" +
+    "per_page=#{@getTotalImages()}&" +
+    "format=json&jsoncallback=?"
 
   getPhotoURL: (photo) ->
     "http://farm#{photo.farm}.static.flickr.com/" +
@@ -122,6 +124,8 @@ class Timeframe extends Backbone.View
 
     $.getJSON @getJSONURL(), (response) =>
       @response = response
+
+      console.log response
 
       if response.code == 100
         @showErrorMessage response.message
