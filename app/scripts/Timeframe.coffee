@@ -31,8 +31,7 @@ class Timeframe extends Backbone.View
     @loadUtility = skone.util.ImageLoader.LoadImageSet
 
     @elTarget = $(target)
-
-    @elLoader = @elTarget.find('#loader')
+    @elLoader = $('.loader')
     @elCityLoading = @elLoader.find('.city-loading')
 
     @elImgContainer = @elTarget
@@ -73,7 +72,7 @@ class Timeframe extends Backbone.View
   initialize: () ->
     @cityName = @citySearch.getCityName()
 
-    @elCityLoading.text @cityName
+    @updateUIWithCityChange @cityName
 
     @date = new Date
     @timezone = @date.toString().replace(/^.*\(|\)$/g, "").replace(/[^A-Z]/g, "")
@@ -84,6 +83,9 @@ class Timeframe extends Backbone.View
     @setTime()
     @setTags()
     @queryAPI()
+
+  updateUIWithCityChange: (cityName) ->
+    @elCityLoading.text cityName
 
   setTime: () ->
     @date.setSeconds(@date.getSeconds() + 1)
