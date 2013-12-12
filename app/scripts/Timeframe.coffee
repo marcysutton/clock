@@ -53,7 +53,7 @@ class Timeframe extends Backbone.View
       .addClass('initialized')
 
     @elImgContainer = @elTarget
-    @elImgList = @elImgContainer.find('ul')
+    @elImgList = @elImgContainer.find('ul.imgStacks')
     @elImgListItems = @elImgList.find('li')
 
     @elImgListItems.each (index, value) ->
@@ -157,7 +157,7 @@ class Timeframe extends Backbone.View
 
       i = 0
       while i < photoUrls.length
-        if i > 12 and i < 72
+        if i > 11 and i < 72
           @moveStack stack, relevantTime
 
           stack = @minutesStack
