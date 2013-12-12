@@ -30,9 +30,6 @@ class Timeframe extends Backbone.View
 
     @loadUtility = skone.util.ImageLoader.LoadImageSet
 
-    @totalImages = @options.numImages.reduce (a, b) ->
-      a + b
-
     @elTarget = $(target)
 
     @elLoader = @elTarget.find('#loader')
@@ -44,6 +41,10 @@ class Timeframe extends Backbone.View
 
     @initSearchBox()
     @setup()
+
+  getTotalImages: () ->
+    @options.numImages.reduce (a, b) ->
+      a + b
 
   initSearchBox: () ->
     @citySearch = new CitySearchView
