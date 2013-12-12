@@ -146,11 +146,45 @@ class Timeframe extends Backbone.View
 
       photoUrls.push t_url
 
-    @loadUtility photoUrls, () =>
-      list = @hoursList
+    @loadImages(photoUrls)
 
+  loadImages: (photoUrls) ->
+    @loadUtility photoUrls, () =>
+      list = @hoursStack.elList
+
+      @elLoader.remove()
+      @interval = window.setInterval(=>
+        @printTime()
+      , 1000)
 
   printTime: () ->
+    @setTime()
+
+    @printSeconds()
+    @printMinutes()
+    @printHours()
+
+  printSeconds: () ->
+    seconds = @date.getSeconds()
+    formattedSeconds = (if seconds < 10 then '0' + seconds else seconds)
+
+    @secondsStack.updateClockUnit formattedSeconds
+
+  printMinutes: () ->
+    minutes = @date.getMinutes()
+    formattedMinutes = (if minutes < 10 then '0' + minutes else minutes)
+
+    @minutesStack.updateClockUnit formattedMinutes
+
+    # add code to loop to next minute
+
+  printHours: () ->
+    hours = @date.getHours12()
+    formattedHour = (if hours < 10 then ((if hours is 0 then 12 else "0" + hours)) else hours)
+
+    @hoursStack.updateClockUnit formattedHour
+
+    #add code to loop to next hour
 
   moveStack: () ->
 
