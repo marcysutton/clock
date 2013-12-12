@@ -14,7 +14,8 @@
     "sinon": "~1.7.3",
     "requirejs": "~2.1.9",
     "chai": "~1.8.1",
-    "mocha": "~1.15.1"
+    "mocha": "~1.15.1",
+    "backbone": "~1.1.0"
   },
   "devDependencies": {
     "coffeeify": "~0.5.2",

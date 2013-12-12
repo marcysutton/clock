@@ -4,10 +4,11 @@
  * Version 2.0
  * 12/5/13
 ###
-
 # global $
 
-module.exports = class Timeframe
+CitySearch = require './CitySearch'
+
+class Timeframe
   constructor: (target, options = {}) ->
     @options =
       apiKey: 'beb8b17f735b6a404dbe120fd7300460'
@@ -30,9 +31,7 @@ module.exports = class Timeframe
 
     @elTarget = $(target)
 
-    @elCityPicker = @elTarget.find('form.city-picker')
-    @elCityInput = @elCityPicker.find('input[type=text]')
-    @elCityPickerSubmit = @elCityPicker.find('input[type=submit]')
+    @elCityPicker = new CitySearchView
 
     @elLoader = @elTarget.find('#loader')
     @elCityLoading = @elLoader.find('.city-loading')
@@ -46,8 +45,6 @@ module.exports = class Timeframe
   setup: () ->
     $('body').removeClass('no-js')
       .addClass('initialized')
-
-    @elCityPicker.on 'submit', @citySubmitHandler
 
     @elImgListItems.each (index, value) ->
       $(this).append '<h3 /><ul />'
@@ -75,17 +72,6 @@ module.exports = class Timeframe
     @setTime()
     @setTags()
     @queryAPI()
-
-  citySubmitHandler: (e) =>
-    e.preventDefault()
-
-    input = @elCityInput.val()
-
-    if input isnt ""
-      @cityName = input
-      @initialize()
-    else
-      alert "Please enter a city."
 
   setTime: () ->
     @date.setSeconds(@date.getSeconds() + 1)
@@ -151,3 +137,5 @@ module.exports = class Timeframe
   printTime: () ->
 
   moveStack: () ->
+
+  module.exports = Timeframe
