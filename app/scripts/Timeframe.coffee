@@ -157,6 +157,20 @@ class Timeframe extends Backbone.View
         @printTime()
       , 1000)
 
+      @showClock()
+
+  showClock: () ->
+    @elLoader.remove()
+    # @startInterval @interval
+
+  startInterval: (interval) ->
+    interval = window.setInterval(=>
+      @printTime()
+    , 1000)
+
+  stopInterval: (interval) ->
+    window.clearInterval(interval)
+
   printTime: () ->
     @setTime()
 
