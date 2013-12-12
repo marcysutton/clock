@@ -1,5 +1,4 @@
 Backbone = require 'backbone'
-$ = require('../../bower_components/jquery/jquery')
 Backbone.$ = $
 
 class CitySearchView extends Backbone.View
@@ -30,7 +29,7 @@ class CitySearchView extends Backbone.View
   setCityName: (cityName) ->
     @cityName = cityName
 
-    console.log cityName
+    @dispatcher.trigger 'city_name_change'
 
   getCityName: () ->
     @cityName

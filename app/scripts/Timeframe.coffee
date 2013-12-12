@@ -4,11 +4,15 @@
  * Version 2.0
  * 12/5/13
 ###
+
 # global $
 
-CitySearch = require './CitySearch'
+Backbone = require 'backbone'
+Backbone.$ = $
 
-class Timeframe
+CitySearchView = require './CitySearch'
+
+class Timeframe extends Backbone.View
   constructor: (target, options = {}) ->
     @options =
       apiKey: 'beb8b17f735b6a404dbe120fd7300460'
@@ -31,8 +35,6 @@ class Timeframe
 
     @elTarget = $(target)
 
-    @elCityPicker = new CitySearchView
-
     @elLoader = @elTarget.find('#loader')
     @elCityLoading = @elLoader.find('.city-loading')
 
@@ -40,7 +42,14 @@ class Timeframe
     @elImgList = @elImgContainer.find('ul')
     @elImgListItems = @elImgList.find('li')
 
+    @initSearchBox()
     @setup()
+
+  initSearchBox: () ->
+    @citySearch = new CitySearchView
+
+    @dispatcher.bind 'city_name_change', () =>
+      @initialize()
 
   setup: () ->
     $('body').removeClass('no-js')
@@ -61,12 +70,14 @@ class Timeframe
     @elSecondsLabel = @elSeconds.find 'h3'
 
   initialize: () ->
+    @cityName = @citySearch.getCityName()
+
     @elCityLoading.text @cityName
 
     @date = new Date
     @timezone = @date.toString().replace(/^.*\(|\)$/g, "").replace(/[^A-Z]/g, "")
 
-    @elCityPicker.fadeOut().remove()
+    @citySearch.elCityPicker.fadeOut().remove()
     @elLoader.fadeIn()
 
     @setTime()
