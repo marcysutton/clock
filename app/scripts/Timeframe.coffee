@@ -18,7 +18,7 @@ class Timeframe extends Backbone.View
     @options =
       apiKey: 'beb8b17f735b6a404dbe120fd7300460'
       numImages: [12, 60, 60]
-      topMargin: 230
+      initTopMargin: 230
       timesOfDay: [
         [0, 4, 'night']
         [4, 12, 'morning']
@@ -150,12 +150,34 @@ class Timeframe extends Backbone.View
 
   loadImages: (photoUrls) ->
     @loadUtility photoUrls, () =>
-      list = @hoursStack.elList
 
-      @elLoader.remove()
-      @interval = window.setInterval(=>
-        @printTime()
-      , 1000)
+      stack = @hoursStack
+
+      relevantTime = @date.getHours12()
+
+      i = 0
+      while i < photoUrls.length
+        if i > 12 and i < 72
+          @moveStack stack, relevantTime
+
+          stack = @minutesStack
+
+          relevantTime = @date.getMinutes()
+
+        else if i >= 72
+          @moveStack stack, relevantTime
+
+          stack = @secondsStack
+
+          relevantTime = @date.getSeconds()
+
+        stack.elList.append $('<li>')
+          .addClass('flickr')
+          .append $("<div><img src='#{photoUrls[i]}' /></div>")
+
+        i++
+
+      @moveStack stack, relevantTime
 
       @showClock()
 
@@ -200,6 +222,15 @@ class Timeframe extends Backbone.View
 
     #add code to loop to next hour
 
-  moveStack: () ->
+  moveStack: (stack, relevantTime) ->
+    topMargin = @options.initTopMargin - (relevantTime * 15)
+    stack.elList.css "top", "#{topMargin}px"
+
+    stack.currentFrame.removeClass 'current' if stack.currentFrame
+
+    current = $(stack.elListItems[relevantTime]).addClass 'current'
+
+    stack.currentFrame = current
+
 
   module.exports = Timeframe
