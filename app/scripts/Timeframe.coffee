@@ -20,11 +20,11 @@ class Timeframe extends Backbone.View
       numImages: [12, 60, 60]
       initTopMargin: 230
       timesOfDay: [
-        [0, 4, 'night']
-        [4, 12, 'morning']
-        [12, 17, 'afternoon']
-        [17, 20, 'evening']
-        [20, 24, 'night']
+        [0, 4, 'night', 'night']
+        [4, 12, 'morning', 'day']
+        [12, 17, 'afternoon', 'day']
+        [17, 20, 'evening', 'night']
+        [20, 24, 'night', 'night']
       ]
 
     _.defaults(options, @options)
@@ -83,8 +83,7 @@ class Timeframe extends Backbone.View
     @elLoader.fadeIn()
 
     @setTime()
-    @setTags()
-    @queryAPI()
+    @queryAPI(true)
 
   updateUIWithCityChange: (cityName) ->
     @elCityLoading.text cityName
@@ -95,50 +94,57 @@ class Timeframe extends Backbone.View
     # TODO: visual representation of time zone: EST, PST, etc.
     @timezoneOffset = @date.getTimezoneOffset() / 60
 
-  setTags: () ->
+  queryAPI: (timeOfDay) ->
+    @setTags(timeOfDay)
+
+    $.getJSON @getJSONURL(timeOfDay), (response) =>
+      console.log('showing '+@cityName+' in the '+ @currentTag)
+
+      console.log response
+      if response.stat == "ok"
+        console.log 'number of images: ', response.photos.photo.length
+        @fetchImages response
+
+        # if response.photos.photo.length >= 132
+        #   @fetchImages response
+        # else
+        #   @queryAPI(false)
+      else
+        @showErrorMessage response.message
+
+  showErrorMessage: (message) ->
+    alert message
+
+  setTags: (firstAttempt) ->
     currentTagArr = []
     currentHour = @date.getHours()
     tags = @options.timesOfDay
     numTags = tags.length
 
     i = 0
-
     while i < numTags
       currentTagArr = tags[i]
       if currentHour >= currentTagArr[0] and currentHour < currentTagArr[1]
-        @currentTag = currentTagArr[2]
+        @currentTag = (if firstAttempt then currentTagArr[2] else currentTagArr[3])
         break
       i++
 
-  getJSONURL: () ->
+  getJSONURL: (timeOfDay) ->
     "http://api.flickr.com/services/rest/?method=flickr.photos.search&" +
     "api_key=#{@options.apiKey}&" +
-    "tags=#{@cityName.replace(' ','+')},#{@currentTag}&" +
-    "tag_mode=all&" +
-    "per_page=#{@getTotalImages()}&" +
-    "format=json&jsoncallback=?"
+    "tags=" + @getURLTags(timeOfDay)+ "&tag_mode=all&" +
+    "per_page=" + @getTotalImages() +
+    "&format=json&jsoncallback=?"
+
+  getURLTags: (timeOfDay) ->
+    tagParams = "#{@cityName.replace(' ','+')}"
+    tagParams += ",#{@currentTag}" if timeOfDay
+    tagParams
 
   getPhotoURL: (photo) ->
     "http://farm#{photo.farm}.static.flickr.com/" +
     "#{photo.server}/" +
     "#{photo.id}_#{photo.secret}_z.jpg"
-
-  queryAPI: () ->
-    console.log('showing '+@cityName+' in the '+ @currentTag)
-
-    $.getJSON @getJSONURL(), (response) =>
-      @response = response
-
-      console.log response
-
-      if response.code == 100
-        @showErrorMessage response.message
-
-      else
-        @fetchImages response
-
-  showErrorMessage: (message) ->
-    alert message
 
   fetchImages: (response) ->
     photoUrls = []
