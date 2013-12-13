@@ -138,17 +138,27 @@ ul
 
   li.stack
     float: left
-    position: relative
     width: 33%
 
     h3
       color: $c_white
       font-family: $headline_font
+      font-weight: normal
       font-size: 15vw
+      padding-top: 3%
       position: absolute
       text-align: center
-      width: 100%
+      width: 33%
       z-index: 1
+
+    &#hours h3
+      left: 0
+
+    &#minutes h3
+      left: 33%
+
+    &#seconds h3
+      left: 66%
 
     ul
       margin: 0 $default_margin
@@ -176,7 +186,7 @@ ul
         &.flickr
           div
             padding-top: $default-margin
-            width: 90%
+            width: 80%
 
         &.current
           div

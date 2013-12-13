@@ -18,7 +18,6 @@ class Timeframe extends Backbone.View
     @options =
       apiKey: 'beb8b17f735b6a404dbe120fd7300460'
       numImages: [12, 60, 60]
-      initTopMargin: 230
       timesOfDay: [
         [0, 4, 'night', 'night']
         [4, 12, 'morning', 'day']
@@ -87,12 +86,6 @@ class Timeframe extends Backbone.View
 
   updateUIWithCityChange: (cityName) ->
     @elCityLoading.text cityName
-
-  setTime: () ->
-    @date.setSeconds(@date.getSeconds() + 1)
-
-    # TODO: visual representation of time zone: EST, PST, etc.
-    @timezoneOffset = @date.getTimezoneOffset() / 60
 
   queryAPI: (timeOfDay) ->
     @setTags(timeOfDay)
@@ -201,8 +194,7 @@ class Timeframe extends Backbone.View
 
   showClock: () ->
     @elLoader.remove()
-    @printTime()
-    # @startInterval @interval
+    @startInterval @interval
 
   startInterval: (interval) ->
     interval = window.setInterval(=>
@@ -211,6 +203,12 @@ class Timeframe extends Backbone.View
 
   stopInterval: (interval) ->
     window.clearInterval(interval)
+
+  setTime: () ->
+    @date.setSeconds(@date.getSeconds() + 1)
+
+    # TODO: visual representation of time zone: EST, PST, etc.
+    @timezoneOffset = @date.getTimezoneOffset() / 60
 
   printTime: () ->
     @setTime()
@@ -221,37 +219,33 @@ class Timeframe extends Backbone.View
 
   printSeconds: () ->
     seconds = @date.getSeconds()
-    formattedSeconds = (if seconds < 10 then '0' + seconds else seconds)
+    formattedSeconds = @date.getFormattedSeconds()
 
+    @secondsStack.relevantTime = seconds
     @secondsStack.updateClockUnit formattedSeconds
+    @secondsStack.moveStack()
 
   printMinutes: () ->
     minutes = @date.getMinutes()
-    formattedMinutes = (if minutes < 10 then '0' + minutes else minutes)
+    formattedMinutes = @date.getFormattedMinutes()
 
+    @minutesStack.relevantTime = minutes
     @minutesStack.updateClockUnit formattedMinutes
-
-    # add code to loop to next minute
+    @minutesStack.moveStack() if @date.getSeconds() == 0
 
   printHours: () ->
     hours = @date.getHours12()
-    formattedHour = (if hours < 10 then ((if hours is 0 then 12 else "0" + hours)) else hours)
+    formattedHour = @date.getFormattedHours()
 
+    @hoursStack.relevantTime = hours
     @hoursStack.updateClockUnit formattedHour
-
-    #add code to loop to next hour
+    @hoursStack.moveStack() if @date.getMinutes == 0
 
   initStacks: () ->
     for stack in @stacks
       stack.elListItems = stack.elList.find('li')
 
-      topMargin = @options.initTopMargin - (stack.relevantTime * 15)
-      stack.elList.css "top", "#{topMargin}px"
-
-      stack.currentFrame.removeClass 'current' if stack.currentFrame
-      stack.currentFrame = $(stack.elListItems[stack.relevantTime])
-      stack.currentFrame.addClass 'current'
-
-      stack.positionClockUnit $(@stacks[0].elList).height() / 2
+      stack.moveStack()
+      stack.positionClockRelativeToStack @hoursStack
 
   module.exports = Timeframe
