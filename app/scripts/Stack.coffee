@@ -8,6 +8,9 @@ class Stack
     @elLabel = @elTarget.find 'h3'
 
   updateClockUnit: (value) ->
-    @elLabel.text value
+    @elLabel.text(value)
+
+  positionClockUnit: (position) ->
+    @elLabel.css('top', position + 'px')
 
 module.exports = Stack

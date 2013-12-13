@@ -195,6 +195,7 @@ class Timeframe extends Backbone.View
 
   showClock: () ->
     @elLoader.remove()
+    @printTime()
     # @startInterval @interval
 
   startInterval: (interval) ->
@@ -236,17 +237,15 @@ class Timeframe extends Backbone.View
 
   initStacks: () ->
     for stack in @stacks
-
       stack.elListItems = stack.elList.find('li')
 
       topMargin = @options.initTopMargin - (stack.relevantTime * 15)
-
       stack.elList.css "top", "#{topMargin}px"
 
       stack.currentFrame.removeClass 'current' if stack.currentFrame
-
       stack.currentFrame = $(stack.elListItems[stack.relevantTime])
-
       stack.currentFrame.addClass 'current'
+
+      stack.positionClockUnit $(@stacks[0].elList).height() / 2
 
   module.exports = Timeframe
