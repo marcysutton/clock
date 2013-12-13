@@ -9,7 +9,6 @@ body
   background-color: $c_background
   color: $c_default
   font-family: $fonts_default
-  overflow: hidden
 
 a:link, a:visited
   color: $c_default
@@ -138,54 +137,54 @@ ul
   width: 100%
 
   li.stack
-    margin-right: $default_margin
-    position: absolute
-    top: 0
+    float: left
     width: 33%
-
-    &:last-child
-      margin-right: 0
-
-    &#hours
-      left: 0
-
-    &#minutes
-      left: 33%
-
-    &#seconds
-      left: 66%
 
     h3
       color: $c_white
       font-family: $headline_font
       font-size: 210px
-      top: 250px
+      // top: 250px
       position: absolute
       text-align: center
-      width: 500px
+      width: 100%
       z-index: 1
 
     ul
-      overflow: hidden
-      top: 230px
-      width: 500px
+      margin: 0 $default_margin
 
       li
-        height: $default_margin
         margin-bottom: 5px
         overflow: hidden
-
-      &.flickr div
-        overflow: hidden
-        width: 100%
-        margin: 0 auto
-
-      &.current
-        height: 340px
+        padding: 0 $default_margin
+        position: relative
 
         div
-          width: 110%
+          height: 0
+          margin: 0 auto
+          overflow: hidden
+          position: relative
 
-    img
-      display: table
-      margin: 0 auto
+          img
+            bottom: 0
+            display: block
+            left: 0
+            position: absolute
+            right: 0
+            top: 0
+
+        &.flickr
+          div
+            padding-top: $default-margin
+            width: 90%
+
+        &.current
+          div
+            height: auto
+            padding-top: 56.25%
+            width: 100%
+
+            img
+              background-size: 100% auto
+              width: 100%
+

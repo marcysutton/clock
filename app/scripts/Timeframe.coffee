@@ -67,6 +67,10 @@ class Timeframe extends Backbone.View
     @minutesStack = new Stack @elMinutes
     @secondsStack = new Stack @elSeconds
 
+    @stacks = [@hoursStack, @minutesStack, @secondsStack]
+
+    @imageStackObj = {}
+
   initializeApp: () ->
     @cityName = @citySearch.getCityName()
 
@@ -151,25 +155,26 @@ class Timeframe extends Backbone.View
   loadImages: (photoUrls) ->
     @loadUtility photoUrls, () =>
 
-      stack = @hoursStack
-
-      relevantTime = @date.getHours12()
-
       i = 0
       while i < photoUrls.length
         if i > 11 and i < 72
-          @moveStack stack, relevantTime
 
           stack = @minutesStack
+          stack.relevantTime = @date.getMinutes()
 
-          relevantTime = @date.getMinutes()
+          @addToImageStackObj stack, photoUrls[i]
 
         else if i >= 72
-          @moveStack stack, relevantTime
-
           stack = @secondsStack
+          stack.relevantTime = @date.getSeconds()
 
-          relevantTime = @date.getSeconds()
+          @addToImageStackObj stack, photoUrls[i]
+
+        else
+          stack = @hoursStack
+          stack.relevantTime = @date.getHours12()
+
+          @addToImageStackObj stack, photoUrls[i]
 
         stack.elList.append $('<li>')
           .addClass('flickr')
@@ -177,9 +182,16 @@ class Timeframe extends Backbone.View
 
         i++
 
-      @moveStack stack, relevantTime
-
+      @initStacks()
       @showClock()
+
+  addToImageStackObj: (stack, imageUrl) ->
+    @imageStackObj[stack.id] = {} unless @imageStackObj.hasOwnProperty stack.id
+
+    @imageStackObj[stack.id].time = stack.relevantTime
+
+    @imageStackObj[stack.id].urls = [] unless @imageStackObj[stack.id].hasOwnProperty 'urls'
+    @imageStackObj[stack.id].urls.push imageUrl
 
   showClock: () ->
     @elLoader.remove()
@@ -222,15 +234,19 @@ class Timeframe extends Backbone.View
 
     #add code to loop to next hour
 
-  moveStack: (stack, relevantTime) ->
-    topMargin = @options.initTopMargin - (relevantTime * 15)
-    stack.elList.css "top", "#{topMargin}px"
+  initStacks: () ->
+    for stack in @stacks
 
-    stack.currentFrame.removeClass 'current' if stack.currentFrame
+      stack.elListItems = stack.elList.find('li')
 
-    current = $(stack.elListItems[relevantTime]).addClass 'current'
+      topMargin = @options.initTopMargin - (stack.relevantTime * 15)
 
-    stack.currentFrame = current
+      stack.elList.css "top", "#{topMargin}px"
 
+      stack.currentFrame.removeClass 'current' if stack.currentFrame
+
+      stack.currentFrame = $(stack.elListItems[stack.relevantTime])
+
+      stack.currentFrame.addClass 'current'
 
   module.exports = Timeframe
