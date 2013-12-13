@@ -90,7 +90,7 @@ class Timeframe extends Backbone.View
   queryAPI: (timeOfDay) ->
     @setTags(timeOfDay)
 
-    $.getJSON @getJSONURL(timeOfDay), (response) =>
+    $.getJSON(@getJSONURL(timeOfDay), (response) =>
       console.log('showing '+@cityName+' in the '+ @currentTag)
 
       console.log response
@@ -102,8 +102,9 @@ class Timeframe extends Backbone.View
         #   @fetchImages response
         # else
         #   @queryAPI(false)
-      else
-        @showErrorMessage response.message
+        #
+    ).fail (response) =>
+      @showErrorMessage response.message
 
   showErrorMessage: (message) ->
     alert message
