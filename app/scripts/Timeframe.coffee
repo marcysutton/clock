@@ -152,6 +152,14 @@ class Timeframe extends Backbone.View
 
     @loadImages(photoUrls)
 
+  addImageToStackObject: (stack, imageUrl) ->
+    @imageStackObj[stack.id] = {} unless @imageStackObj.hasOwnProperty stack.id
+
+    @imageStackObj[stack.id].time = stack.relevantTime
+
+    @imageStackObj[stack.id].urls = [] unless @imageStackObj[stack.id].hasOwnProperty 'urls'
+    @imageStackObj[stack.id].urls.push imageUrl
+
   loadImages: (photoUrls) ->
     @loadUtility photoUrls, () =>
 
@@ -162,19 +170,19 @@ class Timeframe extends Backbone.View
           stack = @minutesStack
           stack.relevantTime = @date.getMinutes()
 
-          @addToImageStackObj stack, photoUrls[i]
+          @addImageToStackObject stack, photoUrls[i]
 
         else if i >= 72
           stack = @secondsStack
           stack.relevantTime = @date.getSeconds()
 
-          @addToImageStackObj stack, photoUrls[i]
+          @addImageToStackObject stack, photoUrls[i]
 
         else
           stack = @hoursStack
           stack.relevantTime = @date.getHours12()
 
-          @addToImageStackObj stack, photoUrls[i]
+          @addImageToStackObject stack, photoUrls[i]
 
         stack.elList.append $('<li>')
           .addClass('flickr')
@@ -182,18 +190,10 @@ class Timeframe extends Backbone.View
 
         i++
 
-      @initStacks()
-      @showClock()
+      @initPhotoStacks()
+      @startClock()
 
-  addToImageStackObj: (stack, imageUrl) ->
-    @imageStackObj[stack.id] = {} unless @imageStackObj.hasOwnProperty stack.id
-
-    @imageStackObj[stack.id].time = stack.relevantTime
-
-    @imageStackObj[stack.id].urls = [] unless @imageStackObj[stack.id].hasOwnProperty 'urls'
-    @imageStackObj[stack.id].urls.push imageUrl
-
-  showClock: () ->
+  startClock: () ->
     @elLoader.remove()
     @startInterval @interval
 
@@ -205,7 +205,7 @@ class Timeframe extends Backbone.View
   stopInterval: (interval) ->
     window.clearInterval(interval)
 
-  initStacks: () ->
+  initPhotoStacks: () ->
     for stack in @stacks
       stack.elListItems = stack.elList.find('li')
 
