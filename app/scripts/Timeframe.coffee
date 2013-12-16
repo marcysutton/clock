@@ -10,8 +10,8 @@
 Backbone = require 'backbone'
 Backbone.$ = $
 
-CitySearchView = require './CitySearch'
-Stack = require './Stack'
+CitySearchView = require './views/CitySearch'
+StackView = require './views/Stack'
 Clock = require './Clock'
 
 class Timeframe extends Backbone.View
@@ -63,9 +63,9 @@ class Timeframe extends Backbone.View
     @elMinutes = @elImgListItems.eq 1
     @elSeconds = @elImgListItems.eq 2
 
-    @hoursStack = new Stack @elHours
-    @minutesStack = new Stack @elMinutes
-    @secondsStack = new Stack @elSeconds
+    @hoursStack = new StackView @elHours
+    @minutesStack = new StackView @elMinutes
+    @secondsStack = new StackView @elSeconds
     @stacks = [@hoursStack, @minutesStack, @secondsStack]
 
     @imageStackObj = {}
