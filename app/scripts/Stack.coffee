@@ -15,12 +15,6 @@ class Stack
     @elList = @elTarget.find 'ul'
     @elLabel = @elTarget.find 'h3'
 
-  updateClockUnit: (value) ->
-    @elLabel.text(value)
-
-  positionClockNumbers: (stackToPositonFrom) ->
-    currentPhotoPosition = $('.current').offset().top
-    @elLabel.css 'top', currentPhotoPosition - (@options.initTopMargin / 2)
 
   setStackUlPosition: (element, relevantTime) ->
     topMargin = @options.initTopMargin - (relevantTime * 15)
@@ -34,3 +28,11 @@ class Stack
     @currentFrame.addClass 'current'
 
 module.exports = Stack
+
+  updateClockUnit: (value) ->
+    @elLabel.text(value)
+
+  positionClockNumbers: () ->
+    currentFramePosition = @currentFrame.offset().top
+    @elLabel.css 'top', currentFramePosition - (@options.initTopMargin / 2)
+
