@@ -18,15 +18,16 @@ class Stack
   updateClockUnit: (value) ->
     @elLabel.text(value)
 
-  positionClockRelativeToStack: (stackToPositonFrom) ->
-    @setTopPosition @elLabel, stackToPositonFrom.relevantTime
+  positionClockNumbers: (stackToPositonFrom) ->
+    currentPhotoPosition = $('.current').offset().top
+    @elLabel.css 'top', currentPhotoPosition - (@options.initTopMargin / 2)
 
-  setTopPosition: (element, relevantTime) ->
+  setStackUlPosition: (element, relevantTime) ->
     topMargin = @options.initTopMargin - (relevantTime * 15)
     element.css "top", "#{topMargin}px"
 
   moveStack: () ->
-    @setTopPosition @elList, @relevantTime
+    @setStackUlPosition @elList, @relevantTime
 
     @currentFrame.removeClass 'current' if @currentFrame
     @currentFrame = $(@elListItems[@relevantTime])

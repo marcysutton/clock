@@ -247,6 +247,6 @@ class Timeframe extends Backbone.View
       stack.elListItems = stack.elList.find('li')
 
       stack.moveStack()
-      stack.positionClockRelativeToStack @hoursStack
+      stack.positionClockNumbers()
 
   module.exports = Timeframe
