@@ -12,6 +12,7 @@ Backbone.$ = $
 
 CitySearchView = require './CitySearch'
 Stack = require './Stack'
+Clock = require './Clock'
 
 class Timeframe extends Backbone.View
   constructor: (target, options = {}) ->
@@ -65,23 +66,22 @@ class Timeframe extends Backbone.View
     @hoursStack = new Stack @elHours
     @minutesStack = new Stack @elMinutes
     @secondsStack = new Stack @elSeconds
-
     @stacks = [@hoursStack, @minutesStack, @secondsStack]
 
     @imageStackObj = {}
 
+    @clock = new Clock(@stacks)
+
   initializeApp: () ->
     @cityName = @citySearch.getCityName()
-
     @updateUIWithCityChange @cityName
-
-    @date = new Date
-    @timezone = @date.toString().replace(/^.*\(|\)$/g, "").replace(/[^A-Z]/g, "")
 
     @citySearch.elCityPicker.fadeOut().remove()
     @elLoader.fadeIn()
 
-    @setTime()
+    @date = new Date
+
+    @clock.setTime()
     @queryAPI(true)
 
   updateUIWithCityChange: (cityName) ->
@@ -199,48 +199,11 @@ class Timeframe extends Backbone.View
 
   startInterval: (interval) ->
     interval = window.setInterval(=>
-      @printTime()
+      @clock.printTime()
     , 1000)
 
   stopInterval: (interval) ->
     window.clearInterval(interval)
-
-  setTime: () ->
-    @date.setSeconds(@date.getSeconds() + 1)
-
-    # TODO: visual representation of time zone: EST, PST, etc.
-    @timezoneOffset = @date.getTimezoneOffset() / 60
-
-  printTime: () ->
-    @setTime()
-
-    @printSeconds()
-    @printMinutes()
-    @printHours()
-
-  printSeconds: () ->
-    seconds = @date.getSeconds()
-    formattedSeconds = @date.getFormattedSeconds()
-
-    @secondsStack.relevantTime = seconds
-    @secondsStack.updateClockUnit formattedSeconds
-    @secondsStack.moveStack()
-
-  printMinutes: () ->
-    minutes = @date.getMinutes()
-    formattedMinutes = @date.getFormattedMinutes()
-
-    @minutesStack.relevantTime = minutes
-    @minutesStack.updateClockUnit formattedMinutes
-    @minutesStack.moveStack() if @date.getSeconds() == 0
-
-  printHours: () ->
-    hours = @date.getHours12()
-    formattedHour = @date.getFormattedHours()
-
-    @hoursStack.relevantTime = hours
-    @hoursStack.updateClockUnit formattedHour
-    @hoursStack.moveStack() if @date.getMinutes == 0
 
   initStacks: () ->
     for stack in @stacks
