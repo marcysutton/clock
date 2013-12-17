@@ -106,11 +106,15 @@ class Timeframe extends Backbone.View
         # else
         #   @queryAPI(false)
         #
+      else
+        @showErrorMessage response.message
+
     ).fail (response) =>
-      @showErrorMessage response.message
+      @showErrorMessage response
 
   showErrorMessage: (message) ->
-    alert message
+    alert 'There was a problem. Please try again!'
+    console.log message
 
   setTags: (firstAttempt) ->
     currentTagArr = []
