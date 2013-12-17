@@ -20,11 +20,11 @@ class Timeframe extends Backbone.View
       apiKey: 'beb8b17f735b6a404dbe120fd7300460'
       numImages: [12, 60, 60]
       timesOfDay: [
-        [0, 4, 'night', 'night']
-        [4, 12, 'morning', 'day']
-        [12, 17, 'afternoon', 'day']
-        [17, 20, 'evening', 'night']
-        [20, 24, 'night', 'night']
+        [0, 4, 'night']
+        [4, 12, 'morning']
+        [12, 17, 'afternoon']
+        [17, 20, 'evening']
+        [20, 24, 'night']
       ]
 
     _.defaults(options, @options)
@@ -82,38 +82,10 @@ class Timeframe extends Backbone.View
 
     @clock = new Clock(@stacks, @cityName)
     @clock.setTime()
-    @queryAPI(true)
+    @queryAPI()
 
   updateUIWithCityChange: (cityName) ->
     @elCityLoading.text cityName
-
-  queryAPI: (timeOfDay) ->
-    @setTags(timeOfDay)
-
-    $.getJSON(@getJSONURL(timeOfDay), (response) =>
-      console.log('showing '+@cityName+' in the '+ @currentTag)
-
-      @elNowShowing.text "#{@cityName} #{@currentTag}"
-
-      console.log response
-      if response.stat == "ok"
-        console.log 'number of images: ', response.photos.photo.length
-        @fetchImages response
-
-        # if response.photos.photo.length >= 132
-        #   @fetchImages response
-        # else
-        #   @queryAPI(false)
-        #
-      else
-        @showErrorMessage response.message
-
-    ).fail (response) =>
-      @showErrorMessage response
-
-  showErrorMessage: (message) ->
-    alert 'There was a problem. Please try again!'
-    console.log message
 
   setTags: (firstAttempt) ->
     currentTagArr = []
@@ -125,21 +97,49 @@ class Timeframe extends Backbone.View
     while i < numTags
       currentTagArr = tags[i]
       if currentHour >= currentTagArr[0] and currentHour < currentTagArr[1]
-        @currentTag = (if firstAttempt then currentTagArr[2] else currentTagArr[3])
+        @currentTag = currentTagArr[2]
         break
       i++
 
-  getJSONURL: (timeOfDay) ->
+  queryAPI: () ->
+    @setTags()
+
+    $.getJSON(@getJSONURL(), (response) =>
+      console.log('showing '+@cityName+' in the '+ @currentTag)
+
+      @elNowShowing.text "#{@cityName} #{@currentTag}"
+
+      console.log response
+
+      if response.stat == "ok"
+        console.log 'number of images: ', response.photos.photo.length
+        @fetchImages response
+      else
+        @showErrorMessage response.message
+
+    ).fail (response) =>
+      @showErrorMessage response
+
+  showErrorMessage: (message) ->
+    alert 'There was a problem. Please try again!'
+    console.log message
+
+    console.log response
+
+  getJSONURL: () ->
     "http://api.flickr.com/services/rest/?method=flickr.photos.search&" +
     "api_key=#{@options.apiKey}&" +
-    "tags=" + @getURLTags(timeOfDay)+ "&tag_mode=all&" +
+    @getURLTags() +
     "per_page=" + @getTotalImages() +
     "&format=json&jsoncallback=?"
 
-  getURLTags: (timeOfDay) ->
-    tagParams = "#{@cityName.replace(' ','+')}"
-    tagParams += ",#{@currentTag}" if timeOfDay
-    tagParams
+  getURLTags: () ->
+    tagParams = "tag_mode=all&tags="
+
+    tags = "#{@cityName.replace(' ','+')}"
+    tags += ",#{@currentTag}&"
+
+    tagParams + tags
 
   getPhotoURL: (photo) ->
     "http://farm#{photo.farm}.static.flickr.com/" +
