@@ -1,6 +1,8 @@
-class Clock
+Backbone = require 'backbone'
 
-  constructor: (stacks, options = {}) ->
+class Clock extends Backbone.Model
+
+  initialize: (stacks, options = {}) ->
     # stacks = [@hoursStack, @minutesStack, @secondsStack]
     @hoursStack = stacks[0]
     @minutesStack = stacks[1]
@@ -13,6 +15,7 @@ class Clock
 
   setTime: () ->
     date = new Date()
+    @date.setHours(date.getHours())
     @date.setMinutes(date.getMinutes())
     @date.setSeconds(date.getSeconds() + 1)
 
@@ -47,7 +50,7 @@ class Clock
 
     @secondsStack.relevantTime = seconds
     @secondsStack.updateClockUnit formattedSeconds
-    @secondsStack.moveStack()
+    # @secondsStack.moveStack()
 
   printMinutes: () ->
     minutes = @date.getMinutes()
@@ -55,7 +58,7 @@ class Clock
 
     @minutesStack.relevantTime = minutes
     @minutesStack.updateClockUnit formattedMinutes
-    @minutesStack.moveStack() if @date.getSeconds() == 0
+    # @minutesStack.moveStack() if @date.getSeconds() == 0
 
   printHours: () ->
     hours = @date.getHours12()
@@ -63,6 +66,6 @@ class Clock
 
     @hoursStack.relevantTime = hours
     @hoursStack.updateClockUnit formattedHour
-    @hoursStack.moveStack() if @date.getMinutes == 0
+    # @hoursStack.moveStack() if @date.getMinutes == 0
 
 module.exports = Clock

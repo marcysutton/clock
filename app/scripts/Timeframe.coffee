@@ -12,7 +12,7 @@ Backbone.$ = $
 
 CitySearchView = require './views/CitySearch'
 StackView = require './views/Stack'
-Clock = require './Clock'
+Clock = require './models/Clock'
 
 class Timeframe extends Backbone.View
   constructor: (target, options = {}) ->
