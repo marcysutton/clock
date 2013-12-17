@@ -34,6 +34,7 @@ class Timeframe extends Backbone.View
     @elTarget = $(target)
     @elLoader = $('.loader')
     @elCityLoading = @elLoader.find('.city-loading')
+    @elNowShowing = @elTarget.find('.now-showing')
 
     @initSearchBox()
     @setupClockUI()
@@ -92,6 +93,8 @@ class Timeframe extends Backbone.View
 
     $.getJSON(@getJSONURL(timeOfDay), (response) =>
       console.log('showing '+@cityName+' in the '+ @currentTag)
+
+      @elNowShowing.text "#{@cityName} #{@currentTag}"
 
       console.log response
       if response.stat == "ok"
@@ -195,6 +198,7 @@ class Timeframe extends Backbone.View
 
   startClock: () ->
     @elLoader.remove()
+    @elNowShowing.fadeIn()
     @clock.startInterval()
 
   initPhotoStacks: () ->
