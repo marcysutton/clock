@@ -1,9 +1,14 @@
-class StackView
+Backbone = require 'backbone'
+Backbone.$ = $
+
+class StackView extends Backbone.View
 
   options:
     initTopMargin: 230
 
   relevantTime: null
+
+  formattedTime: null
 
   currentFrame: null
 
@@ -19,18 +24,27 @@ class StackView
     topMargin = @options.initTopMargin - (relevantTime * 15)
     element.css "top", "#{topMargin}px"
 
-  moveStack: () ->
+  setCurrentFrame: () ->
     @setStackUlPosition @elList, @relevantTime
 
     @currentFrame.removeClass 'current' if @currentFrame
     @currentFrame = $(@elListItems[@relevantTime])
     @currentFrame.addClass 'current'
 
-  updateClockUnit: (value) ->
-    @elLabel.text(value)
+  updateClockUnit: () ->
+    @elLabel.text(@formattedTime)
 
   positionClockNumbers: () ->
     currentFramePosition = @currentFrame.offset().top
     @elLabel.css 'top', currentFramePosition - (@options.initTopMargin / 2)
+
+    @elLabel.fadeIn()
+
+  moveStack: (relevantTime, formattedTime) ->
+    @relevantTime = relevantTime
+    @formattedTime = formattedTime
+
+    @setCurrentFrame()
+    @updateClockUnit()
 
 module.exports = StackView

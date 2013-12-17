@@ -1,5 +1,5 @@
 ###
- * Timeframe
+ * Timeframe ViewController
  * @author: Marcy Sutton
  * Version 2.0
  * 12/5/13
@@ -12,7 +12,7 @@ Backbone.$ = $
 
 CitySearchView = require './views/CitySearch'
 StackView = require './views/Stack'
-Clock = require './Clock'
+Clock = require './models/Clock'
 
 class Timeframe extends Backbone.View
   constructor: (target, options = {}) ->
@@ -71,8 +71,6 @@ class Timeframe extends Backbone.View
 
     @imageStackObj = {}
 
-    @clock = new Clock(@stacks)
-
   initializeApp: () ->
     @cityName = @citySearch.getCityName()
     @updateUIWithCityChange @cityName
@@ -82,6 +80,7 @@ class Timeframe extends Backbone.View
 
     @date = new Date
 
+    @clock = new Clock(@stacks, @cityName)
     @clock.setTime()
     @queryAPI(true)
 
@@ -106,11 +105,15 @@ class Timeframe extends Backbone.View
         # else
         #   @queryAPI(false)
         #
+      else
+        @showErrorMessage response.message
+
     ).fail (response) =>
-      @showErrorMessage response.message
+      @showErrorMessage response
 
   showErrorMessage: (message) ->
-    alert message
+    alert 'There was a problem. Please try again!'
+    console.log message
 
   setTags: (firstAttempt) ->
     currentTagArr = []
@@ -201,11 +204,19 @@ class Timeframe extends Backbone.View
     @elNowShowing.fadeIn()
     @clock.startInterval()
 
+    @clock.on "change:time", (event) =>
+      @moveStacks()
+
   initPhotoStacks: () ->
     for stack in @stacks
       stack.elListItems = stack.elList.find('li')
 
-      stack.moveStack()
+      stack.setCurrentFrame(@clock.date)
       stack.positionClockNumbers()
+
+  moveStacks: () ->
+    @secondsStack.moveStack @clock.currentSeconds, @clock.formattedSeconds
+    @minutesStack.moveStack @clock.currentMinutes, @clock.formattedMinutes
+    @hoursStack.moveStack @clock.currentHours, @clock.formattedHours
 
   module.exports = Timeframe
