@@ -205,11 +205,19 @@ class Timeframe extends Backbone.View
     @elNowShowing.fadeIn()
     @clock.startInterval()
 
+    @clock.on "change:time", (event) =>
+      @moveStacks()
+
   initPhotoStacks: () ->
     for stack in @stacks
       stack.elListItems = stack.elList.find('li')
 
-      stack.moveStack()
+      stack.setCurrentFrame(@clock.date)
       stack.positionClockNumbers()
+
+  moveStacks: () ->
+    @secondsStack.moveStack @clock.currentSeconds, @clock.formattedSeconds
+    @minutesStack.moveStack @clock.currentMinutes, @clock.formattedMinutes
+    @hoursStack.moveStack @clock.currentHours, @clock.formattedHours
 
   module.exports = Timeframe

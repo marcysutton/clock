@@ -1,26 +1,22 @@
 Backbone = require 'backbone'
+moment = require 'moment'
+
 
 class Clock extends Backbone.Model
 
-  initialize: (stacks, options = {}) ->
+  initialize: (stacks, cityName, options = {}) ->
     # stacks = [@hoursStack, @minutesStack, @secondsStack]
     @hoursStack = stacks[0]
     @minutesStack = stacks[1]
     @secondsStack = stacks[2]
 
-    @date = new Date()
-    @start = @date.getTime()
+    @currentHours = null
+    @currentMinutes = null
+    @currentSeconds = null
+
+    @start = moment()
     @time = 0
     @elapsed = 0
-
-  setTime: () ->
-    date = new Date()
-    @date.setHours(date.getHours())
-    @date.setMinutes(date.getMinutes())
-    @date.setSeconds(date.getSeconds() + 1)
-
-    # TODO: visual representation of time zone: EST, PST, etc.
-    @timezoneOffset = @date.getTimezoneOffset() / 60
 
   startInterval: () ->
     timeout = window.setTimeout(=>
@@ -32,40 +28,31 @@ class Clock extends Backbone.Model
     @time += 100
     @elapsed = Math.floor(@time / 100) / 10
 
-    @printTime() if Math.round(@elapsed) is @elapsed
+    @setTime() if Math.round(@elapsed) is @elapsed
 
-    diff = (new Date().getTime() - @start) - @time
+    diff = (moment() - @start) - @time
     window.setTimeout @intervalFunc, (100 - diff)
 
-  printTime: () ->
-    @setTime()
+  setTime: () ->
+    # TODO: visual representation of time zone: EST, PST, etc.
+    # @timezoneOffset = @date.getTimezoneOffset() / 60
 
-    @printSeconds()
-    @printMinutes()
-    @printHours()
+    @setSeconds()
+    @setMinutes()
+    @setHours()
 
-  printSeconds: () ->
-    seconds = @date.getSeconds()
-    formattedSeconds = @date.getFormattedSeconds()
+    @trigger 'change:time'
 
-    @secondsStack.relevantTime = seconds
-    @secondsStack.updateClockUnit formattedSeconds
-    # @secondsStack.moveStack()
+  setSeconds: () ->
+    @currentSeconds = moment().format('s')
+    @formattedSeconds = moment().format('ss')
 
-  printMinutes: () ->
-    minutes = @date.getMinutes()
-    formattedMinutes = @date.getFormattedMinutes()
+  setMinutes: () ->
+    @currentMinutes = moment().format('m')
+    @formattedMinutes = moment().format('mm')
 
-    @minutesStack.relevantTime = minutes
-    @minutesStack.updateClockUnit formattedMinutes
-    # @minutesStack.moveStack() if @date.getSeconds() == 0
-
-  printHours: () ->
-    hours = @date.getHours12()
-    formattedHour = @date.getFormattedHours()
-
-    @hoursStack.relevantTime = hours
-    @hoursStack.updateClockUnit formattedHour
-    # @hoursStack.moveStack() if @date.getMinutes == 0
+  setHours: () ->
+    @currentHours = moment().format('h')
+    @formattedHours = moment().format('hh')
 
 module.exports = Clock

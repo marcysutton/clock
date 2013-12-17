@@ -16,7 +16,9 @@
     "chai": "~1.8.1",
     "mocha": "~1.15.1",
     "backbone": "~1.1.0",
-    "underscore": "~1.5.2"
+    "underscore": "~1.5.2",
+    "moment": "~2.4.0",
+    "moment-timezone": "0.0.3"
   },
   "devDependencies": {
     "coffeeify": "~0.5.2",
