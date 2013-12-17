@@ -210,15 +210,22 @@ class Timeframe extends Backbone.View
       @moveStacks()
 
   initPhotoStacks: () ->
+    @updateStackTime()
+
     for stack in @stacks
       stack.elListItems = stack.elList.find('li')
-
-      stack.setCurrentFrame(@clock.date)
+      stack.setCurrentFrame()
       stack.positionClockNumbers()
 
+  updateStackTime: () ->
+    @secondsStack.setTime @clock.currentSeconds, @clock.formattedSeconds
+    @minutesStack.setTime @clock.currentMinutes, @clock.formattedMinutes
+    @hoursStack.setTime (@clock.currentHours - 1), @clock.formattedHours
+
   moveStacks: () ->
-    @secondsStack.moveStack @clock.currentSeconds, @clock.formattedSeconds
-    @minutesStack.moveStack @clock.currentMinutes, @clock.formattedMinutes
-    @hoursStack.moveStack @clock.currentHours, @clock.formattedHours
+    @updateStackTime()
+
+    for stack in @stacks
+      stack.moveStack()
 
   module.exports = Timeframe
