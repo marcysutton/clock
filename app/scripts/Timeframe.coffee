@@ -1,5 +1,5 @@
 ###
- * Timeframe
+ * Timeframe ViewController
  * @author: Marcy Sutton
  * Version 2.0
  * 12/5/13
@@ -71,8 +71,6 @@ class Timeframe extends Backbone.View
 
     @imageStackObj = {}
 
-    @clock = new Clock(@stacks)
-
   initializeApp: () ->
     @cityName = @citySearch.getCityName()
     @updateUIWithCityChange @cityName
@@ -82,6 +80,7 @@ class Timeframe extends Backbone.View
 
     @date = new Date
 
+    @clock = new Clock(@stacks, @cityName)
     @clock.setTime()
     @queryAPI(true)
 
