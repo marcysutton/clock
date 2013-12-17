@@ -7,13 +7,30 @@ class Clock
     @secondsStack = stacks[2]
 
     @date = new Date()
-    # @timezone = @date.toString().replace(/^.*\(|\)$/g, "").replace(/[^A-Z]/g, "")
+    @start = @date.getTime()
+    @time = 0
+    @elapsed = 0
 
   setTime: () ->
-    @date.setSeconds(@date.getSeconds() + 1)
+    @date.setSeconds(new Date().getSeconds() + 1)
 
     # TODO: visual representation of time zone: EST, PST, etc.
     @timezoneOffset = @date.getTimezoneOffset() / 60
+
+  startInterval: () ->
+    timeout = window.setTimeout(=>
+      @intervalFunc()
+    , 100)
+
+  intervalFunc: () =>
+    #check if it has been 1000 milliseconds
+    @time += 100
+    @elapsed = Math.floor(@time / 100) / 10
+
+    @printTime() if Math.round(@elapsed) is @elapsed
+
+    diff = (new Date().getTime() - @start) - @time
+    window.setTimeout @intervalFunc, (100 - diff)
 
   printTime: () ->
     @setTime()
