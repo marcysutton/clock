@@ -10,8 +10,9 @@
 Backbone = require 'backbone'
 Backbone.$ = $
 
-CitySearchView = require './CitySearch'
-Stack = require './Stack'
+CitySearchView = require './views/CitySearch'
+StackView = require './views/Stack'
+Clock = require './Clock'
 
 class Timeframe extends Backbone.View
   constructor: (target, options = {}) ->
@@ -62,26 +63,25 @@ class Timeframe extends Backbone.View
     @elMinutes = @elImgListItems.eq 1
     @elSeconds = @elImgListItems.eq 2
 
-    @hoursStack = new Stack @elHours
-    @minutesStack = new Stack @elMinutes
-    @secondsStack = new Stack @elSeconds
-
+    @hoursStack = new StackView @elHours
+    @minutesStack = new StackView @elMinutes
+    @secondsStack = new StackView @elSeconds
     @stacks = [@hoursStack, @minutesStack, @secondsStack]
 
     @imageStackObj = {}
 
+    @clock = new Clock(@stacks)
+
   initializeApp: () ->
     @cityName = @citySearch.getCityName()
-
     @updateUIWithCityChange @cityName
-
-    @date = new Date
-    @timezone = @date.toString().replace(/^.*\(|\)$/g, "").replace(/[^A-Z]/g, "")
 
     @citySearch.elCityPicker.fadeOut().remove()
     @elLoader.fadeIn()
 
-    @setTime()
+    @date = new Date
+
+    @clock.setTime()
     @queryAPI(true)
 
   updateUIWithCityChange: (cityName) ->
@@ -152,6 +152,14 @@ class Timeframe extends Backbone.View
 
     @loadImages(photoUrls)
 
+  addImageToStackObject: (stack, imageUrl) ->
+    @imageStackObj[stack.id] = {} unless @imageStackObj.hasOwnProperty stack.id
+
+    @imageStackObj[stack.id].time = stack.relevantTime
+
+    @imageStackObj[stack.id].urls = [] unless @imageStackObj[stack.id].hasOwnProperty 'urls'
+    @imageStackObj[stack.id].urls.push imageUrl
+
   loadImages: (photoUrls) ->
     @loadUtility photoUrls, () =>
 
@@ -162,19 +170,19 @@ class Timeframe extends Backbone.View
           stack = @minutesStack
           stack.relevantTime = @date.getMinutes()
 
-          @addToImageStackObj stack, photoUrls[i]
+          @addImageToStackObject stack, photoUrls[i]
 
         else if i >= 72
           stack = @secondsStack
           stack.relevantTime = @date.getSeconds()
 
-          @addToImageStackObj stack, photoUrls[i]
+          @addImageToStackObject stack, photoUrls[i]
 
         else
           stack = @hoursStack
           stack.relevantTime = @date.getHours12()
 
-          @addToImageStackObj stack, photoUrls[i]
+          @addImageToStackObject stack, photoUrls[i]
 
         stack.elList.append $('<li>')
           .addClass('flickr')
@@ -182,71 +190,26 @@ class Timeframe extends Backbone.View
 
         i++
 
-      @initStacks()
-      @showClock()
+      @initPhotoStacks()
+      @startClock()
 
-  addToImageStackObj: (stack, imageUrl) ->
-    @imageStackObj[stack.id] = {} unless @imageStackObj.hasOwnProperty stack.id
-
-    @imageStackObj[stack.id].time = stack.relevantTime
-
-    @imageStackObj[stack.id].urls = [] unless @imageStackObj[stack.id].hasOwnProperty 'urls'
-    @imageStackObj[stack.id].urls.push imageUrl
-
-  showClock: () ->
+  startClock: () ->
     @elLoader.remove()
     @startInterval @interval
 
   startInterval: (interval) ->
     interval = window.setInterval(=>
-      @printTime()
+      @clock.printTime()
     , 1000)
 
   stopInterval: (interval) ->
     window.clearInterval(interval)
 
-  setTime: () ->
-    @date.setSeconds(@date.getSeconds() + 1)
-
-    # TODO: visual representation of time zone: EST, PST, etc.
-    @timezoneOffset = @date.getTimezoneOffset() / 60
-
-  printTime: () ->
-    @setTime()
-
-    @printSeconds()
-    @printMinutes()
-    @printHours()
-
-  printSeconds: () ->
-    seconds = @date.getSeconds()
-    formattedSeconds = @date.getFormattedSeconds()
-
-    @secondsStack.relevantTime = seconds
-    @secondsStack.updateClockUnit formattedSeconds
-    @secondsStack.moveStack()
-
-  printMinutes: () ->
-    minutes = @date.getMinutes()
-    formattedMinutes = @date.getFormattedMinutes()
-
-    @minutesStack.relevantTime = minutes
-    @minutesStack.updateClockUnit formattedMinutes
-    @minutesStack.moveStack() if @date.getSeconds() == 0
-
-  printHours: () ->
-    hours = @date.getHours12()
-    formattedHour = @date.getFormattedHours()
-
-    @hoursStack.relevantTime = hours
-    @hoursStack.updateClockUnit formattedHour
-    @hoursStack.moveStack() if @date.getMinutes == 0
-
-  initStacks: () ->
+  initPhotoStacks: () ->
     for stack in @stacks
       stack.elListItems = stack.elList.find('li')
 
       stack.moveStack()
-      stack.positionClockRelativeToStack @hoursStack
+      stack.positionClockNumbers()
 
   module.exports = Timeframe

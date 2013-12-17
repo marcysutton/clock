@@ -1,4 +1,4 @@
-class Stack
+class StackView
 
   options:
     initTopMargin: 230
@@ -15,21 +15,22 @@ class Stack
     @elList = @elTarget.find 'ul'
     @elLabel = @elTarget.find 'h3'
 
-  updateClockUnit: (value) ->
-    @elLabel.text(value)
-
-  positionClockRelativeToStack: (stackToPositonFrom) ->
-    @setTopPosition @elLabel, stackToPositonFrom.relevantTime
-
-  setTopPosition: (element, relevantTime) ->
+  setStackUlPosition: (element, relevantTime) ->
     topMargin = @options.initTopMargin - (relevantTime * 15)
     element.css "top", "#{topMargin}px"
 
   moveStack: () ->
-    @setTopPosition @elList, @relevantTime
+    @setStackUlPosition @elList, @relevantTime
 
     @currentFrame.removeClass 'current' if @currentFrame
     @currentFrame = $(@elListItems[@relevantTime])
     @currentFrame.addClass 'current'
 
-module.exports = Stack
+  updateClockUnit: (value) ->
+    @elLabel.text(value)
+
+  positionClockNumbers: () ->
+    currentFramePosition = @currentFrame.offset().top
+    @elLabel.css 'top', currentFramePosition - (@options.initTopMargin / 2)
+
+module.exports = StackView
