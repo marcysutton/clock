@@ -120,9 +120,11 @@ class Timeframe extends Backbone.View
     ).fail (response) =>
       @showErrorMessage response
 
-  showErrorMessage: (message) ->
-    alert 'There was a problem. Please try again!'
-    console.log message
+  showErrorMessage: (response) ->
+    if response.message
+      alert response.message
+    else
+      alert 'Sorry, there was a problem. Please try again!'
 
     console.log response
 
