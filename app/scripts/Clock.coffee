@@ -12,7 +12,9 @@ class Clock
     @elapsed = 0
 
   setTime: () ->
-    @date.setSeconds(new Date().getSeconds() + 1)
+    date = new Date()
+    @date.setMinutes(date.getMinutes())
+    @date.setSeconds(date.getSeconds() + 1)
 
     # TODO: visual representation of time zone: EST, PST, etc.
     @timezoneOffset = @date.getTimezoneOffset() / 60
