@@ -195,15 +195,7 @@ class Timeframe extends Backbone.View
 
   startClock: () ->
     @elLoader.remove()
-    @startInterval @interval
-
-  startInterval: (interval) ->
-    interval = window.setInterval(=>
-      @clock.printTime()
-    , 1000)
-
-  stopInterval: (interval) ->
-    window.clearInterval(interval)
+    @clock.startInterval()
 
   initPhotoStacks: () ->
     for stack in @stacks
