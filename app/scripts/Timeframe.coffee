@@ -28,6 +28,7 @@ class Timeframe extends Backbone.View
         [17, 20, 'evening']
         [20, 24, 'night']
       ]
+      minimumImages: 72
 
     _.defaults(options, @options)
 
