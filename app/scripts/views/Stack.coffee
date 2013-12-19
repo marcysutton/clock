@@ -1,4 +1,3 @@
-Backbone = require 'backbone'
 Backbone.$ = $
 
 class StackView extends Backbone.View

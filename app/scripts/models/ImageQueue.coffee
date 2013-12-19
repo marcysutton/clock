@@ -1,4 +1,3 @@
-Backbone = require 'backbone'
 ImageUrl = require './ImageUrl'
 
 class ImageQueue extends Backbone.Collection

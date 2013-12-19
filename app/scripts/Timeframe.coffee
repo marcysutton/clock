@@ -6,8 +6,6 @@
 ###
 
 # global $
-
-Backbone = require 'backbone'
 Backbone.$ = $
 
 Router = require './routers/Router'

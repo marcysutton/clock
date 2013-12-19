@@ -1,6 +1,4 @@
-Backbone = require 'backbone'
 moment = require 'moment'
-
 
 class Clock extends Backbone.Model
 
@@ -19,7 +17,6 @@ class Clock extends Backbone.Model
     , 100)
 
   intervalFunc: () =>
-    #check if it has been 1000 milliseconds
     @time += 100
 
     @secondsElapsed = Math.floor(@time / 100) / 10
@@ -29,9 +26,6 @@ class Clock extends Backbone.Model
     window.setTimeout @intervalFunc, (100 - diff)
 
   setTime: () ->
-    # TODO: visual representation of time zone: EST, PST, etc.
-    # @timezoneOffset = @date.getTimezoneOffset() / 60
-
     @setSeconds()
     @setMinutes()
     @setHours()

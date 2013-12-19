@@ -1,4 +1,3 @@
-Backbone = require 'backbone'
 Backbone.$ = $
 
 class InputSearchView extends Backbone.View

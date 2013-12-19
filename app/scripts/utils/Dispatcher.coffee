@@ -1,5 +1,3 @@
-Backbone = require 'backbone'
-
 # centralized dispatcher object added to all Backbone Collection, Model, View, and Router classes
 (->
   return if this.isExtended
