@@ -23,11 +23,11 @@ class InputSearchView extends Backbone.View
 
     if input isnt ""
       selectedTagName = input
-      @goToTag(selectedTagName)
+      @tagToRoute(selectedTagName)
     else
       alert "Please enter a location."
 
-  goToTag: (selectedTagName) ->
+  tagToRoute: (selectedTagName) ->
     Backbone.history.navigate "#/location/#{@encodeTagName(selectedTagName)}", trigger: true
 
   setTagName: (selectedTagName) ->

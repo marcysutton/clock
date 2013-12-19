@@ -16,6 +16,9 @@ class Router extends Backbone.Router
   default: () ->
     Backbone.history.navigate '/'
 
+  routeChange: (route, router) ->
+    @app.reset()
+
   searchCity: (param) ->
     @inputSearch.setTagName(param)
 

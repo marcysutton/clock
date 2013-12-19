@@ -13,12 +13,12 @@ class StackView extends Backbone.View
   currentFrame: null
 
   constructor: (target) ->
-    @elTarget = $(target)
+    @el = $(target)
 
     @id = target.attr 'id'
 
-    @elList = @elTarget.find 'ul'
-    @elLabel = @elTarget.find 'h3'
+    @elList = @el.find 'ul'
+    @elLabel = @el.find 'h3'
 
   setStackUlPosition: (element, relevantTime) ->
     topMargin = @options.initTopMargin - (relevantTime * 15)

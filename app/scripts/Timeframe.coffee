@@ -48,9 +48,6 @@ class Timeframe extends Backbone.View
 
     @setupClockUI()
 
-    # @dispatcher.on 'tag_name_change', (selectedTagName) =>
-    #   @appStart()
-
     Backbone.history.start()
 
   getTotalImages: () ->
@@ -186,10 +183,11 @@ class Timeframe extends Backbone.View
 
   updateSecondsImages: () ->
     shuffledUrls = @shuffleImageQueue(@options.numImages[2])
+    stack = @secondsStack
 
     i = 0
     _.each shuffledUrls, (image) =>
-      imageItem = @secondsStack.elListItems.eq(i).find('img')
+      imageItem = stack.elListItems.eq(i).find('img')
       imageItem.attr('src', image.url)
       i++
 
@@ -197,8 +195,14 @@ class Timeframe extends Backbone.View
     stack.elList.append $('<li>')
       .append $("<div><img src='#{imageUrl}' /></div>")
 
+  reset: () ->
+    for stack in @stacks
+      if stack.elListItems
+        stack.elListItems.detach()
+        stack.elLabel.fadeOut()
+
   startClock: () ->
-    @elLoader.remove()
+    @elLoader.hide()
     @elNowShowing.fadeIn()
     @clock.startInterval()
 
