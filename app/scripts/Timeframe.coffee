@@ -71,6 +71,9 @@ class Timeframe extends Backbone.View
     @secondsStack = new StackView @elSeconds
     @stacks = [@hoursStack, @minutesStack, @secondsStack]
 
+    $(window)
+      .on 'resize', (event) =>
+        @clockTextRepaint()
 
   initializeApp: () ->
     @cityName = @citySearch.getCityName()
@@ -89,6 +92,9 @@ class Timeframe extends Backbone.View
       @handOutImages()
 
     @queryAPI()
+
+  clockTextRepaint: () ->
+    $('.stack').find('h3').css('z-index', 1)
 
   updateUIWithCityChange: (cityName) ->
     @elCityLoading.text cityName
