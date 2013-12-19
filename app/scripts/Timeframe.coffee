@@ -5,10 +5,11 @@
  * 12/5/13
 ###
 
-# global $
+# global $, Modernizr
 Backbone.$ = $
 
 Router = require './routers/Router'
+Modal = require './views/Modal'
 InputSearchView = require './views/InputSearch'
 StackView = require './views/Stack'
 ImageQueue = require './models/ImageQueue'
@@ -47,7 +48,12 @@ class Timeframe extends Backbone.View
 
     @setupClockUI()
 
-    Backbone.history.start()
+    @modal = new Modal()
+
+    if Modernizr.touch is true
+      $('.modal').html @modal.render().el
+    else
+      Backbone.history.start()
 
   getTotalImages: () ->
     @options.numImages.reduce (a, b) ->
