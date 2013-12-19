@@ -10,6 +10,7 @@
 Backbone = require 'backbone'
 Backbone.$ = $
 
+Router = require './routers/Router'
 CitySearchView = require './views/CitySearch'
 StackView = require './views/Stack'
 ImageQueue = require './models/ImageQueue'
@@ -33,23 +34,23 @@ class Timeframe extends Backbone.View
     @loadUtility = skone.util.ImageLoader.LoadImageSet
     @imageQueue = new ImageQueue()
 
+    @citySearch = new CitySearchView()
+
+    @router = new Router(@citySearch)
+
     @elTarget = $(target)
     @elLoader = $('.loader')
     @elCityLoading = @elLoader.find('.city-loading')
     @elNowShowing = @elTarget.find('.now-showing')
 
-    @initSearchBox()
     @setupClockUI()
+
+    @dispatcher.on 'city_name_change', (cityName) =>
+      @initializeApp()
 
   getTotalImages: () ->
     @options.numImages.reduce (a, b) ->
       a + b
-
-  initSearchBox: () ->
-    @citySearch = new CitySearchView
-
-    @dispatcher.bind 'city_name_change', () =>
-      @initializeApp()
 
   setupClockUI: () ->
     $('body').removeClass('no-js')
@@ -151,7 +152,7 @@ class Timeframe extends Backbone.View
   getURLTags: () ->
     tagParams = "tag_mode=all&tags="
 
-    tags = "#{@cityName.replace(' ','+')}"
+    tags = "#{@citySearch.encodeCityName()}"
     tags += ",#{@currentTag}&"
 
     tagParams + tags
