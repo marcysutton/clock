@@ -12,6 +12,7 @@ Backbone.$ = $
 
 CitySearchView = require './views/CitySearch'
 StackView = require './views/Stack'
+ImageQueue = require './models/ImageQueue'
 Clock = require './models/Clock'
 
 class Timeframe extends Backbone.View
@@ -30,6 +31,7 @@ class Timeframe extends Backbone.View
     _.defaults(options, @options)
 
     @loadUtility = skone.util.ImageLoader.LoadImageSet
+    @imageQueue = new ImageQueue()
 
     @elTarget = $(target)
     @elLoader = $('.loader')
@@ -69,7 +71,6 @@ class Timeframe extends Backbone.View
     @secondsStack = new StackView @elSeconds
     @stacks = [@hoursStack, @minutesStack, @secondsStack]
 
-    @imageStackObj = {}
 
   initializeApp: () ->
     @cityName = @citySearch.getCityName()
@@ -82,6 +83,11 @@ class Timeframe extends Backbone.View
 
     @clock = new Clock(@stacks, @cityName)
     @clock.setTime()
+
+    @imageQueue = new ImageQueue()
+    @imageQueue.on 'imagesloaded', () =>
+      @handOutImages()
+
     @queryAPI()
 
   updateUIWithCityChange: (cityName) ->
@@ -113,7 +119,7 @@ class Timeframe extends Backbone.View
 
       if response.stat == "ok"
         console.log 'number of images: ', response.photos.photo.length
-        @fetchImages response
+        @imageQueue.fetchImages response
       else
         @showErrorMessage response.message
 
@@ -132,6 +138,7 @@ class Timeframe extends Backbone.View
     "http://api.flickr.com/services/rest/?method=flickr.photos.search&" +
     "api_key=#{@options.apiKey}&" +
     @getURLTags() +
+    "sort=interestingness-desc&" +
     "per_page=" + @getTotalImages() +
     "&format=json&jsoncallback=?"
 
@@ -143,63 +150,40 @@ class Timeframe extends Backbone.View
 
     tagParams + tags
 
-  getPhotoURL: (photo) ->
-    "http://farm#{photo.farm}.static.flickr.com/" +
-    "#{photo.server}/" +
-    "#{photo.id}_#{photo.secret}_z.jpg"
+  shuffleImageQueue: (n) ->
+    _.sample @imageQueue.models, n
 
-  fetchImages: (response) ->
-    photoUrls = []
+  handOutImages: () ->
+    photoUrls = @shuffleImageQueue(@options.numImages[0] + @options.numImages[1])
 
-    $.each response.photos.photo, (n, item) =>
-      photo = response.photos.photo[n]
+    i = 0
+    _.each photoUrls, (image) =>
+      if i < @options.numImages[0]
+        @insertImageInStack @hoursStack, image.url
 
-      t_url = @getPhotoURL(photo)
+      else if i >= @options.numImages[0]
+        @insertImageInStack @minutesStack, image.url
 
-      photoUrls.push t_url
+      if i < @options.numImages[2]
+        @insertImageInStack @secondsStack, image.url
 
-    @loadImages(photoUrls)
+      i++
 
-  addImageToStackObject: (stack, imageUrl) ->
-    @imageStackObj[stack.id] = {} unless @imageStackObj.hasOwnProperty stack.id
+    @initPhotoStacks()
+    @startClock()
 
-    @imageStackObj[stack.id].time = stack.relevantTime
+  updateSecondsImages: () ->
+    shuffledUrls = @shuffleImageQueue(@options.numImages[2])
 
-    @imageStackObj[stack.id].urls = [] unless @imageStackObj[stack.id].hasOwnProperty 'urls'
-    @imageStackObj[stack.id].urls.push imageUrl
+    i = 0
+    _.each shuffledUrls, (image) =>
+      imageItem = @secondsStack.elListItems.eq(i).find('img')
+      imageItem.attr('src', image.url)
+      i++
 
-  loadImages: (photoUrls) ->
-    @loadUtility photoUrls, () =>
-
-      i = 0
-      while i < photoUrls.length
-        if i > 11 and i < 72
-
-          stack = @minutesStack
-          stack.relevantTime = @date.getMinutes()
-
-          @addImageToStackObject stack, photoUrls[i]
-
-        else if i >= 72
-          stack = @secondsStack
-          stack.relevantTime = @date.getSeconds()
-
-          @addImageToStackObject stack, photoUrls[i]
-
-        else
-          stack = @hoursStack
-          stack.relevantTime = @date.getHours12()
-
-          @addImageToStackObject stack, photoUrls[i]
-
-        stack.elList.append $('<li>')
-          .addClass('flickr')
-          .append $("<div><img src='#{photoUrls[i]}' /></div>")
-
-        i++
-
-      @initPhotoStacks()
-      @startClock()
+  insertImageInStack: (stack, imageUrl) ->
+    stack.elList.append $('<li>')
+      .append $("<div><img src='#{imageUrl}' /></div>")
 
   startClock: () ->
     @elLoader.remove()
