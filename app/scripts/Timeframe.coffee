@@ -195,7 +195,6 @@ class Timeframe extends Backbone.View
 
     @clock.on "change:minute", (event) =>
       @updateSecondsImages()
-      @secondsStack.moveStack()
 
   initPhotoStacks: () ->
     @updateStackTime()
