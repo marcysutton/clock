@@ -9,14 +9,15 @@ class Router extends Backbone.Router
   initialize: (searchView) ->
     # @bind "all", @searchCity
 
-    @citySearch = searchView
 
     Backbone.history.start()
+    @inputSearch = searchView
 
   default: () ->
     Backbone.history.navigate '/'
 
   searchCity: (param) ->
     @citySearch.setCityName(param)
+    @inputSearch.setTagName(param)
 
 module.exports = Router
