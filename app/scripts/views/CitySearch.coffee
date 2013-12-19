@@ -9,6 +9,7 @@ class CitySearchView extends Backbone.View
   el: $('form.city-picker')
 
   initialize: ->
+    _.bindAll @, 'citySubmitHandler'
 
     @elCityPicker = $(@el)
 
@@ -29,9 +30,17 @@ class CitySearchView extends Backbone.View
   setCityName: (cityName) ->
     @cityName = cityName
 
+    @elCityInput.val @decodeCityName(cityName)
+
     @dispatcher.trigger 'city_name_change'
 
   getCityName: () ->
     @cityName
+
+  encodeCityName: (cityName = @cityName) ->
+    cityName.replace(' ','+')
+
+  decodeCityName: (cityName = @cityName) ->
+    cityName.replace('+', ' ')
 
 module.exports = CitySearchView
