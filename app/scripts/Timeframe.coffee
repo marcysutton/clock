@@ -31,15 +31,18 @@ class Timeframe extends Backbone.View
 
     _.defaults(options, @options)
 
+    @target = target
+
     @loadUtility = skone.util.ImageLoader.LoadImageSet
     @imageQueue = new ImageQueue()
 
+  initialize: () ->
     @inputSearch = new InputSearchView()
-
     @router = new Router(@inputSearch)
 
-    @elTarget = $(target)
+    @elTarget = $(@target)
     @elLoader = $('.loader')
+
     @elTagLoading = @elLoader.find('.tag-loading')
     @elNowShowing = @elTarget.find('.now-showing')
 
@@ -48,6 +51,7 @@ class Timeframe extends Backbone.View
     # @dispatcher.on 'tag_name_change', (selectedTagName) =>
     #   @appStart()
 
+    Backbone.history.start()
 
   getTotalImages: () ->
     @options.numImages.reduce (a, b) ->
@@ -77,8 +81,8 @@ class Timeframe extends Backbone.View
       .on 'resize', (event) =>
         @clockTextRepaint()
 
-  initializeApp: () ->
-    @selectedTagName = @inputSearch.getTagName()
+  appStart: () ->
+    @selectedTagName = @inputSearch.decodeTagName()
     @updateUIWithTagChange @selectedTagName
 
     @inputSearch.elTagPicker.fadeOut().remove()
