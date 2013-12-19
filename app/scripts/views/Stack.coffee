@@ -24,12 +24,9 @@ class StackView extends Backbone.View
     topMargin = @options.initTopMargin - (relevantTime * 15)
     element.css "top", "#{topMargin}px"
 
-  setCurrentFrame: () ->
-    @setStackUlPosition @elList, @relevantTime
-
-    @currentFrame.removeClass 'current' if @currentFrame
-    @currentFrame = $(@elListItems[@relevantTime])
-    @currentFrame.addClass 'current'
+  setTime: (relevantTime, formattedTime) ->
+    @relevantTime = relevantTime
+    @formattedTime = formattedTime
 
   updateClockUnit: () ->
     @elLabel.text(@formattedTime)
@@ -40,10 +37,15 @@ class StackView extends Backbone.View
 
     @elLabel.fadeIn()
 
-  moveStack: (relevantTime, formattedTime) ->
-    @relevantTime = relevantTime
-    @formattedTime = formattedTime
+  setCurrentFrame: () ->
+    @setStackUlPosition @elList, @relevantTime
 
+    @currentFrame.removeClass 'current' if @currentFrame
+    @currentFrame = $(@elListItems[@relevantTime])
+
+    @currentFrame.addClass 'current'
+
+  moveStack: () ->
     @setCurrentFrame()
     @updateClockUnit()
 
