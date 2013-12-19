@@ -8,7 +8,7 @@
 	<meta property="og:url" content="http://marcysutton.com/pop/clock" />
 	<meta property="og:image" content="http://marcysutton.com/pop/clock/images/pop_clock.jpg" />
 	<meta property="og:site_name" content="Timeframe" />
-  <!-- build:css(.tmp) styles/main.css-->
+  <!-- build:css(.tmp) styles/clock-styles.css-->
 	<link rel="stylesheet" type="text/css" href="styles/clock-styles.css" />
   <!-- endbuild-->
 </head>
@@ -45,11 +45,9 @@
 		</ul>
     <p class="now-showing"></p>
   </section>
-<!-- build:js scripts/vendor.js-->
 <script src="/vendor_scripts/image-loader.js"></script>
 <script src="/vendor_scripts/jquery.min.js"></script>
 <script src="/vendor_scripts/underscore-min.js"></script>
-<!-- endbuild -->
 <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
 document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
@@ -60,7 +58,7 @@ var pageTracker = _gat._getTracker("UA-12190082-1");
 pageTracker._setDomainName(".marcysutton.com");
 pageTracker._trackPageview();
 } catch(err) {}</script>
-<!-- build:js({.tmp, app}) scripts/main.js-->
+<!-- build:js({.tmp, app}) scripts/application.js-->
 <script src="scripts/application.js"></script>
 <!-- endbuild-->
 </body>

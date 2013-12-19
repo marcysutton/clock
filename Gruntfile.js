@@ -163,11 +163,17 @@ module.exports = function(grunt) {
     },
     // Put files not handled in other tasks here
     copy: {
-      dist: {
+      js_css: {
         expand: true,
         cwd: '.tmp',
         dest: '<%= config.dist %>',
         src: ['{,*/}*.css', '{,*/}*.js']
+      },
+      assets: {
+        expand: true,
+        cwd: '<%= config.app %>',
+        dest: '<%= config.dist %>',
+        src: ['images/*', 'fonts/*']
       },
       styles: {
         expand: true,
@@ -175,6 +181,12 @@ module.exports = function(grunt) {
         cwd: '<%= config.app %>/styles',
         dest: '.tmp/styles/',
         src: '{,*/}*.css'
+      }
+    },
+    concat: {
+      basic: {
+        src: ['.tmp/scripts/*.js'],
+        dest: ['dist/scripts/*.js']
       }
     },
     browserify: {
@@ -254,7 +266,8 @@ module.exports = function(grunt) {
     'useminPrepare',
     'concurrent:dist',
     'usemin',
-    'copy:dist'
+    'copy:js_css',
+    'copy:assets'
   ]);
 
   grunt.registerTask('default', [
