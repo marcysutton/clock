@@ -90,11 +90,7 @@ h2.site-cred
   position: relative
   width: 100%
 
-body.no-js form.city-picker
-  display: none
-  visibility: hidden
-
-form.city-picker
+form.tag-input
   background-color: #ccc
   padding: $default_margin
   line-height: 22px
@@ -111,7 +107,7 @@ form.city-picker
     height: 2em
     line-height: 1.25em
 
-    &#city
+    &[type=text]
       display: block
       float: left
       padding-left: 5px

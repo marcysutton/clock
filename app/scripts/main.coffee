@@ -3,4 +3,5 @@
 Timeframe = require './Timeframe'
 
 $(document).ready ->
-  new Timeframe '.app'
+  window.timeframeApp = new Timeframe '.app'
+  timeframeApp.initialize()

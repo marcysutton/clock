@@ -11,7 +11,7 @@ Backbone = require 'backbone'
 Backbone.$ = $
 
 Router = require './routers/Router'
-CitySearchView = require './views/CitySearch'
+InputSearchView = require './views/InputSearch'
 StackView = require './views/Stack'
 ImageQueue = require './models/ImageQueue'
 Clock = require './models/Clock'
@@ -28,25 +28,28 @@ class Timeframe extends Backbone.View
         [17, 20, 'evening']
         [20, 24, 'night']
       ]
+      minimumImages: 72
 
     _.defaults(options, @options)
+
+    @target = target
 
     @loadUtility = skone.util.ImageLoader.LoadImageSet
     @imageQueue = new ImageQueue()
 
-    @citySearch = new CitySearchView()
+  initialize: () ->
+    @inputSearch = new InputSearchView()
+    @router = new Router(@inputSearch)
 
-    @router = new Router(@citySearch)
-
-    @elTarget = $(target)
+    @elTarget = $(@target)
     @elLoader = $('.loader')
-    @elCityLoading = @elLoader.find('.city-loading')
+
+    @elTagLoading = @elLoader.find('.tag-loading')
     @elNowShowing = @elTarget.find('.now-showing')
 
     @setupClockUI()
 
-    @dispatcher.on 'city_name_change', (cityName) =>
-      @initializeApp()
+    Backbone.history.start()
 
   getTotalImages: () ->
     @options.numImages.reduce (a, b) ->
@@ -76,16 +79,16 @@ class Timeframe extends Backbone.View
       .on 'resize', (event) =>
         @clockTextRepaint()
 
-  initializeApp: () ->
-    @cityName = @citySearch.getCityName()
-    @updateUIWithCityChange @cityName
+  appStart: () ->
+    @selectedTagName = @inputSearch.decodeTagName()
+    @updateUIWithTagChange @selectedTagName
 
-    @citySearch.elCityPicker.fadeOut().remove()
+    @inputSearch.elTagPicker.fadeOut().remove()
     @elLoader.fadeIn()
 
     @date = new Date
 
-    @clock = new Clock(@cityName)
+    @clock = new Clock(@selectedTagName)
     @clock.setTime()
 
     @imageQueue = new ImageQueue()
@@ -97,8 +100,8 @@ class Timeframe extends Backbone.View
   clockTextRepaint: () ->
     $('.stack').find('h3').css('z-index', 1)
 
-  updateUIWithCityChange: (cityName) ->
-    @elCityLoading.text cityName
+  updateUIWithTagChange: (selectedTagName) ->
+    @elTagLoading.text selectedTagName
 
   setTags: (firstAttempt) ->
     currentTagArr = []
@@ -118,9 +121,9 @@ class Timeframe extends Backbone.View
     @setTags()
 
     $.getJSON(@getJSONURL(), (response) =>
-      console.log('showing '+@cityName+' in the '+ @currentTag)
+      console.log('showing '+@selectedTagName+' in the '+ @currentTag)
 
-      @elNowShowing.text "#{@cityName} #{@currentTag}"
+      @elNowShowing.text "#{@selectedTagName} #{@currentTag}"
 
       console.log response
 
@@ -152,7 +155,7 @@ class Timeframe extends Backbone.View
   getURLTags: () ->
     tagParams = "tag_mode=all&tags="
 
-    tags = "#{@citySearch.encodeCityName()}"
+    tags = "#{@inputSearch.encodeTagName()}"
     tags += ",#{@currentTag}&"
 
     tagParams + tags
@@ -181,10 +184,11 @@ class Timeframe extends Backbone.View
 
   updateSecondsImages: () ->
     shuffledUrls = @shuffleImageQueue(@options.numImages[2])
+    stack = @secondsStack
 
     i = 0
     _.each shuffledUrls, (image) =>
-      imageItem = @secondsStack.elListItems.eq(i).find('img')
+      imageItem = stack.elListItems.eq(i).find('img')
       imageItem.attr('src', image.url)
       i++
 
@@ -192,8 +196,14 @@ class Timeframe extends Backbone.View
     stack.elList.append $('<li>')
       .append $("<div><img src='#{imageUrl}' /></div>")
 
+  reset: () ->
+    for stack in @stacks
+      if stack.elListItems
+        stack.elListItems.detach()
+        stack.elLabel.fadeOut()
+
   startClock: () ->
-    @elLoader.remove()
+    @elLoader.hide()
     @elNowShowing.fadeIn()
     @clock.startInterval()
 
