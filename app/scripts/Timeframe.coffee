@@ -81,7 +81,7 @@ class Timeframe extends Backbone.View
 
     @date = new Date
 
-    @clock = new Clock(@stacks, @cityName)
+    @clock = new Clock(@cityName)
     @clock.setTime()
 
     @imageQueue = new ImageQueue()
@@ -193,6 +193,10 @@ class Timeframe extends Backbone.View
     @clock.on "change:time", (event) =>
       @moveStacks()
 
+    @clock.on "change:minute", (event) =>
+      @updateSecondsImages()
+      @secondsStack.moveStack()
+
   initPhotoStacks: () ->
     @updateStackTime()
 
@@ -202,9 +206,9 @@ class Timeframe extends Backbone.View
       stack.positionClockNumbers()
 
   updateStackTime: () ->
-    @secondsStack.setTime @clock.currentSeconds, @clock.formattedSeconds
-    @minutesStack.setTime @clock.currentMinutes, @clock.formattedMinutes
-    @hoursStack.setTime (@clock.currentHours - 1), @clock.formattedHours
+    @secondsStack.setTime @clock.currentSecond, @clock.formattedSecond
+    @minutesStack.setTime @clock.currentMinute, @clock.formattedMinute
+    @hoursStack.setTime (@clock.currentHour - 1), @clock.formattedHour
 
   moveStacks: () ->
     @updateStackTime()
