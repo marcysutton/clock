@@ -185,8 +185,8 @@ module.exports = function(grunt) {
     },
     concat: {
       basic: {
-        src: ['.tmp/scripts/*.js'],
-        dest: ['dist/scripts/*.js']
+        src: ['<%= config.app %>/vendor_scripts/*.js'],
+        dest: '.tmp/scripts/vendor.js'
       }
     },
     browserify: {
@@ -265,6 +265,7 @@ module.exports = function(grunt) {
     'clean:dist',
     'useminPrepare',
     'concurrent:dist',
+    'concat',
     'usemin',
     'copy:js_css',
     'copy:assets'

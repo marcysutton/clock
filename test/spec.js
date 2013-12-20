@@ -9294,7 +9294,7 @@ if ( typeof window === "object" && typeof window.document === "object" ) {
 },{}],3:[function(require,module,exports){
 var $, chai_jq;
 
-$ = require('../../bower_components/jquery/jquery');
+$ = require('../../app/bower_components/jquery/jquery');
 
 chai_jq = require('chai-jq');
 
@@ -9313,5 +9313,5 @@ chai.use(chai_jq);
 })();
 
 
-},{"../../bower_components/jquery/jquery":1,"chai-jq":2}]},{},[3])
+},{"../../app/bower_components/jquery/jquery":1,"chai-jq":2}]},{},[3])
 ;
