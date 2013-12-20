@@ -1,7 +1,7 @@
 # global $, describe, it, expect
 # jslint node: true
 
-$ = require('../../bower_components/jquery/jquery')
+$ = require('../../app/bower_components/jquery/jquery')
 chai_jq = require('chai-jq')
 chai.use(chai_jq)
 
