@@ -26,6 +26,10 @@ class InputSearchView extends Backbone.View
       @tagToRoute(selectedTagName)
     else
       alert "Please enter a location."
+  
+  reset: () ->
+    @elTagPicker.show()
+    @elTagInput.val('')
 
   tagToRoute: (selectedTagName) ->
     Backbone.history.navigate "#/location/#{@encodeTagName(selectedTagName)}", trigger: true

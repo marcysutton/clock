@@ -26,7 +26,7 @@ module.exports = function(grunt) {
     watch: {
       coffee: {
         files: ['<%= config.app %>/scripts/{,*/}*.coffee'],
-        tasks: ['browserify']
+        tasks: ['coffeelint:app','browserify']
       },
       compass: {
         files: ['<%= config.app %>/styles/{,*/}/*.{scss,sass}'],
