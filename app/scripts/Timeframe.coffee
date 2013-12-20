@@ -86,8 +86,6 @@ class Timeframe extends Backbone.View
     @inputSearch.elTagPicker.fadeOut().remove()
     @elLoader.fadeIn()
 
-    @date = new Date
-
     @clock = new Clock(@selectedTagName)
     @clock.setTime()
 
@@ -105,7 +103,7 @@ class Timeframe extends Backbone.View
 
   setTags: (firstAttempt) ->
     currentTagArr = []
-    currentHour = @date.getHours()
+    currentHour = @clock.currentHour
     tags = @options.timesOfDay
     numTags = tags.length
 
@@ -187,7 +185,7 @@ class Timeframe extends Backbone.View
     stack = @secondsStack
 
     i = 0
-    _.each shuffledUrls, (image) =>
+    _.each shuffledUrls, (image) ->
       imageItem = stack.elListItems.eq(i).find('img')
       imageItem.attr('src', image.url)
       i++
