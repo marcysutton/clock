@@ -39,17 +39,18 @@
     <p class="now-showing"></p>
   </section>
   <div class="modal"></div>
-  <template id="modal-template">
+  <script type="text/template" id="modal-template">
     <div class="bbm-modal__topbar">
       <h3 class="bbm-modal__title">Heads up!</h3>
     </div>
     <div class="bbm-modal__section">
-      <p>This application requires significant bandwidth.</p>
+      <p class="bandwidth">This application requires significant bandwidth.</p>
+      <p class="orientation">This application is best viewed in landscape mode.</p>
     </div>
     <div class="btn-wrapper bbm-modal__bottombar">
-      <button class="btn-close">Let's See It</button>
+      <button class="btn-close">Let&rsquo;s See It</button>
     </div>
-  </template>
+  </script>
 <script src="./bower_components/jquery/jquery.js"></script>
 <script src="./bower_components/underscore/underscore.js"></script>
 <script src="./bower_components/backbone/backbone.js"></script>
