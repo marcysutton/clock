@@ -83,7 +83,7 @@ class Timeframe extends Backbone.View
     @selectedTagName = @inputSearch.decodeTagName()
     @updateUIWithTagChange @selectedTagName
 
-    @inputSearch.elTagPicker.fadeOut().remove()
+    @inputSearch.elTagPicker.fadeOut()
     @elLoader.fadeIn()
 
     @clock = new Clock(@selectedTagName)
@@ -119,14 +119,13 @@ class Timeframe extends Backbone.View
     @setTags()
 
     $.getJSON(@getJSONURL(), (response) =>
-      console.log('showing '+@selectedTagName+' in the '+ @currentTag)
-
-      @elNowShowing.text "#{@selectedTagName} #{@currentTag}"
-
       console.log response
 
       if response.stat == "ok"
+        console.log('showing '+@selectedTagName+' in the '+ @currentTag)
         console.log 'number of images: ', response.photos.photo.length
+  
+        @elNowShowing.text "#{@selectedTagName} #{@currentTag}"
         @imageQueue.fetchImages response
       else
         @showErrorMessage response.message
@@ -194,11 +193,19 @@ class Timeframe extends Backbone.View
     stack.elList.append $('<li>')
       .append $("<div><img src='#{imageUrl}' /></div>")
 
-  reset: () ->
+  reload: () ->
     for stack in @stacks
       if stack.elListItems
         stack.elListItems.detach()
         stack.elLabel.fadeOut()
+  
+  restart: () ->
+    @reload()
+    
+    @elLoader.hide()
+    @inputSearch.reset()
+    
+    Backbone.history.navigate ''
 
   startClock: () ->
     @elLoader.hide()
