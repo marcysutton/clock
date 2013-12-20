@@ -1,8 +1,8 @@
 class Router extends Backbone.Router
 
   routes:
-    '' : 'default'
-    'location/:cityName': 'searchCity'
+    'location/:cityName': 'searchCity',
+    'error': 'error'
 
   initialize: (searchView) ->
     @bind "all", @routeChange
@@ -10,16 +10,16 @@ class Router extends Backbone.Router
     @app = window.timeframeApp
 
     @inputSearch = searchView
-
-  default: () ->
-    Backbone.history.navigate '/'
-
+    
   routeChange: (route, router) ->
-    @app.reset()
+    @app.reload()
 
   searchCity: (param) ->
     @inputSearch.setTagName(param)
 
     @app.appStart()
+  
+  error: () ->
+    @app.restart()
 
 module.exports = Router

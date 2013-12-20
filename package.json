@@ -1,6 +1,7 @@
 {
   "name": "Timeframe",
   "description": "TimeFrame, a Flickr-integrated web clock",
+  "version": "0.0.1",
   "homepage": "http://marcysutton.com/pop/clock/",
   "author": {
     "name": "Marcy Sutton",
@@ -18,7 +19,8 @@
     "backbone": "~1.1.0",
     "underscore": "~1.5.2",
     "moment": "~2.4.0",
-    "moment-timezone": "0.0.3"
+    "moment-timezone": "0.0.3",
+    "chai-jq": "0.0.4"
   },
   "devDependencies": {
     "coffeeify": "~0.5.2",
@@ -39,6 +41,7 @@
     "grunt-usemin": "~2.0.2",
     "grunt-contrib-htmlmin": "~0.1.3",
     "grunt-coffeelint": "0.0.8",
-    "grunt-notify": "~0.2.16"
+    "grunt-notify": "~0.2.16",
+    "grunt-contrib-concat": "~0.3.0"
   }
 }
