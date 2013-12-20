@@ -204,7 +204,8 @@ class Timeframe extends Backbone.View
     
     @elLoader.hide()
     @inputSearch.reset()
-    
+    @elNowShowing.hide()
+
     Backbone.history.navigate ''
 
   startClock: () ->
