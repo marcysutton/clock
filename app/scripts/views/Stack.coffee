@@ -20,8 +20,8 @@ class StackView extends Backbone.View
     @elLabel = @el.find 'h3'
 
   setStackUlPosition: (element, relevantTime) ->
-    topMargin = @options.initTopMargin - (relevantTime * 15)
-    element.css "top", "#{topMargin}px"
+    @ulTopMargin = @options.initTopMargin - (relevantTime * 15)
+    element.css "top", "#{@ulTopMargin}px"
 
   setTime: (relevantTime, formattedTime) ->
     @relevantTime = relevantTime
@@ -31,8 +31,8 @@ class StackView extends Backbone.View
     @elLabel.text(@formattedTime)
 
   positionClockNumbers: () ->
-    currentFramePosition = @currentFrame.offset().top
-    @elLabel.css 'top', currentFramePosition - (@options.initTopMargin / 2)
+    currentFramePosition = @ulTopMargin + @currentFrame.position().top
+    @elLabel.css 'top', currentFramePosition
 
     @elLabel.fadeIn()
 
