@@ -49,8 +49,8 @@ class Timeframe extends Backbone.View
 
     @modal = new Modal()
 
-    if Modernizr.touch is true
-      $('.modal').html @modal.render().el
+    if Modernizr.touch
+      @modal.show()
     else
       Backbone.history.start()
 

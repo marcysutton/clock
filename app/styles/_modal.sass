@@ -16,3 +16,17 @@
 
     &:hover, &:focus
       color: $c_hover
+
+.modal
+  .and
+    font-style: italic
+    font-size: 1em
+    font-weight: bold
+    margin-top: $default-margin * 1.5
+
+  .orientation
+    display: none
+
+  @media #{$landscape}
+    .orientation
+      display: block
