@@ -5,8 +5,7 @@
  * 12/5/13
 ###
 
-# global $, Modernizr
-Backbone.$ = $
+# global $, Modernizr, Backbone
 
 Router = require './routers/Router'
 Modal = require './views/Modal'
@@ -128,7 +127,7 @@ class Timeframe extends Backbone.View
       if response.stat == "ok"
         console.log('showing '+@selectedTagName+' in the '+ @currentTag)
         console.log 'number of images: ', response.photos.photo.length
-  
+
         @elNowShowing.text "#{@selectedTagName} #{@currentTag}"
         @imageQueue.fetchImages response
       else
@@ -202,10 +201,10 @@ class Timeframe extends Backbone.View
       if stack.elListItems
         stack.elListItems.detach()
         stack.elLabel.fadeOut()
-  
+
   restart: () ->
     @reload()
-    
+
     @elLoader.hide()
     @inputSearch.reset()
     @elNowShowing.hide()

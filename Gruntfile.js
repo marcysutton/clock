@@ -54,7 +54,7 @@ module.exports = function(grunt) {
     },
     connect: {
       options: {
-        port: 8888,
+        port: 8001,
         livereload: 35729,
         // change this to '0.0.0.0' to access the server from outside
         hostname: '0.0.0.0'
@@ -185,7 +185,11 @@ module.exports = function(grunt) {
     },
     concat: {
       basic: {
-        src: ['<%= config.app %>/vendor_scripts/*.js'],
+        src: ['<%= config.app %>/bower_components/underscore/underscore-min.js',
+              '<%= config.app %>/bower_components/backbone/backbone-min.js',
+              '<%= config.app %>/bower_components/jquery/jquery.min.js',
+              '<%= config.app %>/vendor_scripts/*.js'
+              ],
         dest: '.tmp/scripts/vendor.js'
       }
     },
