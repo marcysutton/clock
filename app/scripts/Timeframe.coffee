@@ -5,12 +5,10 @@
  * 12/5/13
 ###
 
-# global $
-
-Backbone = require 'backbone'
-Backbone.$ = $
+# global $, Modernizr, Backbone
 
 Router = require './routers/Router'
+Modal = require './views/Modal'
 InputSearchView = require './views/InputSearch'
 StackView = require './views/Stack'
 ImageQueue = require './models/ImageQueue'
@@ -49,7 +47,12 @@ class Timeframe extends Backbone.View
 
     @setupClockUI()
 
-    Backbone.history.start()
+    @modal = new Modal()
+
+    if Modernizr.touch
+      @modal.show()
+    else
+      Backbone.history.start()
 
   getTotalImages: () ->
     @options.numImages.reduce (a, b) ->
@@ -101,9 +104,9 @@ class Timeframe extends Backbone.View
   updateUIWithTagChange: (selectedTagName) ->
     @elTagLoading.text selectedTagName
 
-  setTags: (firstAttempt) ->
+  setTags: () ->
     currentTagArr = []
-    currentHour = @clock.currentHour
+    currentHour = @clock.current24Hour
     tags = @options.timesOfDay
     numTags = tags.length
 
@@ -124,7 +127,7 @@ class Timeframe extends Backbone.View
       if response.stat == "ok"
         console.log('showing '+@selectedTagName+' in the '+ @currentTag)
         console.log 'number of images: ', response.photos.photo.length
-  
+
         @elNowShowing.text "#{@selectedTagName} #{@currentTag}"
         @imageQueue.fetchImages response
       else
@@ -198,10 +201,10 @@ class Timeframe extends Backbone.View
       if stack.elListItems
         stack.elListItems.detach()
         stack.elLabel.fadeOut()
-  
+
   restart: () ->
     @reload()
-    
+
     @elLoader.hide()
     @inputSearch.reset()
     @elNowShowing.hide()

@@ -1,5 +1,3 @@
-Backbone = require 'backbone'
-
 class ImageUrl extends Backbone.Model
 
   url: null
