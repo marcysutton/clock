@@ -4,6 +4,7 @@ class Clock extends Backbone.Model
 
   initialize: (cityName, options = {}) ->
     @currentHour = null
+    @current24Hour = null
     @currentMinute = null
     @currentSecond = null
 
@@ -53,5 +54,7 @@ class Clock extends Backbone.Model
       @formattedHour = moment().format('hh')
 
       @trigger 'change:hour'
+
+    @current24Hour = moment().format('H')
 
 module.exports = Clock

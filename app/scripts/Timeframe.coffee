@@ -104,9 +104,9 @@ class Timeframe extends Backbone.View
   updateUIWithTagChange: (selectedTagName) ->
     @elTagLoading.text selectedTagName
 
-  setTags: (firstAttempt) ->
+  setTags: () ->
     currentTagArr = []
-    currentHour = @clock.currentHour
+    currentHour = @clock.current24Hour
     tags = @options.timesOfDay
     numTags = tags.length
 
