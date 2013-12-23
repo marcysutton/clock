@@ -98,7 +98,7 @@ form.tag-input
   height: auto
   margin-left: $default_margin
   margin-top: 35px
-  width: 300px
+  max-width: 300px
 
   input
     font-family: TelegramaRender
@@ -204,13 +204,13 @@ ul
               background-size: 100% auto
               width: 100%
 
-.touch 
+.touch
   @media #{$tablet}
     li.stack
       float: none
       margin: $default-margin auto
       position: relative
-      width: 90%
+      width: 100%
 
       h3
         width: 100%
@@ -220,6 +220,9 @@ ul
       &#seconds h3
         left: auto
         font-size: 35vw
+      
+      ul
+        margin: 0
 
-      div
-        padding-top: 50%
+        div
+          padding-top: 50%
