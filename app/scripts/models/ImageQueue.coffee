@@ -29,7 +29,7 @@ class ImageQueue extends Backbone.Collection
 
       @urlArray.push t_url
     
-    if @urlArray.length > window.timeframeApp.options.minimumImages
+    if @urlArray.length >= window.timeframeApp.options.minimumImages
       @loadImages()
     else
       console.log 'Not enough images'
