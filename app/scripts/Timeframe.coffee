@@ -49,7 +49,7 @@ class Timeframe extends Backbone.View
 
     @modal = new Modal()
 
-    if Modernizr.touch and window.matchMedia("(max-width: 1024px)").matches
+    if Modernizr.touch and window.matchMedia("(max-width: 64em)").matches
       @mobileSetup()
     
     @setupClockUI()
