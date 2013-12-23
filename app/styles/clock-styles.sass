@@ -151,7 +151,7 @@ ul
       display: none
       font-family: $headline_font
       font-weight: normal
-      font-size: 15vw
+      font-size: 13vw
       padding-top: 3%
       position: absolute
       text-align: center
@@ -205,7 +205,13 @@ ul
               width: 100%
 
 .touch
-  @media #{$tablet}
+  @media #{$portrait}
+    .now-showing
+      color: #ccc
+      padding: 2% 0
+      position: relative
+      z-index: 1
+
     li.stack
       float: none
       margin: $default-margin auto
@@ -219,7 +225,7 @@ ul
       &#minutes h3, 
       &#seconds h3
         left: auto
-        font-size: 35vw
+        font-size: 37vw
       
       ul
         margin: 0
