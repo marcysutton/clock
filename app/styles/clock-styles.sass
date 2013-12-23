@@ -204,3 +204,22 @@ ul
               background-size: 100% auto
               width: 100%
 
+.touch 
+  @media #{$tablet}
+    li.stack
+      float: none
+      margin: $default-margin auto
+      position: relative
+      width: 90%
+
+      h3
+        width: 100%
+
+      &#hours h3, 
+      &#minutes h3, 
+      &#seconds h3
+        left: auto
+        font-size: 35vw
+
+      div
+        padding-top: 50%

@@ -28,6 +28,7 @@ class StackView extends Backbone.View
     if @positionContext is 'time'
       @relevantPosition = @relevantTime
     else
+      @options.initTopMargin = 0
       @relevantPosition = 0
 
     @relevantPosition
