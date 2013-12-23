@@ -27,6 +27,7 @@ class Timeframe extends Backbone.View
         [20, 24, 'night']
       ]
       minimumImages: 72
+      positionContext: 'time'
 
     _.defaults(options, @options)
 
@@ -46,18 +47,21 @@ class Timeframe extends Backbone.View
     @elTagLoading = @elLoader.find('.tag-loading')
     @elNowShowing = @elTarget.find('.now-showing')
 
-    @setupClockUI()
-
     @modal = new Modal()
 
-    if Modernizr.touch
-      @modal.show()
+    if Modernizr.touch and window.matchMedia("(max-width: 1024px)").matches
+      @mobileSetup()
+    
+    @setupClockUI()
+
+    Backbone.history.start()
+
   getTotalImages: () ->
     if not @mobile
       @totalImages = @options.columnImageCounts.reduce (a, b) ->
         a + b
     else
-      Backbone.history.start()
+      @totalImages = 10
 
     @totalImages
 
@@ -84,6 +88,14 @@ class Timeframe extends Backbone.View
     $(window)
       .on 'resize', (event) =>
         @clockTextRepaint()
+
+  mobileSetup: () ->
+    console.log 'mobileSetup'
+    @mobile = true
+
+    @options.minimumImages = @getTotalImages()
+    @options.columnImageCounts = [1, 1, 1]
+    @options.positionContext = 'none'
 
   appStart: () ->
     @selectedTagName = @inputSearch.decodeTagName()
@@ -231,7 +243,8 @@ class Timeframe extends Backbone.View
       @moveStacks()
 
     @clock.on "change:minute", (event) =>
-      @updateSecondsImages()
+      if not @mobile
+        @updateSecondsImages()
 
   initPhotoStacks: () ->
     @updateStackTime()
