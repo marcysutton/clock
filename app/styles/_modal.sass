@@ -1,32 +1,33 @@
 @import backbone.modal/backbone.modal
 @import backbone.modal/backbone.modal.theme
 
-.btn-wrapper
-  text-align: center
+.bbm-modal
+  background-color: #333
+  color: $c_white
+  padding: 0 0 5%
+  position: relative
 
-  button.btn-close
-    background-color: $c_background
-    border: 2px $c_default solid
-    border-radius: 5px
-    color: $c_white
-    cursor: pointer
-    display: inline-block
-    font-size: 1em
-    padding: 2% 5%
+  p
+    color: #999
 
-    &:hover, &:focus
-      color: $c_hover
+button.btn-close
+  background-color: transparent
+  border: 0px
+  color: $c_white
+  cursor: pointer
+  display: block
+  font-family: $icon_font
+  font-size: 1em
+  padding: 2%
+  position: absolute
+  text-align: right
+  right: 0
+  top: 0
 
-.modal
-  .and
-    font-style: italic
-    font-size: 1em
-    font-weight: bold
-    margin-top: $default-margin * 1.5
+  &:before
+    content: '\e60d'
+    display: block
 
-  .orientation
-    display: none
-
-  @media #{$landscape}
-    .orientation
-      display: block
+  &:hover:before,
+  &:focus:before
+    color: $c_hover

@@ -21,7 +21,7 @@
   		<noscript>requires Javascript.</noscript>
   		<span></span>
   	</h1>
-    <h2 class="site-cred info"><span class="icon"></span></h2>
+    <button class="info-icon"><span class="offscreen">info</span></button>
   </header>
   <figure class="loader">
     <span class="loading-text">loading images from <span class="tag-loading"></span>...</span>
@@ -43,26 +43,18 @@
   </section>
   <div class="modal"></div>
   <script type="text/template" id="modal-template">
-    <div class="content-container"></div>
-    <div class="btn-wrapper bbm-modal__bottombar">
-      <button class="btn-close">Let&rsquo;s See It</button>
-    </div>
-  </script>
-  <script type="text/template" id="info-view-template">
-    <div class="bbm-modal__section">
-      <h1>Timeframe</h1>
-      <p>Developed by Marcy Sutton at Substantial and designed by Nick Thiel.</p>
-    </div>
-  </script>
-  <script type="text/template" id="mobile-view-template">
     <div class="bbm-modal__topbar">
-      <h3 class="bbm-modal__title">Heads up!</h3>
     </div>
-    <div class="bbm-modal__section">
-      <p class="bandwidth">This application requires significant bandwidth.</p>
-      <div class="orientation">
-          <h1 class="and">Also:</h1>
-          <p>This application is best viewed in landscape mode.</p>
+    <div class="content-container">
+      <div class="bbm-modal__section">
+        <button class="btn-close"><span class="offscreen">Close</span></button>
+        <h2 class="substantial-branding">
+          a
+          <a href="http://substantial.com" target="_new" title="Link opens in a new window">
+          SUBSTANTIAL
+          </a>
+          project</h2>
+        <p>Developed by Marcy Sutton and designed by Nick Thiel.</p>
       </div>
     </div>
   </script>
