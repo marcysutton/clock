@@ -14,7 +14,8 @@ To install the Grunt CLI globally, run:
 To install the required tools for this project, run:
 
 `npm install`
-`bower install`
+
+`cd app && bower install`
 
 To run the site after all Node dependencies have downloaded, run:
 
