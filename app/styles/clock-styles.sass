@@ -98,7 +98,7 @@ form.tag-input
   height: auto
   margin-left: $default_margin
   margin-top: 35px
-  width: 300px
+  max-width: 300px
 
   input
     font-family: TelegramaRender
@@ -151,7 +151,7 @@ ul
       display: none
       font-family: $headline_font
       font-weight: normal
-      font-size: 15vw
+      font-size: 13vw
       padding-top: 3%
       position: absolute
       text-align: center
@@ -204,3 +204,31 @@ ul
               background-size: 100% auto
               width: 100%
 
+.touch
+  @media #{$portrait}
+    .now-showing
+      color: #ccc
+      padding: 2% 0
+      position: relative
+      z-index: 1
+
+    li.stack
+      float: none
+      margin: $default-margin auto
+      position: relative
+      width: 100%
+
+      h3
+        width: 100%
+
+      &#hours h3, 
+      &#minutes h3, 
+      &#seconds h3
+        left: auto
+        font-size: 37vw
+      
+      ul
+        margin: 0
+
+        div
+          padding-top: 50%

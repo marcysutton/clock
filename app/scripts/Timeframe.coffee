@@ -18,7 +18,7 @@ class Timeframe extends Backbone.View
   constructor: (target, options = {}) ->
     @options =
       apiKey: 'beb8b17f735b6a404dbe120fd7300460'
-      numImages: [12, 60, 60]
+      columnImageCounts: [12, 60, 60]
       timesOfDay: [
         [0, 4, 'night']
         [4, 12, 'morning']
@@ -27,10 +27,12 @@ class Timeframe extends Backbone.View
         [20, 24, 'night']
       ]
       minimumImages: 72
+      positionContext: 'time'
 
     _.defaults(options, @options)
 
     @target = target
+    @mobile = false
 
     @loadUtility = skone.util.ImageLoader.LoadImageSet
     @imageQueue = new ImageQueue()
@@ -45,18 +47,23 @@ class Timeframe extends Backbone.View
     @elTagLoading = @elLoader.find('.tag-loading')
     @elNowShowing = @elTarget.find('.now-showing')
 
-    @setupClockUI()
-
     @modal = new Modal()
 
-    if Modernizr.touch
-      @modal.show()
-    else
-      Backbone.history.start()
+    if Modernizr.touch and window.matchMedia("(max-width: 64em)").matches
+      @mobileSetup()
+    
+    @setupClockUI()
+
+    Backbone.history.start()
 
   getTotalImages: () ->
-    @options.numImages.reduce (a, b) ->
-      a + b
+    if not @mobile
+      @totalImages = @options.columnImageCounts.reduce (a, b) ->
+        a + b
+    else
+      @totalImages = 10
+
+    @totalImages
 
   setupClockUI: () ->
     $('body').removeClass('no-js')
@@ -81,6 +88,14 @@ class Timeframe extends Backbone.View
     $(window)
       .on 'resize', (event) =>
         @clockTextRepaint()
+
+  mobileSetup: () ->
+    console.log 'mobileSetup'
+    @mobile = true
+
+    @options.minimumImages = @getTotalImages()
+    @options.columnImageCounts = [1, 1, 1]
+    @options.positionContext = 'none'
 
   appStart: () ->
     @selectedTagName = @inputSearch.decodeTagName()
@@ -160,21 +175,29 @@ class Timeframe extends Backbone.View
 
     tagParams + tags
 
-  shuffleImageQueue: (n) ->
-    _.sample @imageQueue.models, n
+  sortImageQueue: (n) ->
+    _.shuffle @imageQueue.models, n
+
+  setUrlList: () ->
+    if not @mobile
+      @options.columnImageCounts[0] + @options.columnImageCounts[1]
+    else
+      @getTotalImages()
 
   handOutImages: () ->
-    photoUrls = @shuffleImageQueue(@options.numImages[0] + @options.numImages[1])
+    photoUrls = @sortImageQueue @setUrlList()
+
+    secondColRangeTop = @options.columnImageCounts[0] + @options.columnImageCounts[1]
 
     i = 0
     _.each photoUrls, (image) =>
-      if i < @options.numImages[0]
+      if i < @options.columnImageCounts[0]
         @insertImageInStack @hoursStack, image.url
 
-      else if i >= @options.numImages[0]
+      else if i >= @options.columnImageCounts[0] && i < secondColRangeTop
         @insertImageInStack @minutesStack, image.url
 
-      if i < @options.numImages[2]
+      if (@mobile is false and i < @options.columnImageCounts[2]) or (@mobile is true and i > secondColRangeTop and i <= secondColRangeTop + 1)
         @insertImageInStack @secondsStack, image.url
 
       i++
@@ -183,7 +206,7 @@ class Timeframe extends Backbone.View
     @startClock()
 
   updateSecondsImages: () ->
-    shuffledUrls = @shuffleImageQueue(@options.numImages[2])
+    shuffledUrls = @sortImageQueue(@options.columnImageCounts[2])
     stack = @secondsStack
 
     i = 0
@@ -220,7 +243,8 @@ class Timeframe extends Backbone.View
       @moveStacks()
 
     @clock.on "change:minute", (event) =>
-      @updateSecondsImages()
+      if not @mobile
+        @updateSecondsImages()
 
   initPhotoStacks: () ->
     @updateStackTime()

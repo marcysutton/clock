@@ -11,6 +11,8 @@ class StackView extends Backbone.View
 
   currentFrame: null
 
+  positionContext: null
+
   constructor: (target) ->
     @el = $(target)
 
@@ -19,6 +21,18 @@ class StackView extends Backbone.View
     @elList = @el.find 'ul'
     @elLabel = @el.find 'h3'
 
+    @positionContext = window.timeframeApp.options.positionContext
+    @changeRelativePosition()
+
+  changeRelativePosition: () ->
+    if @positionContext is 'time'
+      @relevantPosition = @relevantTime
+    else
+      @options.initTopMargin = 0
+      @relevantPosition = 0
+
+    @relevantPosition
+
   setStackUlPosition: (element, relevantTime) ->
     @ulTopMargin = @options.initTopMargin - (relevantTime * 15)
     element.css "top", "#{@ulTopMargin}px"
@@ -26,6 +40,8 @@ class StackView extends Backbone.View
   setTime: (relevantTime, formattedTime) ->
     @relevantTime = relevantTime
     @formattedTime = formattedTime
+
+    @changeRelativePosition()
 
   updateClockUnit: () ->
     @elLabel.text(@formattedTime)
@@ -37,10 +53,10 @@ class StackView extends Backbone.View
     @elLabel.fadeIn()
 
   setCurrentFrame: () ->
-    @setStackUlPosition @elList, @relevantTime
+    @setStackUlPosition @elList, @relevantPosition
 
     @currentFrame.removeClass 'current' if @currentFrame
-    @currentFrame = $(@elListItems[@relevantTime])
+    @currentFrame = $(@elListItems[@relevantPosition])
 
     @currentFrame.addClass 'current'
 
