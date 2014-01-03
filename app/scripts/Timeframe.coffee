@@ -8,7 +8,6 @@
 # global $, Modernizr, Backbone
 
 Router = require './routers/Router'
-Modal = require './views/Modal'
 InputSearchView = require './views/InputSearch'
 StackView = require './views/Stack'
 ImageQueue = require './models/ImageQueue'
@@ -44,10 +43,9 @@ class Timeframe extends Backbone.View
     @elTarget = $(@target)
     @elLoader = $('.loader')
 
+    @elSiteCredit = $('.substantial')
     @elTagLoading = @elLoader.find('.tag-loading')
     @elNowShowing = @elTarget.find('.now-showing')
-
-    @modal = new Modal()
 
     if Modernizr.touch and window.matchMedia("(max-width: 64em)").matches
       @mobileSetup()
@@ -185,7 +183,7 @@ class Timeframe extends Backbone.View
       i++
 
   getParams: () ->
-    if @inputSearch.selectedMode is 'location'
+    if @mode is 'location'
       @setLocationTags()
 
       tagParams = "tag_mode=all&tags="
@@ -252,12 +250,13 @@ class Timeframe extends Backbone.View
 
     @elLoader.hide()
     @inputSearch.reset()
+    @elSiteCredit.show()
     @elNowShowing.hide()
 
-    Backbone.history.navigate ''
+    Backbone.history.navigate '#', trigger: true
 
   updateDisplay: () ->
-    if @inputSearch.selectedMode is 'location'
+    if @mode is 'location'
       console.log('showing '+@selectedTagName+' in the '+ @currentTag)
       @elNowShowing.text "#{@selectedTagName} #{@currentTag}"
     else
@@ -266,6 +265,7 @@ class Timeframe extends Backbone.View
 
   startClock: () ->
     @elLoader.hide()
+    @elSiteCredit.hide()
     @elNowShowing.fadeIn()
     @clock.startInterval()
 

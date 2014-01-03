@@ -26,6 +26,9 @@ class InputSearchView extends Backbone.View
     @elUsernameInput = @elTagPicker.find('input#username')
     @elTagPickerSubmit = @elTagPicker.find('input[type=submit]')
 
+    tooltipContent = $('.tooltip-content').html()
+    $('.username-help').tooltip({content: tooltipContent}, "open")
+
   inputSubmitHandler: (e) =>
     e.preventDefault()
 
@@ -64,7 +67,6 @@ class InputSearchView extends Backbone.View
     Backbone.history.navigate "#/#{mode}/#{@encodeTagName(selectedTagName)}", trigger: true
 
   setTagName: (mode = @selectedMode, selectedTagName) ->
-    console.log selectedTagName
     @selectedTagName = selectedTagName
 
     $("##{mode}").val @decodeTagName(selectedTagName)

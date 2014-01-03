@@ -1,18 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>TimeFrame</title>
-	<meta name="description" content="TimeFrame, a Flickr-integrated web clock" />
-	<meta name="keywords" content="Marcy Sutton, Flickr app garden, web clock, interactive clock, global image slideshow, Flickr JSON integration" />
+	<title>timeframe | a SUBSTANTIAL project</title>
+	<meta name="description" content="TimeFrame, a Flickr-integrated web clock by Marcy Sutton at Substantial" />
+	<meta name="keywords" content="Marcy Sutton, Flickr app garden, web clock, interactive clock, global image slideshow, Flickr integration" />
 	<meta property="og:type" content="website" />
-	<meta property="og:url" content="http://marcysutton.com/pop/clock" />
-	<meta property="og:image" content="http://marcysutton.com/pop/clock/images/pop_clock.jpg" />
+	<meta property="og:url" content="http://timeframe.marcysutton.com/" />
+	<meta property="og:image" content="images/timeframe-screenshot.jpg" />
 	<meta property="og:site_name" content="Timeframe" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
   <meta name="apple-mobile-web-app-capable" content="yes">
   <!-- build:css(.tmp) styles/clock-styles.css-->
 	<link rel="stylesheet" type="text/css" href="styles/clock-styles.css" />
   <!-- endbuild-->
+  <!--
+  _   _                 __
+ | | (_)               / _|
+ | |_ _ _ __ ___   ___| |_ _ __ __ _ _ __ ___   ___
+ | __| | '_ ` _ \ / _ \  _| '__/ _` | '_ ` _ \ / _ \
+ | |_| | | | | | |  __/ | | | | (_| | | | | | |  __/
+  \__|_|_| |_| |_|\___|_| |_|  \__,_|_| |_| |_|\___|
+
+  Flickr Clock by Marcy Sutton at Substantial
+  https://github.com/marcysutton/timeframe
+ -->
 </head>
 <body class="no-js">
   <header>
@@ -37,6 +48,18 @@
         <input type="text" id="username" name="username" placeholder="Enter your Flickr username" class="tag" />
       </fieldset>
       <input type="submit" value="go" id="submit" />
+      <p class="find-username"><a href="http://www.flickr.com/search/people/" target="_blank" class="username-help" title="Help"><span>Find Flickr Username</span> <span>[?]</span></a></p>
+      <div class="offscreen tooltip-content">
+        <div class="tooltip">
+          <h2>Finding a Flickr username</h2>
+          <ol>
+            <li>Click to open link in new window.</li>
+            <li>Search for people on Flickr.com.</li>
+            <li>Usernames appear in bold text. Copy and paste into the text field.</li>
+          </ol>
+          <img src="images/flickr-lookup-username.png" alt="How to find a Flickr username" />
+        </div>
+      </div>
 		</form>
 		<ul class="imgStacks">
 			<li id="hours" class="stack"></li>
@@ -45,22 +68,14 @@
 		</ul>
     <p class="now-showing"></p>
   </section>
-  <div class="modal"></div>
-  <script type="text/template" id="modal-template">
-    <div class="bbm-modal__topbar">
-      <h3 class="bbm-modal__title">Heads up!</h3>
-    </div>
-    <div class="bbm-modal__section">
-      <p class="bandwidth">This application requires significant bandwidth.</p>
-      <div class="orientation">
-          <h1 class="and">Also:</h1>
-          <p>This application is best viewed in landscape mode.</p>
-      </div>
-    </div>
-    <div class="btn-wrapper bbm-modal__bottombar">
-      <button class="btn-close">Let&rsquo;s See It</button>
-    </div>
-  </script>
+  <footer class="substantial">
+    <h2>
+    <span>a</span>
+    <a href="http://substantial.com" target="_new" title="Link opens in a new window">
+    SUBSTANTIAL
+    </a>
+    <span>project</span></h2>
+  </footer>
 <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
 document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
@@ -75,8 +90,8 @@ pageTracker._trackPageview();
 <script src="bower_components/underscore/underscore.js"></script>
 <script src="bower_components/backbone/backbone.js"></script>
 <script src="bower_components/jquery/jquery.js"></script>
-<script src="vendor_scripts/backbone.modal-min.js"></script>
 <script src="vendor_scripts/modernizr.js"></script>
+<script src="vendor_scripts/jquery-ui-1.10.3.custom.js"></script>
 <script src="vendor_scripts/image-loader.js"></script>
 <!-- endbuild -->
 <!-- build:js({.tmp, app}) scripts/application.js-->

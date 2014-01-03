@@ -2,8 +2,8 @@
 @import config
 @import utilities
 @import header
-@import modal
 @import search_form
+@import jquery-ui
 
 li
   list-style-type: none
@@ -19,11 +19,32 @@ a:link, a:visited
 noscript, a:hover
   color: $c_hover
 
+.substantial
+  background-color: $c_background
+  bottom: $default_margin
+  left: $default_margin
+  position: fixed
+
+  span
+    color: $c_default
+    font-size: 0.75em
+
+  a
+    color: $c_default
+    font-family: $icon_font
+    letter-spacing: 0.23em
+    margin-left: 5px
+    position: relative
+    text-decoration: none
+    top: -2px
+
+    &:hover
+      color: $c_hover
+
 .app
   height: 100%
   position: relative
   width: 100%
-
 
 .now-showing
   background-color: $c_background

@@ -1,8 +1,8 @@
 class Router extends Backbone.Router
 
   routes:
-    'location/:cityName': 'searchCity',
-    'username/:username': 'userPhotos',
+    'location/:cityName': 'searchCity'
+    'username/:username': 'userPhotos'
     'error': 'error'
 
   initialize: (searchView) ->
@@ -25,7 +25,7 @@ class Router extends Backbone.Router
   userPhotos: (param) ->
     @inputSearch.setTagName(@inputSearch.userMode, param)
 
-    @app.mode = @inputSearch.locationMode
+    @app.mode = @inputSearch.userMode
     @app.getFlickrUserId(param)
 
   error: () ->
