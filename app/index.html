@@ -29,10 +29,15 @@
   <section class="app">
 		<form class="tag-input" method="get">
 			<fieldset>
-			  <label for="tag" class="offscreen">enter a location:</label>
-        <input type="text" id="tag" name="tag" placeholder="Enter a location" />
-        <input type="submit" value="go" id="submit" />
+			  <label for="location" class="offscreen">enter a location:</label>
+        <input type="text" id="location" name="location" placeholder="Enter a location" class="tag" />
 			</fieldset>
+      <span>or</span>
+      <fieldset>
+        <label for="username" class="offscreen">enter your Flickr username:</label>
+        <input type="text" id="username" name="username" placeholder="Enter your Flickr username" class="tag" />
+      </fieldset>
+      <input type="submit" value="go" id="submit" />
 		</form>
 		<ul class="imgStacks">
 			<li id="hours" class="stack"></li>

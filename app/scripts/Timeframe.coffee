@@ -51,7 +51,7 @@ class Timeframe extends Backbone.View
 
     if Modernizr.touch and window.matchMedia("(max-width: 64em)").matches
       @mobileSetup()
-    
+
     @setupClockUI()
 
     Backbone.history.start()
@@ -97,6 +97,12 @@ class Timeframe extends Backbone.View
     @options.columnImageCounts = [1, 1, 1]
     @options.positionContext = 'none'
 
+  clockTextRepaint: () ->
+    $('.stack').find('h3').css('z-index', 1)
+
+  updateUIWithTagChange: (selectedTagName) ->
+    @elTagLoading.text selectedTagName
+
   appStart: () ->
     @selectedTagName = @inputSearch.decodeTagName()
     @updateUIWithTagChange @selectedTagName
@@ -111,15 +117,60 @@ class Timeframe extends Backbone.View
     @imageQueue.on 'imagesloaded', () =>
       @handOutImages()
 
-    @queryAPI()
+    @querySearchAPI()
 
-  clockTextRepaint: () ->
-    $('.stack').find('h3').css('z-index', 1)
+  getFlickrUserId: (username) ->
+    $.getJSON @getUserURL(username), (response) =>
+      if response.stat is "ok"
+        console.log response
+        @userId = response.user.id
 
-  updateUIWithTagChange: (selectedTagName) ->
-    @elTagLoading.text selectedTagName
+        @appStart()
 
-  setTags: () ->
+      else if response.stat is "fail"
+        @showErrorMessage response
+    .fail (response) =>
+      @showErrorMessage response
+
+  querySearchAPI: () ->
+    $.getJSON @getJSONURL(), (response) =>
+      console.log response
+
+      if response.stat is "ok"
+        console.log 'number of images: ', response.photos.photo.length
+
+        @updateDisplay()
+
+        @imageQueue.fetchImages response
+      else
+        @showErrorMessage response.message
+
+    .fail (response) =>
+      @showErrorMessage response
+
+  showErrorMessage: (response) ->
+    if response.message
+      alert response.message
+    else
+      alert 'Sorry, there was a problem. Please try again!'
+
+    console.log response
+
+  getUserURL: (username) ->
+    "http://api.flickr.com/services/rest/?method=flickr.people.findByUsername&" +
+    "api_key=#{@options.apiKey}&" +
+    "username=#{username}&" +
+    "format=json&nojsoncallback=1"
+
+  getJSONURL: () ->
+    "http://api.flickr.com/services/rest/?method=flickr.photos.search&" +
+    "api_key=#{@options.apiKey}&" +
+    @getParams() +
+    "sort=interestingness-desc&" +
+    "per_page=" + @getTotalImages() +
+    "&format=json&jsoncallback=?"
+
+  setLocationTags: () ->
     currentTagArr = []
     currentHour = @clock.current24Hour
     tags = @options.timesOfDay
@@ -133,47 +184,18 @@ class Timeframe extends Backbone.View
         break
       i++
 
-  queryAPI: () ->
-    @setTags()
+  getParams: () ->
+    if @inputSearch.selectedMode is 'location'
+      @setLocationTags()
 
-    $.getJSON(@getJSONURL(), (response) =>
-      console.log response
+      tagParams = "tag_mode=all&tags="
+      tags = "#{@inputSearch.encodeTagName()}"
+      tags += ",#{@currentTag}&"
 
-      if response.stat == "ok"
-        console.log('showing '+@selectedTagName+' in the '+ @currentTag)
-        console.log 'number of images: ', response.photos.photo.length
+      tagParams + tags
 
-        @elNowShowing.text "#{@selectedTagName} #{@currentTag}"
-        @imageQueue.fetchImages response
-      else
-        @showErrorMessage response.message
-
-    ).fail (response) =>
-      @showErrorMessage response
-
-  showErrorMessage: (response) ->
-    if response.message
-      alert response.message
     else
-      alert 'Sorry, there was a problem. Please try again!'
-
-    console.log response
-
-  getJSONURL: () ->
-    "http://api.flickr.com/services/rest/?method=flickr.photos.search&" +
-    "api_key=#{@options.apiKey}&" +
-    @getURLTags() +
-    "sort=interestingness-desc&" +
-    "per_page=" + @getTotalImages() +
-    "&format=json&jsoncallback=?"
-
-  getURLTags: () ->
-    tagParams = "tag_mode=all&tags="
-
-    tags = "#{@inputSearch.encodeTagName()}"
-    tags += ",#{@currentTag}&"
-
-    tagParams + tags
+      "user_id=#{@userId}&"
 
   sortImageQueue: (n) ->
     _.shuffle @imageQueue.models, n
@@ -233,6 +255,14 @@ class Timeframe extends Backbone.View
     @elNowShowing.hide()
 
     Backbone.history.navigate ''
+
+  updateDisplay: () ->
+    if @inputSearch.selectedMode is 'location'
+      console.log('showing '+@selectedTagName+' in the '+ @currentTag)
+      @elNowShowing.text "#{@selectedTagName} #{@currentTag}"
+    else
+      console.log 'showing '+@selectedTagName+"'s photos"
+      @elNowShowing.text @selectedTagName+"'s photos"
 
   startClock: () ->
     @elLoader.hide()

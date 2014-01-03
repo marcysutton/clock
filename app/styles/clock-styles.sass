@@ -1,7 +1,9 @@
 @import reset
 @import config
 @import utilities
+@import header
 @import modal
+@import search_form
 
 li
   list-style-type: none
@@ -17,47 +19,6 @@ a:link, a:visited
 noscript, a:hover
   color: $c_hover
 
-h1.current-info
-  font-family: $headline_font
-  font-size: 2em
-  padding: $default_margin
-  text-transform: lowercase
-
-  a
-    border-bottom: 1px solid $c_default
-    padding-bottom: 1px
-    color: $c_default
-    text-decoration: none
-
-    &:hover, &:focus
-      border-bottom: 1px solid $c_hover
-      color: $c_hover
-
-  span
-    display: block
-    font-family: $fonts_default
-    font-size: 13px
-    margin-top: 5px
-    text-transform: capitalize
-
-button.info-icon
-  background-color: transparent
-  border: none
-  color: $c_default
-  display: block
-  cursor: pointer
-  font-family: $icon_font
-  font-size: 1.25em
-  margin: 0 $default_margin
-
-  &:before
-    content: '\e60f'
-    display: block
-
-  &:hover:before,
-  &:focus:before
-    color: $c_white
-
 .substantial-branding
   color: #999
   a
@@ -72,61 +33,10 @@ button.info-icon
     &:hover
       color: $c_hover
 
-.loader
-  background: transparent url(/images/ajax-loader.gif) no-repeat 10px 20px
-  display: block
-  height: 100%
-  margin-top: 30px
-  display: none
-  position: absolute
-  width: 100%
-
-  span.loading-text
-    display: block
-    font-size: 12px
-    margin-left: $default_margin
-
 .app
   height: 100%
   position: relative
   width: 100%
-
-form.tag-input
-  background-color: #ccc
-  padding: $default_margin
-  line-height: 22px
-  height: auto
-  margin-left: $default_margin
-  margin-top: 35px
-  max-width: 300px
-
-  input
-    font-family: $headline_font
-    border: none
-    font-size: 1em
-    font-weight: normal
-    height: 2em
-    line-height: 1.25em
-
-    &[type=text]
-      display: block
-      float: left
-      padding-left: 5px
-      margin-right: 3%
-      width: 70%
-
-    &#submit
-      background-color: $c_default
-      color: $c_white
-      display: inline-block
-      text-transform: lowercase
-      -webkit-appearance: none
-      width: 22%
-
-      &:hover
-        background-color: $c_hover
-        color: $c_background
-        cursor: pointer
 
 .now-showing
   background-color: $c_background
