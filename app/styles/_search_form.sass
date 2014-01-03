@@ -1,0 +1,40 @@
+form.tag-input
+  background-color: #ccc
+  padding: $default_margin
+  line-height: 22px
+  height: auto
+  margin-left: $default_margin
+  margin-top: 35px
+  max-width: 300px
+
+  span
+    display: block
+    margin: 2% 0
+
+  input
+    font-family: TelegramaRender
+    border: none
+    font-size: 0.95em
+    font-weight: normal
+    height: 2em
+    line-height: 1.25em
+
+    &[type=text]
+      display: block
+      float: left
+      padding: 0 2%
+      width: 96%
+
+    &#submit
+      background-color: $c_default
+      color: $c_white
+      display: inline-block
+      margin-top: 5%
+      text-transform: lowercase
+      -webkit-appearance: none
+      width: 22%
+
+      &:hover
+        background-color: $c_hover
+        color: $c_background
+        cursor: pointer

@@ -2,41 +2,72 @@ Backbone.$ = $
 
 class InputSearchView extends Backbone.View
 
+  selectedMode: null
+
+  selectedInput: null
+
+  userMode: 'username'
+
+  locationMode: 'location'
+
   events:
     "submit" : "inputSubmitHandler"
 
   el: $('form.tag-input')
+
+  elInputs: $('input.tag')
 
   initialize: () ->
     _.bindAll @, 'inputSubmitHandler'
 
     @elTagPicker = $(@el)
 
-    @elTagInput = @elTagPicker.find('input[type=text]')
+    @elLocationInput = @elTagPicker.find('input#location')
+    @elUsernameInput = @elTagPicker.find('input#username')
     @elTagPickerSubmit = @elTagPicker.find('input[type=submit]')
 
   inputSubmitHandler: (e) =>
     e.preventDefault()
 
-    input = @elTagInput.val()
+    @validateFields(e)
 
-    if input isnt ""
-      selectedTagName = input
-      @tagToRoute(selectedTagName)
+  validateFields: (e) ->
+    locationValue = @elLocationInput.val()
+    usernameValue = @elUsernameInput.val()
+
+    if locationValue isnt "" and usernameValue isnt ""
+      alert "Please limit your input to location or username"
+
+    else if locationValue is "" and usernameValue is ""
+      alert "Please enter a username or location."
+
     else
-      alert "Please enter a location."
-  
+      if locationValue isnt ""
+        @selectedMode = @locationMode
+        @selectedInput = @elLocationInput
+
+      else if usernameValue isnt ""
+        @selectedMode = @userMode
+        @selectedInput = @elUsernameInput
+
+      @submitTag()
+
+  submitTag: () ->
+    selectedTagName = @selectedInput.val()
+    @tagToRoute(@selectedMode, selectedTagName)
+
   reset: () ->
     @elTagPicker.show()
-    @elTagInput.val('')
+    @elInputs.val('')
 
-  tagToRoute: (selectedTagName) ->
-    Backbone.history.navigate "#/location/#{@encodeTagName(selectedTagName)}", trigger: true
+  tagToRoute: (mode = @selectedMode, selectedTagName) ->
+    Backbone.history.navigate "#/#{mode}/#{@encodeTagName(selectedTagName)}", trigger: true
 
-  setTagName: (selectedTagName) ->
+  setTagName: (mode = @selectedMode, selectedTagName) ->
+    console.log selectedTagName
     @selectedTagName = selectedTagName
 
-    @elTagInput.val @decodeTagName(selectedTagName)
+    $("##{mode}").val @decodeTagName(selectedTagName)
 
   getTagName: () ->
     @selectedTagName
