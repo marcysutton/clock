@@ -165,13 +165,11 @@ class Timeframe extends Backbone.View
   getJSONURL: () ->
     "http://api.flickr.com/services/rest/?method=flickr.photos.search&" +
     "api_key=#{@options.apiKey}&" +
-    @getURLTags() +
+    @getParams() +
     "sort=interestingness-desc&" +
     "per_page=" + @getTotalImages() +
     "&format=json&jsoncallback=?"
 
-  getURLTags: () ->
-    tagParams = "tag_mode=all&tags="
   setLocationTags: () ->
     currentTagArr = []
     currentHour = @clock.current24Hour
@@ -186,11 +184,18 @@ class Timeframe extends Backbone.View
         break
       i++
 
+  getParams: () ->
+    if @inputSearch.selectedMode is 'location'
+      @setLocationTags()
 
-    tags = "#{@inputSearch.encodeTagName()}"
-    tags += ",#{@currentTag}&"
+      tagParams = "tag_mode=all&tags="
+      tags = "#{@inputSearch.encodeTagName()}"
+      tags += ",#{@currentTag}&"
 
-    tagParams + tags
+      tagParams + tags
+
+    else
+      "user_id=#{@userId}&"
 
   sortImageQueue: (n) ->
     _.shuffle @imageQueue.models, n
