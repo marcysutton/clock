@@ -38,7 +38,18 @@
         <input type="text" id="username" name="username" placeholder="Enter your Flickr username" class="tag" />
       </fieldset>
       <input type="submit" value="go" id="submit" />
-      <p class="find-username"><a href="http://www.flickr.com/search/people/" target="_blank" title="Link opens in a new window">Find Flickr username</a><a class="username-help" href="#help" title="Help">[?]</a></p>
+      <p class="find-username"><a href="http://www.flickr.com/search/people/" target="_blank" class="username-help" title="Help"><span>Find Flickr Username</span> <span>[?]</span></a></p>
+      <div class="offscreen tooltip-content">
+        <div class="tooltip">
+          <h2>Finding a Flickr username</h2>
+          <ol>
+            <li>Click to open link in new window.</li>
+            <li>Search for people on Flickr.com.</li>
+            <li>Usernames appear in bold text. Copy and paste into the text field.</li>
+          </ol>
+          <img src="images/flickr-lookup-username.png" alt="How to find a Flickr username" />
+        </div>
+      </div>
 		</form>
 		<ul class="imgStacks">
 			<li id="hours" class="stack"></li>
