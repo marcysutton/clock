@@ -8,7 +8,6 @@
 # global $, Modernizr, Backbone
 
 Router = require './routers/Router'
-Modal = require './views/Modal'
 InputSearchView = require './views/InputSearch'
 StackView = require './views/Stack'
 ImageQueue = require './models/ImageQueue'
@@ -46,8 +45,6 @@ class Timeframe extends Backbone.View
 
     @elTagLoading = @elLoader.find('.tag-loading')
     @elNowShowing = @elTarget.find('.now-showing')
-
-    @modal = new Modal()
 
     if Modernizr.touch and window.matchMedia("(max-width: 64em)").matches
       @mobileSetup()

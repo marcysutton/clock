@@ -21,7 +21,6 @@
   		<noscript>requires Javascript.</noscript>
   		<span></span>
   	</h1>
-    <button class="info-icon"><span class="offscreen">info</span></button>
   </header>
   <figure class="loader">
     <span class="loading-text">loading images from <span class="tag-loading"></span>...</span>
@@ -58,23 +57,6 @@
 		</ul>
     <p class="now-showing"></p>
   </section>
-  <div class="modal"></div>
-  <script type="text/template" id="modal-template">
-    <div class="bbm-modal__topbar">
-    </div>
-    <div class="content-container">
-      <div class="bbm-modal__section">
-        <button class="btn-close"><span class="offscreen">Close</span></button>
-        <h2 class="substantial-branding">
-          a
-          <a href="http://substantial.com" target="_new" title="Link opens in a new window">
-          SUBSTANTIAL
-          </a>
-          project</h2>
-        <p>Developed by Marcy Sutton and designed by Nick Thiel.</p>
-      </div>
-    </div>
-  </script>
 <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
 document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
@@ -89,9 +71,8 @@ pageTracker._trackPageview();
 <script src="bower_components/underscore/underscore.js"></script>
 <script src="bower_components/backbone/backbone.js"></script>
 <script src="bower_components/jquery/jquery.js"></script>
-<script src="vendor_scripts/backbone.modal-min.js"></script>
 <script src="vendor_scripts/modernizr.js"></script>
-<script src="vendor_scripts/jquery-ui-1.10.3.custom.min.js"></script>
+<script src="vendor_scripts/jquery-ui-1.10.3.custom.js"></script>
 <script src="vendor_scripts/image-loader.js"></script>
 <!-- endbuild -->
 <!-- build:js({.tmp, app}) scripts/application.js-->
