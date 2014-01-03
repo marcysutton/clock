@@ -43,6 +43,7 @@ class Timeframe extends Backbone.View
     @elTarget = $(@target)
     @elLoader = $('.loader')
 
+    @elSiteCredit = $('.substantial')
     @elTagLoading = @elLoader.find('.tag-loading')
     @elNowShowing = @elTarget.find('.now-showing')
 
@@ -249,6 +250,7 @@ class Timeframe extends Backbone.View
 
     @elLoader.hide()
     @inputSearch.reset()
+    @elSiteCredit.show()
     @elNowShowing.hide()
 
     Backbone.history.navigate ''
@@ -263,6 +265,7 @@ class Timeframe extends Backbone.View
 
   startClock: () ->
     @elLoader.hide()
+    @elSiteCredit.hide()
     @elNowShowing.fadeIn()
     @clock.startInterval()
 
