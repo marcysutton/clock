@@ -67,7 +67,6 @@ class InputSearchView extends Backbone.View
     Backbone.history.navigate "#/#{mode}/#{@encodeTagName(selectedTagName)}", trigger: true
 
   setTagName: (mode = @selectedMode, selectedTagName) ->
-    console.log selectedTagName
     @selectedTagName = selectedTagName
 
     $("##{mode}").val @decodeTagName(selectedTagName)

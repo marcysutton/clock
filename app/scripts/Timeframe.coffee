@@ -183,7 +183,7 @@ class Timeframe extends Backbone.View
       i++
 
   getParams: () ->
-    if @inputSearch.selectedMode is 'location'
+    if @mode is 'location'
       @setLocationTags()
 
       tagParams = "tag_mode=all&tags="
@@ -253,10 +253,10 @@ class Timeframe extends Backbone.View
     @elSiteCredit.show()
     @elNowShowing.hide()
 
-    Backbone.history.navigate ''
+    Backbone.history.navigate '#', trigger: true
 
   updateDisplay: () ->
-    if @inputSearch.selectedMode is 'location'
+    if @mode is 'location'
       console.log('showing '+@selectedTagName+' in the '+ @currentTag)
       @elNowShowing.text "#{@selectedTagName} #{@currentTag}"
     else
