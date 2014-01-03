@@ -26,6 +26,8 @@ class InputSearchView extends Backbone.View
     @elUsernameInput = @elTagPicker.find('input#username')
     @elTagPickerSubmit = @elTagPicker.find('input[type=submit]')
 
+    $('.username-help').tooltip({content: '<img src="images/flickr-lookup.png" alt="How to find a Flickr username" />'})
+
   inputSubmitHandler: (e) =>
     e.preventDefault()
 
