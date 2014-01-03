@@ -117,7 +117,7 @@ class Timeframe extends Backbone.View
     @imageQueue.on 'imagesloaded', () =>
       @handOutImages()
 
-    @queryAPI()
+    @querySearchAPI()
 
 
   setTags: () ->
@@ -134,10 +134,10 @@ class Timeframe extends Backbone.View
         break
       i++
 
-  queryAPI: () ->
     @setTags()
 
     $.getJSON(@getJSONURL(), (response) =>
+  querySearchAPI: () ->
       console.log response
 
       if response.stat == "ok"
