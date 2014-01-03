@@ -51,7 +51,7 @@ class Timeframe extends Backbone.View
 
     if Modernizr.touch and window.matchMedia("(max-width: 64em)").matches
       @mobileSetup()
-    
+
     @setupClockUI()
 
     Backbone.history.start()
@@ -97,6 +97,12 @@ class Timeframe extends Backbone.View
     @options.columnImageCounts = [1, 1, 1]
     @options.positionContext = 'none'
 
+  clockTextRepaint: () ->
+    $('.stack').find('h3').css('z-index', 1)
+
+  updateUIWithTagChange: (selectedTagName) ->
+    @elTagLoading.text selectedTagName
+
   appStart: () ->
     @selectedTagName = @inputSearch.decodeTagName()
     @updateUIWithTagChange @selectedTagName
@@ -113,11 +119,6 @@ class Timeframe extends Backbone.View
 
     @queryAPI()
 
-  clockTextRepaint: () ->
-    $('.stack').find('h3').css('z-index', 1)
-
-  updateUIWithTagChange: (selectedTagName) ->
-    @elTagLoading.text selectedTagName
 
   setTags: () ->
     currentTagArr = []
