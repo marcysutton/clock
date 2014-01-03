@@ -136,11 +136,11 @@ class Timeframe extends Backbone.View
     $.getJSON @getJSONURL(), (response) =>
       console.log response
 
-      if response.stat == "ok"
-        console.log('showing '+@selectedTagName+' in the '+ @currentTag)
+      if response.stat is "ok"
         console.log 'number of images: ', response.photos.photo.length
 
-        @elNowShowing.text "#{@selectedTagName} #{@currentTag}"
+        @updateDisplay()
+
         @imageQueue.fetchImages response
       else
         @showErrorMessage response.message
@@ -255,6 +255,14 @@ class Timeframe extends Backbone.View
     @elNowShowing.hide()
 
     Backbone.history.navigate ''
+
+  updateDisplay: () ->
+    if @inputSearch.selectedMode is 'location'
+      console.log('showing '+@selectedTagName+' in the '+ @currentTag)
+      @elNowShowing.text "#{@selectedTagName} #{@currentTag}"
+    else
+      console.log 'showing '+@selectedTagName+"'s photos"
+      @elNowShowing.text @selectedTagName+"'s photos"
 
   startClock: () ->
     @elLoader.hide()
