@@ -125,19 +125,6 @@ class Timeframe extends Backbone.View
         console.log response
         @userId = response.user.id
 
-  setTags: () ->
-    currentTagArr = []
-    currentHour = @clock.current24Hour
-    tags = @options.timesOfDay
-    numTags = tags.length
-
-    i = 0
-    while i < numTags
-      currentTagArr = tags[i]
-      if currentHour >= currentTagArr[0] and currentHour < currentTagArr[1]
-        @currentTag = currentTagArr[2]
-        break
-      i++
         @appStart()
 
       else if response.stat is "fail"
@@ -185,6 +172,20 @@ class Timeframe extends Backbone.View
 
   getURLTags: () ->
     tagParams = "tag_mode=all&tags="
+  setLocationTags: () ->
+    currentTagArr = []
+    currentHour = @clock.current24Hour
+    tags = @options.timesOfDay
+    numTags = tags.length
+
+    i = 0
+    while i < numTags
+      currentTagArr = tags[i]
+      if currentHour >= currentTagArr[0] and currentHour < currentTagArr[1]
+        @currentTag = currentTagArr[2]
+        break
+      i++
+
 
     tags = "#{@inputSearch.encodeTagName()}"
     tags += ",#{@currentTag}&"
