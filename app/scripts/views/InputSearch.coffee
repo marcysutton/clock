@@ -15,6 +15,8 @@ class InputSearchView extends Backbone.View
 
   el: $('form.tag-input')
 
+  elInputs: $('input.tag')
+
   initialize: () ->
     _.bindAll @, 'inputSubmitHandler'
 
@@ -56,7 +58,7 @@ class InputSearchView extends Backbone.View
 
   reset: () ->
     @elTagPicker.show()
-    @elTagInput.val('')
+    @elInputs.val('')
 
   tagToRoute: (mode = @selectedMode, selectedTagName) ->
     Backbone.history.navigate "#/#{mode}/#{@encodeTagName(selectedTagName)}", trigger: true
