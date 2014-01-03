@@ -119,6 +119,11 @@ class Timeframe extends Backbone.View
 
     @querySearchAPI()
 
+  getFlickrUserId: (username) ->
+    $.getJSON @getUserURL(username), (response) =>
+      if response.stat is "ok"
+        console.log response
+        @userId = response.user.id
 
   setTags: () ->
     currentTagArr = []
@@ -133,11 +138,15 @@ class Timeframe extends Backbone.View
         @currentTag = currentTagArr[2]
         break
       i++
+        @appStart()
 
-    @setTags()
+      else if response.stat is "fail"
+        @showErrorMessage response
+    .fail (response) =>
+      @showErrorMessage response
 
-    $.getJSON(@getJSONURL(), (response) =>
   querySearchAPI: () ->
+    $.getJSON @getJSONURL(), (response) =>
       console.log response
 
       if response.stat == "ok"
@@ -149,7 +158,7 @@ class Timeframe extends Backbone.View
       else
         @showErrorMessage response.message
 
-    ).fail (response) =>
+    .fail (response) =>
       @showErrorMessage response
 
   showErrorMessage: (response) ->
@@ -159,6 +168,12 @@ class Timeframe extends Backbone.View
       alert 'Sorry, there was a problem. Please try again!'
 
     console.log response
+
+  getUserURL: (username) ->
+    "http://api.flickr.com/services/rest/?method=flickr.people.findByUsername&" +
+    "api_key=#{@options.apiKey}&" +
+    "username=#{username}&" +
+    "format=json&nojsoncallback=1"
 
   getJSONURL: () ->
     "http://api.flickr.com/services/rest/?method=flickr.photos.search&" +
