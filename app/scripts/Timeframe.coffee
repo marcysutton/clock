@@ -107,6 +107,7 @@ class Timeframe extends Backbone.View
 
     @inputSearch.elTagPicker.fadeOut()
     @elLoader.fadeIn()
+    @elSiteCredit.hide()
 
     @clock = new Clock(@selectedTagName)
     @clock.setTime()
@@ -265,7 +266,6 @@ class Timeframe extends Backbone.View
 
   startClock: () ->
     @elLoader.hide()
-    @elSiteCredit.hide()
     @elNowShowing.fadeIn()
     @clock.startInterval()
 

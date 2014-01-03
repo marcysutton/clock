@@ -27,7 +27,13 @@ class InputSearchView extends Backbone.View
     @elTagPickerSubmit = @elTagPicker.find('input[type=submit]')
 
     tooltipContent = $('.tooltip-content').html()
-    $('.username-help').tooltip({content: tooltipContent}, "open")
+    $('.username-help').tooltip
+      content: tooltipContent
+      position:
+        my: "top"
+        at: "bottom-10"
+        of: '.tag-input'
+      "open"
 
   inputSubmitHandler: (e) =>
     e.preventDefault()
