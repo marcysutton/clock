@@ -46,16 +46,21 @@
   <section class="app">
     <form class="tag-input" method="get">
       <fieldset>
-        <label for="location" class="offscreen">enter a location:</label>
-        <input type="text" id="location" name="location" placeholder="Enter a location" class="tag" />
+        <legend class="offscreen">Choose a mode</legend>
+        <fieldset>
+          <legend>Location + Time of Day</legend>
+          <label for="location" class="offscreen">enter a location:</label>
+          <input type="text" id="location" name="location" placeholder="Enter a location" class="tag" />
+        </fieldset>
+        <span class="or">or</span>
+        <fieldset>
+          <legend>Your Flickr Photos</legend>
+          <label for="username" class="offscreen">enter your Flickr username:</label>
+          <input type="text" id="username" name="username" placeholder="Enter your Flickr username" class="tag" />
+        </fieldset>
+        <input type="submit" value="go" id="submit" />
+        <p class="find-username"><a href="http://www.flickr.com/search/people/" target="_blank" class="username-help" title="Help"><span>Find Flickr Username</span> <span>[?]</span></a></p>
       </fieldset>
-      <span>or</span>
-      <fieldset>
-        <label for="username" class="offscreen">enter your Flickr username:</label>
-        <input type="text" id="username" name="username" placeholder="Enter your Flickr username" class="tag" />
-      </fieldset>
-      <input type="submit" value="go" id="submit" />
-      <p class="find-username"><a href="http://www.flickr.com/search/people/" target="_blank" class="username-help" title="Help"><span>Find Flickr Username</span> <span>[?]</span></a></p>
       <div class="offscreen tooltip-content">
         <div class="tooltip">
           <h2>Finding a Flickr username</h2>
