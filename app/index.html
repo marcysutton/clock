@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" prefix="og: http://ogp.me/ns#">
 <head>
-	<title>timeframe | a SUBSTANTIAL project</title>
-	<meta name="description" content="Timeframe, a Flickr-integrated web clock by Marcy Sutton at Substantial" />
-	<meta name="keywords" content="Marcy Sutton, Flickr app garden, web clock, interactive clock, global image slideshow, Flickr integration" />
+  <title>timeframe | a SUBSTANTIAL project</title>
+  <meta name="description" content="Timeframe, a Flickr-integrated web clock by Marcy Sutton at Substantial" />
+  <meta name="keywords" content="Marcy Sutton, Flickr app garden, web clock, interactive clock, global image slideshow, Flickr integration" />
   <meta property="og:title" content="Timeframe" />
   <meta property="og:description" content="A Flickr-integrated web clock by Marcy Sutton at Substantial" />
-	<meta property="og:type" content="website" />
-	<meta property="og:url" content="http://timeframe.marcysutton.com/" />
-	<meta property="og:image" content="http://timeframe.marcysutton.com/images/timeframe-screenshot.jpg" />
-	<meta property="og:site_name" content="Timeframe" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="http://timeframe.marcysutton.com/" />
+  <meta property="og:image" content="http://timeframe.marcysutton.com/images/timeframe-screenshot.jpg" />
+  <meta property="og:site_name" content="Timeframe" />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:site" content="@marcysutton" />
   <meta name='twitter:image' content='http://timeframe.marcysutton.com/images/timeframe-screenshot300x225.jpg' />
@@ -17,7 +17,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
   <meta name="apple-mobile-web-app-capable" content="yes">
   <!-- build:css(.tmp) styles/clock-styles.css-->
-	<link rel="stylesheet" type="text/css" href="styles/clock-styles.css" />
+  <link rel="stylesheet" type="text/css" href="styles/clock-styles.css" />
   <!-- endbuild-->
   <!--
   _   _                 __
@@ -33,22 +33,22 @@
 </head>
 <body class="no-js">
   <header>
-  	<h1 class="current-info">
-  		<a href="./">TimeFrame</a>
-  		<noscript>requires Javascript.</noscript>
-  		<span></span>
-  	</h1>
+    <h1 class="current-info">
+      <a href="./">TimeFrame</a>
+      <noscript>requires Javascript.</noscript>
+      <span></span>
+    </h1>
     <p class="offscreen">A Flickr-integrated web clock by Marcy Sutton at Substantial</p>
   </header>
   <figure class="loader">
     <span class="loading-text">loading images from <span class="tag-loading"></span>...</span>
   </figure>
   <section class="app">
-		<form class="tag-input" method="get">
-			<fieldset>
-			  <label for="location" class="offscreen">enter a location:</label>
+    <form class="tag-input" method="get">
+      <fieldset>
+        <label for="location" class="offscreen">enter a location:</label>
         <input type="text" id="location" name="location" placeholder="Enter a location" class="tag" />
-			</fieldset>
+      </fieldset>
       <span>or</span>
       <fieldset>
         <label for="username" class="offscreen">enter your Flickr username:</label>
@@ -67,21 +67,20 @@
           <img src="images/flickr-lookup-username.png" alt="How to find a Flickr username" />
         </div>
       </div>
-		</form>
-		<ul class="imgStacks">
-			<li id="hours" class="stack"></li>
-			<li id="minutes" class="stack"></li>
-			<li id="seconds" class="stack"></li>
-		</ul>
+    </form>
+    <ul class="imgStacks">
+      <li id="hours" class="stack"></li>
+      <li id="minutes" class="stack"></li>
+      <li id="seconds" class="stack"></li>
+    </ul>
     <p class="now-showing"></p>
   </section>
   <footer class="substantial">
     <h2>
-    <span>a</span>
-    <a href="http://substantial.com" target="_new" title="Link opens in a new window">
-    SUBSTANTIAL
-    </a>
-    <span>project</span></h2>
+      <span>a</span>
+      <a href="http://substantial.com" target="_new" title="Link opens in a new window">SUBSTANTIAL</a>
+      <span>project</span>
+    </h2>
   </footer>
 <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
