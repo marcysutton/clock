@@ -131,9 +131,15 @@ ul
 
 .touch
   @media #{$portrait}
+    .substantial
+      padding-left: 0
+      position: relative
+
     .now-showing
-      color: #ccc
+      color: $c_default
       padding: 2% 0
+      left: $default_margin
+      margin-bottom: $default_margin
       position: relative
       z-index: 1
 
@@ -150,10 +156,10 @@ ul
       &#minutes h3,
       &#seconds h3
         left: auto
-        font-size: 37vw
+        font-size: 30vw
 
       ul
         margin: 0
 
-        div
-          padding-top: 50%
+        li.current div
+          padding-top: 40%
