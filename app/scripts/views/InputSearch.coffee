@@ -64,6 +64,7 @@ class InputSearchView extends Backbone.View
   submitTag: () ->
     selectedTagName = @selectedInput.val()
     @tagToRoute(@selectedMode, selectedTagName)
+    @selectedInput.blur()
 
   reset: () ->
     @elTagPicker.show()
