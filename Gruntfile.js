@@ -71,7 +71,7 @@ module.exports = function(grunt) {
       test: {
         options: {
           hostname: 'localhost',
-          port: 3000,
+          port: 3001,
           base: [
             '.tmp',
             'test',
