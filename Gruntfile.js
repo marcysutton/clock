@@ -117,12 +117,12 @@ module.exports = function(grunt) {
         sassDir: '<%= config.app %>/styles',
         cssDir: '.tmp/styles',
         generatedImagesDir: '.tmp/images/generated',
-        imagesDir: '<%= config.app %>/images',
+        imagesDir: '../images',
         javascriptsDir: '<%= config.app %>/scripts',
-        fontsDir: '<%= config.app %>/styles/fonts',
-        httpImagesPath: '/images',
+        fontsDir: '<%= config.app %>',
+        httpImagesPath: '../images',
         httpGeneratedImagesPath: '/images/generated',
-        httpFontsPath: '/styles/fonts',
+        httpFontsPath: '../fonts',
         relativeAssets: false,
         assetCacheBuster: false
       },
@@ -134,7 +134,7 @@ module.exports = function(grunt) {
       },
       server: {
         options: {
-          debugInfo: true
+          debugInfo: false
         }
       }
     },
