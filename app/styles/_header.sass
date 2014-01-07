@@ -1,5 +1,6 @@
 
 h1.current-info
+  display: inline-block
   font-family: $headline_font
   font-size: 2em
   padding: $default_margin
@@ -39,6 +40,25 @@ button.info-icon
   &:hover:before,
   &:focus:before
     color: $c_white
+
+.start-over
+  background-color: transparent
+  border: none
+  color: $c_default
+  display: none
+  cursor: pointer
+  font-family: $icon_font
+  font-size: 1.25em
+  text-decoration: none
+  visibility: hidden
+
+  &:before
+    content: '\e600'
+    display: block
+
+  .clock-active &
+    display: inline-block
+    visibility: visible
 
 .loader
   background: transparent url(../images/ajax-loader.gif) no-repeat 10px 20px

@@ -40,7 +40,8 @@ class Timeframe extends Backbone.View
     @inputSearch = new InputSearchView()
     @router = new Router(@inputSearch)
 
-    @elTarget = $(@target)
+    @elWrapper = $(@target)
+    @elTarget = @elWrapper.find('.app')
     @elLoader = $('.loader')
 
     @elSiteCredit = $('.substantial')
@@ -107,7 +108,7 @@ class Timeframe extends Backbone.View
 
     @inputSearch.elTagPicker.fadeOut()
     @elLoader.fadeIn()
-    @elSiteCredit.addClass('clock-active')
+    @elWrapper.addClass('clock-active')
 
     @clock = new Clock(@selectedTagName)
     @clock.setTime()
@@ -251,7 +252,7 @@ class Timeframe extends Backbone.View
 
     @elLoader.hide()
     @inputSearch.reset()
-    @elSiteCredit.removeClass('clock-active')
+    @elWrapper.removeClass('clock-active')
     @elNowShowing.hide()
 
     Backbone.history.navigate '#', trigger: true
