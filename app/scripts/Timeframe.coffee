@@ -238,7 +238,7 @@ class Timeframe extends Backbone.View
 
   insertImageInStack: (stack, imageUrl) ->
     stack.elList.append $('<li>')
-      .append $("<div><img src='#{imageUrl}' /></div>")
+      .append $("<div><div class='img' style='background-image:url(#{imageUrl})'></div></div>")
 
   reload: () ->
     for stack in @stacks

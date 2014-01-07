@@ -101,13 +101,16 @@ ul
         padding: 0 $default_margin
         position: relative
 
-        div
+        &> div
           height: 0
           margin: 0 auto
           overflow: hidden
+          padding-top: $default-margin
           position: relative
+          width: 80%
 
-          img
+          div.img
+            background-repeat: no-repeat
             bottom: 0
             display: block
             left: 0
@@ -115,18 +118,15 @@ ul
             right: 0
             top: 0
 
-        div
-          padding-top: $default-margin
-          width: 80%
-
         &.current
-          div
+          &> div
             height: auto
             padding-top: 56.25%
             width: 100%
 
-            img
+            div.img
               background-size: 100% auto
+              background-position: center center
               width: 100%
 
 .touch
@@ -161,5 +161,6 @@ ul
       ul
         margin: 0
 
-        li.current div
+        li.current > div
+          min-height: 15px
           padding-top: 40%
