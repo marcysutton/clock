@@ -116,12 +116,10 @@ module.exports = function(grunt) {
       options: {
         sassDir: '<%= config.app %>/styles',
         cssDir: '.tmp/styles',
-        generatedImagesDir: '.tmp/images/generated',
         imagesDir: '../images',
         javascriptsDir: '<%= config.app %>/scripts',
         fontsDir: '<%= config.app %>',
         httpImagesPath: '../images',
-        httpGeneratedImagesPath: '/images/generated',
         httpFontsPath: '../fonts',
         relativeAssets: false,
         assetCacheBuster: false,
