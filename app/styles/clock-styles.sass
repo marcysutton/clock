@@ -20,9 +20,16 @@ noscript, a:hover
   color: $c_hover
 
 .substantial
+  background-color: $c_background
   margin-top: $default_margin * 6
-  margin-left: $default_margin
+  left: $default_margin
+  padding: $default_margin
   position: relative
+
+  &.clock-active
+    bottom: 0
+    margin-top: 0
+    position: fixed
 
   span
     color: $c_default
@@ -47,12 +54,13 @@ noscript, a:hover
 
 .now-showing
   background-color: $c_background
-  bottom: $default_margin
+  bottom: 0
   color: $c_default
   display: none
   font-style: italic
-  left: $default_margin
+  padding: $default_margin
   position: fixed
+  right: $default_margin
 
 ul
   margin: 0px auto 0

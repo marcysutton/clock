@@ -107,7 +107,7 @@ class Timeframe extends Backbone.View
 
     @inputSearch.elTagPicker.fadeOut()
     @elLoader.fadeIn()
-    @elSiteCredit.hide()
+    @elSiteCredit.addClass('clock-active')
 
     @clock = new Clock(@selectedTagName)
     @clock.setTime()
@@ -251,7 +251,7 @@ class Timeframe extends Backbone.View
 
     @elLoader.hide()
     @inputSearch.reset()
-    @elSiteCredit.show()
+    @elSiteCredit.removeClass('clock-active')
     @elNowShowing.hide()
 
     Backbone.history.navigate '#', trigger: true
