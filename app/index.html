@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <title>timeframe | a SUBSTANTIAL project</title>
-  <meta name="description" content="Timeframe, a Flickr-integrated web clock by Marcy Sutton at Substantial">
-  <meta name="keywords" content="Marcy Sutton, Flickr app garden, web clock, interactive clock, global image slideshow, Flickr integration">
+  <meta name="description" content="Timeframe, a Flickr photo clock by Marcy Sutton at Substantial">
+  <meta name="keywords" content="Flickr app garden, web clock, interactive clock, global image slideshow, photo clock, Flickr integration, Javascript clock, Marcy Sutton">
   <meta property="og:title" content="Timeframe">
-  <meta property="og:description" content="A Flickr-integrated web clock by Marcy Sutton at Substantial">
+  <meta property="og:description" content="A Flickr photo clock by Marcy Sutton at Substantial">
   <meta property="og:type" content="website">
   <meta property="og:url" content="http://substantial.com/timeframe">
   <meta property="og:image" content="http://substantial.com/timeframe/images/timeframe-screenshot.jpg">
@@ -14,7 +14,7 @@
   <meta name="twitter:card" content="summary">
   <meta name="twitter:site" content="">
   <meta name="twitter:title" content="Timeframe">
-  <meta name="twitter:description" content="A Flickr-integrated web clock by Marcy Sutton at Substantial">
+  <meta name="twitter:description" content="A Flickr photo clock by Marcy Sutton at Substantial">
   <meta name="twitter:creator" content="">
   <meta name="twitter:image:src" content="">
   <meta name="twitter:domain" content="">
@@ -31,7 +31,6 @@
  | |_| | | | | | |  __/ | | | | (_| | | | | | |  __/
   \__|_|_| |_| |_|\___|_| |_|  \__,_|_| |_| |_|\___|
 
-  Flickr Clock by Marcy Sutton at Substantial
   https://github.com/marcysutton/timeframe
  -->
 </head>
@@ -42,7 +41,7 @@
       <noscript>requires Javascript.</noscript>
       <span></span>
     </h1>
-    <p class="offscreen">A Flickr-integrated web clock by Marcy Sutton at Substantial</p>
+    <p class="offscreen">A Flickr photo clock by Marcy Sutton at Substantial</p>
   </header>
   <figure class="loader">
     <span class="loading-text">loading images from <span class="tag-loading"></span>...</span>
@@ -91,16 +90,17 @@
       <span>project</span>
     </h2>
   </footer>
-<script type="text/javascript">
-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-8266338-1', 'auto');
+ga('send', 'pageview');
 </script>
-<script type="text/javascript">
-try {
-var pageTracker = _gat._getTracker("UA-12190082-1");
-pageTracker._setDomainName(".marcysutton.com");
-pageTracker._trackPageview();
-} catch(err) {}</script>
+<!-- End Google Analytics -->
 <!-- build:js(.tmp) ./scripts/vendor.js -->
 <script src="bower_components/underscore/underscore.js"></script>
 <script src="bower_components/backbone/backbone.js"></script>
