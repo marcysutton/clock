@@ -124,17 +124,17 @@ module.exports = function(grunt) {
         httpGeneratedImagesPath: '/images/generated',
         httpFontsPath: '../fonts',
         relativeAssets: false,
-        assetCacheBuster: false
+        assetCacheBuster: false,
+        debugInfo: false
       },
       dist: {
         options: {
-          generatedImagesDir: '<%= config.dist %>/images/generated',
-          debugInfo: false
+          noLineComments: true
         }
       },
       server: {
         options: {
-          debugInfo: false
+          noLineComments: false
         }
       }
     },
@@ -218,7 +218,7 @@ module.exports = function(grunt) {
     },
     concurrent: {
       server: [
-        'compass:dist',
+        'compass:server',
         'browserify:app'
       ],
       test: [
