@@ -1,7 +1,9 @@
 @import reset
 @import config
 @import utilities
+@import typography
 @import header
+@import footer
 @import search_form
 @import jquery-ui
 
@@ -15,137 +17,89 @@ body
 
 a:link, a:visited
   color: $c_default
+  transition: color 0.5s
 
 noscript, a:hover
   color: $c_hover
 
-.substantial
-  background-color: $c_background
-  font-size: 0.85em
-  margin-top: $default_margin * 6
-  position: relative
-  text-align: center
-
-  .clock-active &
-    bottom: 0
-    margin-top: 0
-    padding: $default_margin
-    position: fixed
-
-  span
-    color: $c_default
-    font-size: 0.75em
-
-  a
-    color: $c_default
-    font-family: $icon_font
-    letter-spacing: 0.23em
-    margin-left: 5px
-    position: relative
-    text-decoration: none
-    top: -2px
-
-    &:hover
-      color: $c_hover
-
 .app
   height: 100%
-  position: relative
+  min-height: 280px
   width: 100%
 
-.now-showing
-  background-color: $c_background
-  bottom: 0
-  color: $c_default
-  display: none
-  font-family: $headline_font
-  padding: $default_margin
-  position: fixed
-  right: $default_margin
+  .gradient
+    position: absolute
+    height: 100%
+    top: 0
+    width: 100%
 
-ul
-  margin: 0px auto 0
-  position: relative
-  width: 100%
+  ul
+    margin: 0px auto 0
+    position: relative
+    width: 100%
 
-  li.stack
-    float: left
-    width: 33%
-
-    h3
-      color: $c_white
-      display: none
-      font-family: $headline_font
-      font-weight: normal
-      font-size: 13vw
-      padding-top: 3%
-      position: absolute
-      text-align: center
+    li.stack
+      float: left
       width: 33%
-      z-index: 1
 
-    &#hours h3
-      left: 0
+      h3
+        display: none
+        padding-top: 3%
+        position: absolute
+        text-align: center
+        width: 33%
+        z-index: 1
 
-    &#minutes h3
-      left: 33%
+      &#hours h3
+        left: 0
 
-    &#seconds h3
-      left: 66%
+      &#minutes h3
+        left: 33%
 
-    ul
-      margin: 0 $default_margin
+      &#seconds h3
+        left: 66%
 
-      li
-        margin-bottom: 5px
-        overflow: hidden
-        padding: 0 $default_margin
-        position: relative
+      ul
+        margin: 0 $default_margin
 
-        &> div
-          height: 0
-          margin: 0 auto
-          opacity: .7
+        li
+          margin-bottom: 5px
           overflow: hidden
-          padding-top: $default-margin
+          padding: 0 $default_margin
           position: relative
-          width: 80%
 
-          div.img
-            background-repeat: no-repeat
-            bottom: 0
-            display: block
-            left: 0
-            position: absolute
-            right: 0
-            top: 0
-
-        &.current
           &> div
-            height: auto
-            opacity: 1
-            padding-top: 56.25%
-            width: 100%
+            height: 0
+            margin: 0 auto
+            opacity: .7
+            overflow: hidden
+            padding-top: $default-margin
+            position: relative
+            width: 80%
 
             div.img
-              background-size: cover
-              background-position: center center
+              background-repeat: no-repeat
+              bottom: 0
+              display: block
+              left: 0
+              position: absolute
+              right: 0
+              top: 0
+
+          &.current
+            &> div
+              height: auto
+              opacity: 1
+              padding-top: 56.25%
               width: 100%
+
+              div.img
+                background-size: cover
+                background-position: center center
+                width: 100%
 
 .touch
   @media #{$portrait}
-    .substantial
-      padding-left: 0
-      position: relative
-
-    .now-showing
-      color: $c_default
-      padding: 2% 0
-      left: $default_margin
-      margin-bottom: $default_margin
-      position: relative
-      z-index: 1
-
     li.stack
       float: none
       margin: $default-margin auto
@@ -159,7 +113,6 @@ ul
       &#minutes h3,
       &#seconds h3
         left: auto
-        font-size: 30vw
 
       ul
         margin: 0

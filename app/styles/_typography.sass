@@ -1,0 +1,67 @@
+h1.timeframe-logo
+  font-family: $headline_font
+  font-size: 2em
+
+.loader span.loading-text
+  color: $c_default
+  font-family: $headline_font
+  font-size: .9em
+
+.stack h3
+  color: $c_white
+  font-family: $headline_font
+  font-weight: normal
+  font-size: 15vw
+
+form
+  .form-heading
+    font-family: $headline_font
+    font-size: 1.1em
+
+  input
+    font-size: 0.9em
+
+    &[type=text]
+      font-style: italic
+
+    &#submit
+      background-color: $c_default
+      color: $c_white
+      text-transform: lowercase
+
+      &:hover
+        background-color: $c_hover
+        color: $c_background
+        cursor: pointer
+
+  .find-username
+    font-size: 0.75em
+
+    a
+      text-decoration: none
+
+      &:hover, &:focus
+        color: $c_background
+
+      span
+        display: inline
+        text-decoration: underline
+
+.tooltip
+  h2, ol
+    color: $c_white
+    margin-bottom: 2%
+
+  ol li
+    font-size: 0.85em
+    line-height: 1.25em
+    list-style: decimal inside
+    margin-top: 2%
+
+.touch
+  @media #{$portrait}
+    .stack
+      &#hours h3,
+      &#minutes h3,
+      &#seconds h3
+        font-size: 30vw

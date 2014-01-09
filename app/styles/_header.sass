@@ -1,8 +1,9 @@
+header
+  position: relative
+  z-index: 3
 
-h1.current-info
+h1.timeframe-logo
   display: block
-  font-family: $headline_font
-  font-size: 2em
   padding: $default_margin
   text-align: center
   text-transform: lowercase
@@ -12,6 +13,7 @@ h1.current-info
     padding-bottom: 1px
     color: $c_default
     text-decoration: none
+    transition: all 0.5s
 
     &:before
       color: $c_default
@@ -20,6 +22,7 @@ h1.current-info
       font-family: $icon_font
       font-size: 1.5em
       margin: ($default_margin * 4) 0 $default_margin
+      transition: color 0.5s
 
     &:hover
       border-bottom: 1px solid $c_hover
@@ -54,7 +57,4 @@ h1.current-info
   width: 100%
 
   span.loading-text
-    color: $c_default
     display: block
-    font-family: $headline_font
-    font-size: .9em
