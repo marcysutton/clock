@@ -1,8 +1,9 @@
 .substantial
   background-color: $c_background
-  margin-top: $default_margin * 6
+  margin-top: $default_margin * 2
   position: relative
   text-align: center
+  z-index: 4
 
   .clock-active &
     bottom: 0
@@ -23,6 +24,7 @@
   padding: $default_margin
   position: fixed
   right: $default_margin
+  z-index: 5
 
 .touch
   @media #{$portrait}
@@ -30,6 +32,7 @@
       display: none
 
     .substantial
+      margin-top: 0
       padding-left: 0
       position: relative
 
@@ -39,6 +42,6 @@
     .now-showing
       padding: 2% 0
       left: $default_margin
+      right: auto
       margin-bottom: $default_margin
       position: relative
-      z-index: 1
