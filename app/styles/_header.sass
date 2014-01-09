@@ -1,9 +1,10 @@
 
 h1.current-info
-  display: inline-block
+  display: block
   font-family: $headline_font
   font-size: 2em
   padding: $default_margin
+  text-align: center
   text-transform: lowercase
 
   a
@@ -12,46 +13,48 @@ h1.current-info
     color: $c_default
     text-decoration: none
 
+    &:before
+      color: $c_default
+      content: '\e601'
+      display: block
+      font-family: $icon_font
+      font-size: 1.5em
+      margin: ($default_margin * 4) 0 $default_margin
+
     &:hover
       border-bottom: 1px solid $c_hover
       color: $c_hover
 
-  span
-    display: block
-    font-family: $fonts_default
-    font-size: 13px
-    margin-top: 5px
-    text-transform: capitalize
+      &:before
+        color: $c_hover
 
-.start-over
-  background-color: transparent
-  border: none
-  color: $c_default
-  display: none
-  cursor: pointer
-  font-family: $icon_font
-  font-size: 1.25em
-  text-decoration: none
-  visibility: hidden
-
-  &:before
-    content: '\e600'
-    display: block
+    span
+      border-bottom: 1px solid $c_default
 
   .clock-active &
-    display: inline-block
-    visibility: visible
+    text-align: left
+
+    a
+      &:before
+        font-size: 1em
+        margin: $default_margin
+
+      span
+        left: -50000px
+        position: absolute
 
 .loader
-  background: transparent url(../images/ajax-loader.gif) no-repeat 10px 20px
+  background: transparent url(../images/ajax-loader.gif) no-repeat center 40px
   display: block
   height: 100%
-  margin-top: $default-margin * 3
   display: none
   position: absolute
+  top: 50%
+  text-align: center
   width: 100%
 
   span.loading-text
+    color: $c_default
     display: block
-    font-size: 12px
-    margin-left: $default_margin
+    font-family: $headline_font
+    font-size: .9em

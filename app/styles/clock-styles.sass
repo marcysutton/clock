@@ -21,14 +21,15 @@ noscript, a:hover
 
 .substantial
   background-color: $c_background
+  font-size: 0.85em
   margin-top: $default_margin * 6
-  left: $default_margin
-  padding: $default_margin
   position: relative
+  text-align: center
 
   .clock-active &
     bottom: 0
     margin-top: 0
+    padding: $default_margin
     position: fixed
 
   span
@@ -57,7 +58,7 @@ noscript, a:hover
   bottom: 0
   color: $c_default
   display: none
-  font-style: italic
+  font-family: $headline_font
   padding: $default_margin
   position: fixed
   right: $default_margin
@@ -80,7 +81,6 @@ ul
       padding-top: 3%
       position: absolute
       text-align: center
-      text-shadow: #333 0 2px 4px
       width: 33%
       z-index: 1
 
