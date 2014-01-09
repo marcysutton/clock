@@ -1,19 +1,86 @@
+//
+//   Global
+//
+li
+  list-style-type: none
+
+body
+  background-color: $c_background
+  color: $c_default
+  font-family: $fonts_default
+
+a:link, a:visited
+  color: $c_default
+  transition: color 0.5s
+
+noscript, a:hover
+  color: $c_hover
+
 h1.timeframe-logo
   font-family: $headline_font
   font-size: 2em
 
+  a
+    color: $c_default
+
+    &:before
+      color: $c_default
+      content: '\e601'
+      font-family: $icon_font
+      font-size: 1.5em
+      transition: color 0.5s
+
+    span
+      text-transform: uppercase
+
+    &:hover
+      color: $c_hover
+
+      &:before
+        color: $c_hover
+
+    .clock-active &
+      &:before
+        font-size: 1em
+
+.substantial
+  a
+    color: $c_default
+    font-size: 1em
+    font-family: $icon_font
+    letter-spacing: 0.23em
+    transition: all 0.5s
+
+    &:hover
+      color: $c_red
+
+//
+// Active Clock
+//
 .loader span.loading-text
   color: $c_default
   font-family: $headline_font
-  font-size: .9em
+  font-size: 1em
+  text-transform: uppercase
 
 .stack h3
   color: $c_white
   font-family: $headline_font
   font-weight: normal
-  font-size: 15vw
+  font-size: 13vw
 
-form
+.now-showing
+  color: $c_default
+  font-family: $headline_font
+  font-size: 1.2em
+
+  #locationClock &
+    text-transform: uppercase
+
+//
+// Input form
+//
+form.tag-input
   .form-heading
     font-family: $headline_font
     font-size: 1.1em
@@ -48,16 +115,20 @@ form
         text-decoration: underline
 
 .tooltip
+  h2
+    font-family: $headline_font
+
   h2, ol
     color: $c_white
-    margin-bottom: 2%
 
   ol li
     font-size: 0.85em
     line-height: 1.25em
     list-style: decimal inside
-    margin-top: 2%
 
+//
+// Mobile
+//
 .touch
   @media #{$portrait}
     .stack

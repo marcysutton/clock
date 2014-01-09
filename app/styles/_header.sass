@@ -6,40 +6,24 @@ h1.timeframe-logo
   display: block
   padding: $default_margin
   text-align: center
-  text-transform: lowercase
 
   a
-    border-bottom: 1px solid $c_default
     padding-bottom: 1px
-    color: $c_default
     text-decoration: none
-    transition: all 0.5s
 
     &:before
-      color: $c_default
-      content: '\e601'
       display: block
-      font-family: $icon_font
-      font-size: 1.5em
       margin: ($default_margin * 4) 0 $default_margin
-      transition: color 0.5s
-
-    &:hover
-      border-bottom: 1px solid $c_hover
-      color: $c_hover
-
-      &:before
-        color: $c_hover
 
     span
-      border-bottom: 1px solid $c_default
+      display: inline-block
+      margin-top: 5px
 
   .clock-active &
     text-align: left
 
     a
       &:before
-        font-size: 1em
         margin: $default_margin
 
       span
@@ -57,4 +41,6 @@ h1.timeframe-logo
   width: 100%
 
   span.loading-text
-    display: block
+    background-color: $c_background
+    display: inline-block
+    margin: $default_margin / 2
