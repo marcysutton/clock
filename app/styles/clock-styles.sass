@@ -10,13 +10,8 @@
 .app
   height: 100%
   min-height: 250px
+  position: relative
   width: 100%
-
-  .gradient
-    position: absolute
-    height: 100%
-    top: 0
-    width: 100%
 
   ul
     margin: 0px auto 0
@@ -83,25 +78,41 @@
                 background-position: center center
                 width: 100%
 
+.clock-active
+  .gradient
+    position: absolute
+    height: 35%
+    width: 100%
+    z-index: 1
+
+    &.top
+      @include background-image(linear-gradient(top, rgba(0,0,0,1) 0%,rgba(0,0,0,0) 100%))
+      top: 0
+
+    &.bottom
+      @include background-image(linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%))
+      bottom: 0
+
 .touch
   @media #{$portrait}
-    li.stack
-      float: none
-      margin: $default-margin auto
-      position: relative
-      width: 100%
-
-      h3
+    .app
+      li.stack
+        float: none
+        margin: $default-margin auto
+        position: relative
         width: 100%
 
-      &#hours h3,
-      &#minutes h3,
-      &#seconds h3
-        left: auto
+        h3
+          width: 100%
 
-      ul
-        margin: 0
+        &#hours h3,
+        &#minutes h3,
+        &#seconds h3
+          left: auto
 
-        li.current > div
-          min-height: 15px
-          padding-top: 40%
+        ul
+          margin: 0
+
+          li.current > div
+            min-height: 15px
+            padding-top: 40%
