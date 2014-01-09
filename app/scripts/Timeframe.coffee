@@ -259,9 +259,11 @@ class Timeframe extends Backbone.View
 
   updateDisplay: () ->
     if @mode is 'location'
+      @elWrapper.attr 'id', 'locationClock'
       console.log('showing '+@selectedTagName+' in the '+ @currentTag)
       @elNowShowing.text "#{@selectedTagName} #{@currentTag}"
     else
+      @elWrapper.attr 'id', 'userClock'
       console.log 'showing '+@selectedTagName+"'s photos"
       @elNowShowing.text @selectedTagName+"'s photos"
 
