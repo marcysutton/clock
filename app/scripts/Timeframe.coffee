@@ -236,32 +236,6 @@ class Timeframe extends Backbone.View
     stack.elList.append $('<li>')
       .append $("<div><div class='img' style='background-image:url(#{imageUrl})'></div></div>")
 
-  reload: () ->
-    for stack in @stacks
-      if stack.elListItems
-        stack.elListItems.detach()
-        stack.elLabel.fadeOut()
-
-  restart: () ->
-    @reload()
-
-    @elLoader.hide()
-    @inputSearch.reset()
-    @elWrapper.removeClass('clock-active')
-    @elNowShowing.hide()
-
-    Backbone.history.navigate '#', trigger: true
-
-  updateDisplay: () ->
-    if @mode is 'location'
-      @elWrapper.attr 'id', 'locationClock'
-      console.log('showing '+@selectedTagName+' in the '+ @currentTimeTag)
-      @elNowShowing.text "#{@selectedTagName} #{@currentTimeTag}"
-    else
-      @elWrapper.attr 'id', 'userClock'
-      console.log 'showing '+@selectedTagName+"'s photos"
-      @elNowShowing.text @selectedTagName+"'s photos"
-
   startClock: () ->
     @elLoader.hide()
     @elNowShowing.fadeIn()
@@ -277,6 +251,12 @@ class Timeframe extends Backbone.View
     @clock.on "change:minute", (event) =>
       if not @mobile
         @updateSecondsImages()
+
+  moveStacks: () ->
+    @updateStackTime()
+
+    for stack in @stacks
+      stack.moveStack()
 
   upDate: () ->
     @elDate.text(@clock.moment.format(@options.dateFormat))
@@ -294,10 +274,30 @@ class Timeframe extends Backbone.View
     @minutesStack.setTime @clock.currentMinute, @clock.formattedMinute
     @hoursStack.setTime (@clock.currentHour - 1), @clock.formattedHour
 
-  moveStacks: () ->
-    @updateStackTime()
-
+  updateDisplay: () ->
+    if @mode is 'location'
+      @elWrapper.attr 'id', 'locationClock'
+      console.log('showing '+@selectedTagName+' in the '+ @currentTimeTag)
+      @elNowShowing.text "#{@selectedTagName} #{@currentTimeTag}"
+    else
+      @elWrapper.attr 'id', 'userClock'
+      console.log 'showing '+@selectedTagName+"'s photos"
+      @elNowShowing.text @selectedTagName+"'s photos"
+  reload: () ->
     for stack in @stacks
-      stack.moveStack()
+      if stack.elListItems
+        stack.elListItems.detach()
+        stack.elLabel.fadeOut()
+
+  restart: () ->
+    @reload()
+
+    @elLoader.hide()
+    @inputSearch.reset()
+    @elWrapper.removeClass('clock-active')
+    @elNowShowing.hide()
+    @elDate.hide()
+
+    Backbone.history.navigate '#', trigger: true
 
   module.exports = Timeframe
