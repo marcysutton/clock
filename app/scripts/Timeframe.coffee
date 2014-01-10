@@ -20,11 +20,12 @@ class Timeframe extends Backbone.View
       columnImageCounts: [12, 60, 60]
       dateFormat: 'dddd, MMM D YYYY'
       timesOfDay: [
-        [0, 4, 'night']
-        [4, 12, 'morning']
-        [12, 17, 'afternoon']
-        [17, 20, 'evening']
-        [20, 24, 'night']
+        'night'
+        'morning'
+        'morning'
+        'afternoon'
+        'evening'
+        'night'
       ]
       minimumImages: 72
       positionContext: 'time'
@@ -174,23 +175,13 @@ class Timeframe extends Backbone.View
     "per_page=" + @getTotalImages() +
     "&format=json&jsoncallback=?"
 
-  setLocationTags: () ->
-    currentTimeTagArr = []
-    currentHour = @clock.current24Hour
-    tags = @options.timesOfDay
-    numTags = tags.length
-
-    i = 0
-    while i < numTags
-      currentTimeTagArr = tags[i]
-      if currentHour >= currentTimeTagArr[0] and currentHour < currentTimeTagArr[1]
-        @currentTimeTag = currentTimeTagArr[2]
-        break
-      i++
+  setTimeTag: () ->
+    timeIndex = @options.timesOfDay.length * (@clock.current24Hour / 24)
+    @currentTimeTag = @options.timesOfDay[Math.floor timeIndex]
 
   getParams: () ->
     if @mode is 'location'
-      @setLocationTags()
+      @setTimeTag()
 
       tagParams = "tag_mode=all&tags="
       tags = "#{@inputSearch.encodeTagName()}"
