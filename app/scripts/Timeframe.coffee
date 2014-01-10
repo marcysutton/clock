@@ -93,6 +93,8 @@ class Timeframe extends Backbone.View
     console.log 'mobileSetup'
     @mobile = true
 
+    $('body').addClass('mobile')
+
     @options.minimumImages = @getTotalImages()
     @options.columnImageCounts = [1, 1, 1]
     @options.positionContext = 'none'
