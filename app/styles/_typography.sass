@@ -13,8 +13,11 @@ a:link, a:visited
   color: $c_default
   transition: color 0.5s
 
-noscript, a:hover
+noscript, a:hover, a:focus
   color: $c_hover
+
+a:active
+  color: $c_red
 
 h1.timeframe-logo
   font-family: $headline_font
@@ -33,11 +36,14 @@ h1.timeframe-logo
     span
       text-transform: uppercase
 
-    &:hover
+    &:hover, &:focus
       color: $c_hover
 
       &:before
         color: $c_hover
+
+    &:active, &:active:before
+      color: $c_red
 
     .clock-active &
       &:before
@@ -56,7 +62,7 @@ h1.timeframe-logo
     letter-spacing: 0.23em
     transition: all 0.5s
 
-    &:hover
+    &:hover, &:focus, &:active
       color: $c_red
 
 //
