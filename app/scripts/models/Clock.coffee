@@ -3,14 +3,17 @@ moment = require 'moment'
 class Clock extends Backbone.Model
 
   initialize: (cityName, options = {}) ->
+    @currentDay = null
     @currentHour = null
     @current24Hour = null
     @currentMinute = null
     @currentSecond = null
 
-    @start = moment()
+    @moment = moment()
+    @start = @moment
     @time = 0
     @secondsElapsed = 0
+
 
   startInterval: () ->
     timeout = window.setTimeout(=>
@@ -30,6 +33,7 @@ class Clock extends Backbone.Model
     @setSeconds()
     @setMinutes()
     @setHours()
+    @setDate()
 
     @trigger 'change:time'
 
@@ -56,5 +60,13 @@ class Clock extends Backbone.Model
       @trigger 'change:hour'
 
     @current24Hour = moment().format('H')
+
+  setDate: () ->
+    day = moment().format('D')
+
+    if @currentDay isnt day
+      @currentDay = moment().format('D')
+
+      @trigger 'change:day'
 
 module.exports = Clock

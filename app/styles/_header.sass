@@ -1,57 +1,67 @@
-
-h1.current-info
-  display: inline-block
-  font-family: $headline_font
-  font-size: 2em
-  padding: $default_margin
-  text-transform: lowercase
-
-  a
-    border-bottom: 1px solid $c_default
-    padding-bottom: 1px
-    color: $c_default
-    text-decoration: none
-
-    &:hover
-      border-bottom: 1px solid $c_hover
-      color: $c_hover
-
-  span
-    display: block
-    font-family: $fonts_default
-    font-size: 13px
-    margin-top: 5px
-    text-transform: capitalize
-
-.start-over
-  background-color: transparent
-  border: none
-  color: $c_default
-  display: none
-  cursor: pointer
-  font-family: $icon_font
-  font-size: 1.25em
-  text-decoration: none
-  visibility: hidden
-
-  &:before
-    content: '\e600'
-    display: block
+header
+  margin-top: $default_margin * 4
+  position: relative
+  text-align: center
+  z-index: 3
 
   .clock-active &
-    display: inline-block
-    visibility: visible
+    margin-top: 0
+    text-align: left
+
+h1.timeframe-logo
+  display: inline-block
+  padding: $default_margin
+  text-align: center
+
+  a
+    padding-bottom: 1px
+    text-decoration: none
+
+    &:before
+      display: block
+      margin: $default_margin 0
+
+    span
+      display: inline-block
+      margin-top: 5px
+
+  .clock-active &
+    text-align: left
+
+    a
+      &:before
+        margin: $default_margin
+
+      span
+        left: -50000px
+        position: absolute
+
+.date
+  display: inline-block
+  margin-top: 27px
+  vertical-align: top
 
 .loader
-  background: transparent url(../images/ajax-loader.gif) no-repeat 10px 20px
+  background: transparent url(../images/ajax-loader.gif) no-repeat center 40px
   display: block
   height: 100%
-  margin-top: $default-margin * 3
   display: none
   position: absolute
+  top: 50%
+  text-align: center
   width: 100%
+  z-index: 2
 
   span.loading-text
-    display: block
-    font-size: 12px
-    margin-left: $default_margin
+    background-color: $c_background
+    display: inline-block
+    margin: $default_margin / 2
+
+.mobile
+  @media #{$portrait}
+    header
+      margin-top: 0
+
+      .date
+        display: none
+        visibility: hidden

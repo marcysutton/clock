@@ -36,12 +36,11 @@
 </head>
 <body class="no-js timeframe">
   <header>
-    <h1 class="current-info">
-      <a href="./">TimeFrame</a>
+    <h1 class="timeframe-logo">
+      <a href="./"><span>TimeFrame</span></a>
       <noscript>requires Javascript.</noscript>
-      <span></span>
     </h1>
-    <a class="start-over" title="Start Over" href="./"><span class="offscreen">Start Over</span></a>
+    <div class="date"></div>
     <p class="offscreen">A Flickr photo clock by Marcy Sutton at Substantial</p>
   </header>
   <figure class="loader">
@@ -52,15 +51,15 @@
       <fieldset>
         <legend class="offscreen">Choose a mode</legend>
         <fieldset>
-          <legend>Location + Time of Day</legend>
-          <label for="location" class="offscreen">enter a location:</label>
-          <input type="text" id="location" name="location" placeholder="Enter a location" class="tag" />
+          <legend class="form-heading">Location</legend>
+          <label for="location" class="offscreen">e.g. Seattle</label>
+          <input type="text" id="location" name="location" placeholder="e.g. Seattle" class="tag" />
         </fieldset>
-        <span class="or">or</span>
+        <span class="">or</span>
         <fieldset>
-          <legend>Your Flickr Photos</legend>
-          <label for="username" class="offscreen">enter your Flickr username:</label>
-          <input type="text" id="username" name="username" placeholder="Enter your Flickr username" class="tag" />
+          <legend class="form-heading">Flickr Username</legend>
+          <label for="username" class="offscreen">e.g. substantialinc</label>
+          <input type="text" id="username" name="username" placeholder="e.g. substantialinc" class="tag" />
         </fieldset>
         <input type="submit" value="go" id="submit" />
         <p class="find-username"><a href="http://www.flickr.com/search/people/" target="_blank" class="username-help" title="Help"><span>Find Flickr Username</span> <span>[?]</span></a></p>
@@ -71,12 +70,14 @@
           <ol>
             <li>Click to open link in new window.</li>
             <li>Search for people on Flickr.com.</li>
-            <li>Usernames appear in bold text. Copy and paste into the text field.</li>
+            <li>Usernames appear in bold text. Copy and paste into the text field above.</li>
           </ol>
           <div class="username-img"></div>
         </div>
       </div>
     </form>
+    <div class="gradient top"></div>
+    <div class="gradient bottom"></div>
     <ul class="imgStacks">
       <li id="hours" class="stack"></li>
       <li id="minutes" class="stack"></li>
@@ -86,9 +87,7 @@
   </section>
   <footer class="substantial">
     <h2>
-      <span>a</span>
       <a href="http://substantial.com" target="_blank" title="Link opens in a new window">SUBSTANTIAL</a>
-      <span>project</span>
     </h2>
   </footer>
 <!-- Google Analytics -->

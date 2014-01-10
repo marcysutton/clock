@@ -1,22 +1,25 @@
 @import compass/css3
 
-+font-face("TelegramaRender", font-files("telegrama_render.eot?","telegrama_render.woff","telegrama_render.ttf","telegrama_render.svg#webfontoYkAniKV"))
++font-face("Oswald-Regular", font-files("oswald-regular-webfont.eot?","oswald-regular-webfont.woff","oswald-regular-webfont.ttf","oswald-regular-webfont.svg#oswaldregular"))
++font-face("Oswald-Bold", font-files("oswald-bold-webfont.eot?","oswald-bold-webfont.woff","oswald-bold-webfont.ttf","oswald-bold-webfont.svg#oswaldbold"))
 +font-face("Substantial_Letters_and_Icons", font-files("icomoon.eot?","icomoon.woff","icomoon.ttf","icomoon.svg#icomoon"))
 
-$headline_font: "TelegramaRender"
+$headline_font: "Oswald-Regular"
 $fonts_default: Helvetica, Arial, sans-serif
 $icon_font: "Substantial_Letters_and_Icons"
 
 $c_background: #000
 $c_white: #fff
+$c_red: #c20000
 $c_default: #666
-$c_hover: #c6ff00
+$c_hover: #ccc
 
 $default_margin: 10px
 
 /////// UI @media breakpoint defaults ///////
 // -----------------------------------------------------------------------------
 $portrait: 					"screen and (orientation: portrait)"
+$landscape:         "screen and (orientation: landscape)"
 
 $tablet:                    "screen and (max-width: 64em)"
 //$tablet_portrait:           "screen and (max-width: 64em) and (orientation: portrait)"
@@ -25,5 +28,3 @@ $tablet:                    "screen and (max-width: 64em)"
 $mobile:                    "screen and (max-width: 47em)"
 //$mobile_portrait:           "screen and (max-width: 50em) and (orientation : portrait)"
 //$mobile_landscape:          "screen and (max-width: 50em) and (orientation : landscape)"
-
-$landscape: "screen and (orientation: portrait)"

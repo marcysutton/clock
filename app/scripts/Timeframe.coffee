@@ -18,6 +18,7 @@ class Timeframe extends Backbone.View
     @options =
       apiKey: 'beb8b17f735b6a404dbe120fd7300460'
       columnImageCounts: [12, 60, 60]
+      dateFormat: 'dddd, MMM D YYYY'
       timesOfDay: [
         [0, 4, 'night']
         [4, 12, 'morning']
@@ -47,6 +48,7 @@ class Timeframe extends Backbone.View
     @elSiteCredit = $('.substantial')
     @elTagLoading = @elLoader.find('.tag-loading')
     @elNowShowing = @elTarget.find('.now-showing')
+    @elDate = @elWrapper.find('.date')
 
     if Modernizr.touch and window.matchMedia("(max-width: 64em)").matches
       @mobileSetup()
@@ -54,15 +56,6 @@ class Timeframe extends Backbone.View
     @setupClockUI()
 
     Backbone.history.start()
-
-  getTotalImages: () ->
-    if not @mobile
-      @totalImages = @options.columnImageCounts.reduce (a, b) ->
-        a + b
-    else
-      @totalImages = 10
-
-    @totalImages
 
   setupClockUI: () ->
     $('body').removeClass('no-js')
@@ -88,9 +81,20 @@ class Timeframe extends Backbone.View
       .on 'resize', (event) =>
         @clockTextRepaint()
 
+  getTotalImages: () ->
+    if not @mobile
+      @totalImages = @options.columnImageCounts.reduce (a, b) ->
+        a + b
+    else
+      @totalImages = @options.mobileImages
+
+    @totalImages
+
   mobileSetup: () ->
     console.log 'mobileSetup'
     @mobile = true
+
+    $('body').addClass('mobile')
 
     @options.minimumImages = @getTotalImages()
     @options.columnImageCounts = [1, 1, 1]
@@ -233,8 +237,8 @@ class Timeframe extends Backbone.View
 
     i = 0
     _.each shuffledUrls, (image) ->
-      imageItem = stack.elListItems.eq(i).find('img')
-      imageItem.attr('src', image.url)
+      imageItem = stack.elListItems.eq(i).find('.img')
+      imageItem.css('background-image', 'url('+image.url+')')
       i++
 
   insertImageInStack: (stack, imageUrl) ->
@@ -259,9 +263,11 @@ class Timeframe extends Backbone.View
 
   updateDisplay: () ->
     if @mode is 'location'
+      @elWrapper.attr 'id', 'locationClock'
       console.log('showing '+@selectedTagName+' in the '+ @currentTag)
       @elNowShowing.text "#{@selectedTagName} #{@currentTag}"
     else
+      @elWrapper.attr 'id', 'userClock'
       console.log 'showing '+@selectedTagName+"'s photos"
       @elNowShowing.text @selectedTagName+"'s photos"
 
@@ -269,6 +275,10 @@ class Timeframe extends Backbone.View
     @elLoader.hide()
     @elNowShowing.fadeIn()
     @clock.startInterval()
+    @upDate()
+
+    @clock.on "change:day", (event) =>
+      @upDate()
 
     @clock.on "change:time", (event) =>
       @moveStacks()
@@ -276,6 +286,9 @@ class Timeframe extends Backbone.View
     @clock.on "change:minute", (event) =>
       if not @mobile
         @updateSecondsImages()
+
+  upDate: () ->
+    @elDate.text(@clock.moment.format(@options.dateFormat))
 
   initPhotoStacks: () ->
     @updateStackTime()

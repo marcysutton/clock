@@ -3,79 +3,60 @@ form.tag-input
   padding: $default_margin
   line-height: 22px
   height: auto
-  margin-left: $default_margin
-  margin-top: 35px
-  max-width: 300px
+  margin: ($default_margin * 2) auto
+  max-width: 280px
+  position: relative
+  z-index: 6
 
   fieldset
-    legend, span.or
-      font-family: $headline_font
-      font-size: 0.95em
+    legend
       margin-bottom: 2%
 
   span
     display: block
     margin: 2% 0
 
+    &.form-heading
+      margin-bottom: 4%
+
   input
     border: none
-    font-size: 0.9em
-    font-weight: bold
     height: 2em
     line-height: 1.25em
 
     &[type=text]
       display: block
       float: left
+      margin-bottom: 2%
       padding: 0 2%
       width: 96%
 
     &#submit
-      background-color: $c_default
-      color: $c_white
       display: inline-block
       margin-top: 5%
-      text-transform: lowercase
       -webkit-appearance: none
       width: 22%
-
-      &:hover
-        background-color: $c_hover
-        color: $c_background
-        cursor: pointer
 
 .find-username
   display: block
   float: right
-  font-size: 0.75em
   margin-top: 5%
   text-align: right
-
-  a
-    text-decoration: none
-
-    span
-      display: inline
-      text-decoration: underline
 
 .tooltip
   background-color: #333
   box-shadow: 0 0 5px #aaa
-  padding: 3%
+  padding: 5%
   width: auto
 
   h2, ol
-    color: $c_white
-    margin-bottom: 2%
+    margin-bottom: $default_margin
 
-  ol li
-    font-size: 0.85em
-    line-height: 1.25em
-    list-style: decimal inside
+  ol, li
     margin-top: 2%
 
   .username-img
-    background: transparent url(../images/flickr-lookup-username.png) no-repeat 0 0
+    background: transparent url(../images/flickr-lookup-username.png) no-repeat center center
     display: inline-block
     min-height: 54px
-    min-width: 283px
+    min-width: 100%

@@ -1,0 +1,50 @@
+.substantial
+  background-color: $c_background
+  margin-top: $default_margin * 2
+  position: relative
+  text-align: center
+  z-index: 4
+
+  .clock-active &
+    bottom: 0
+    margin-top: 0
+    padding: $default_margin
+    position: fixed
+
+  a
+    margin-left: 5px
+    position: relative
+    text-decoration: none
+    top: -2px
+
+.now-showing
+  background-color: $c_background
+  bottom: 0
+  display: none
+  padding: $default_margin
+  position: fixed
+  right: $default_margin
+  z-index: 5
+
+.mobile
+  @media #{$portrait}
+    .gradient
+      display: none
+
+    .substantial
+      bottom: $default_margin
+      padding-left: 0
+      position: absolute
+      text-align: center
+      width: 100%
+
+    &.clock-active
+      .substantial
+        display: none
+
+    .now-showing
+      padding: 2% 0
+      left: $default_margin
+      right: auto
+      margin-bottom: $default_margin
+      position: relative

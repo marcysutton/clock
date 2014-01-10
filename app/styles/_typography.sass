@@ -1,0 +1,149 @@
+//
+//   Global
+//
+li
+  list-style-type: none
+
+body
+  background-color: $c_background
+  color: $c_default
+  font-family: $fonts_default
+
+a:link, a:visited
+  color: $c_default
+  transition: color 0.5s
+
+noscript, a:hover, a:focus
+  color: $c_hover
+
+a:active
+  color: $c_red
+
+h1.timeframe-logo
+  font-family: $headline_font
+  font-size: 2em
+
+  a
+    color: $c_default
+
+    &:before
+      color: $c_default
+      content: '\e601'
+      font-family: $icon_font
+      font-size: 1.5em
+      transition: color 0.5s
+
+    span
+      text-transform: uppercase
+
+    &:hover, &:focus
+      color: $c_hover
+
+      &:before
+        color: $c_hover
+
+    &:active, &:active:before
+      color: $c_red
+
+    .clock-active &
+      &:before
+        font-size: 1em
+
+.date
+  color: $c_default
+  font-family: $headline_font
+  font-size: 1.15em
+
+.substantial
+  a
+    color: $c_default
+    font-size: 1em
+    font-family: $icon_font
+    letter-spacing: 0.23em
+    transition: all 0.5s
+
+    &:hover, &:focus, &:active
+      color: $c_red
+
+//
+// Active Clock
+//
+.loader span.loading-text
+  color: $c_default
+  font-family: $headline_font
+  font-size: 1em
+  text-transform: uppercase
+
+.stack h3
+  color: $c_white
+  font-family: $headline_font
+  font-weight: normal
+  font-size: 13vw
+
+.now-showing
+  color: $c_default
+  font-family: $headline_font
+  font-size: 1.2em
+
+  #locationClock &
+    text-transform: uppercase
+
+//
+// Input form
+//
+form.tag-input
+  .form-heading
+    font-family: $headline_font
+    font-size: 1.1em
+
+  input
+    font-size: 0.9em
+
+    &[type=text]
+      font-style: italic
+
+    &#submit
+      background-color: $c_default
+      color: $c_white
+      text-transform: lowercase
+
+      &:hover
+        background-color: $c_hover
+        color: $c_background
+        cursor: pointer
+
+  .find-username
+    font-size: 0.75em
+
+    a
+      text-decoration: none
+
+      &:hover, &:focus
+        color: $c_background
+
+      span
+        display: inline
+        text-decoration: underline
+
+.tooltip
+  h2
+    font-family: $headline_font
+
+  h2, ol
+    color: $c_white
+
+  ol li
+    font-size: 0.85em
+    line-height: 1.25em
+    list-style: decimal inside
+
+//
+// Mobile
+//
+.mobile
+  @media #{$portrait}
+    .stack
+      &#hours h3,
+      &#minutes h3,
+      &#seconds h3
+        font-size: 30vw

@@ -1,166 +1,123 @@
 @import reset
 @import config
 @import utilities
+@import typography
 @import header
+@import footer
 @import search_form
 @import jquery-ui
 
-li
-  list-style-type: none
-
-body
-  background-color: $c_background
-  color: $c_default
-  font-family: $fonts_default
-
-a:link, a:visited
-  color: $c_default
-
-noscript, a:hover
-  color: $c_hover
-
-.substantial
-  background-color: $c_background
-  margin-top: $default_margin * 6
-  left: $default_margin
-  padding: $default_margin
-  position: relative
-
-  .clock-active &
-    bottom: 0
-    margin-top: 0
-    position: fixed
-
-  span
-    color: $c_default
-    font-size: 0.75em
-
-  a
-    color: $c_default
-    font-family: $icon_font
-    letter-spacing: 0.23em
-    margin-left: 5px
-    position: relative
-    text-decoration: none
-    top: -2px
-
-    &:hover
-      color: $c_hover
-
 .app
   height: 100%
-  position: relative
+  overflow: hidden
   width: 100%
 
-.now-showing
-  background-color: $c_background
-  bottom: 0
-  color: $c_default
-  display: none
-  font-style: italic
-  padding: $default_margin
-  position: fixed
-  right: $default_margin
+  .clock-active &
+    position: absolute
+    top: 0
 
-ul
-  margin: 0px auto 0
-  position: relative
-  width: 100%
-
-  li.stack
-    float: left
-    width: 33%
-
-    h3
-      color: $c_white
-      display: none
-      font-family: $headline_font
-      font-weight: normal
-      font-size: 13vw
-      padding-top: 3%
-      position: absolute
-      text-align: center
-      width: 33%
-      z-index: 1
-
-    &#hours h3
-      left: 0
-
-    &#minutes h3
-      left: 33%
-
-    &#seconds h3
-      left: 66%
-
-    ul
-      margin: 0 $default_margin
-
-      li
-        margin-bottom: 5px
-        overflow: hidden
-        padding: 0 $default_margin
-        position: relative
-
-        &> div
-          height: 0
-          margin: 0 auto
-          overflow: hidden
-          padding-top: $default-margin
-          position: relative
-          width: 80%
-
-          div.img
-            background-repeat: no-repeat
-            bottom: 0
-            display: block
-            left: 0
-            position: absolute
-            right: 0
-            top: 0
-
-        &.current
-          &> div
-            height: auto
-            padding-top: 56.25%
-            width: 100%
-
-            div.img
-              background-size: 100% auto
-              background-position: center center
-              width: 100%
-
-.touch
-  @media #{$portrait}
-    .substantial
-      padding-left: 0
-      position: relative
-
-    .now-showing
-      color: $c_default
-      padding: 2% 0
-      left: $default_margin
-      margin-bottom: $default_margin
-      position: relative
-      z-index: 1
+  ul
+    margin: 0px auto 0
+    position: relative
+    width: 100%
 
     li.stack
-      float: none
-      margin: $default-margin auto
-      position: relative
-      width: 100%
+      float: left
+      width: 33%
 
       h3
-        width: 100%
+        display: none
+        padding-top: 3%
+        position: absolute
+        text-align: center
+        width: 33%
+        z-index: 1
 
-      &#hours h3,
-      &#minutes h3,
+      &#hours h3
+        left: 0
+
+      &#minutes h3
+        left: 33%
+
       &#seconds h3
-        left: auto
-        font-size: 30vw
+        left: 66%
 
       ul
-        margin: 0
+        margin: 0 $default_margin
 
-        li.current > div
-          min-height: 15px
-          padding-top: 40%
+        li
+          margin-bottom: 5px
+          overflow: hidden
+          padding: 0 $default_margin
+          position: relative
+
+          &> div
+            height: 0
+            margin: 0 auto
+            opacity: .7
+            overflow: hidden
+            padding-top: $default-margin
+            position: relative
+            width: 80%
+
+            div.img
+              background-repeat: no-repeat
+              bottom: 0
+              display: block
+              left: 0
+              position: absolute
+              right: 0
+              top: 0
+
+          &.current
+            &> div
+              height: auto
+              opacity: 1
+              padding-top: 56.25%
+              width: 100%
+
+              div.img
+                background-size: cover
+                background-position: center center
+                width: 100%
+
+.clock-active
+  .gradient
+    position: absolute
+    height: 35%
+    width: 100%
+    z-index: 1
+
+    &.top
+      @include background-image(linear-gradient(top, rgba(0,0,0,1) 0%,rgba(0,0,0,0) 100%))
+      top: 0
+
+    &.bottom
+      @include background-image(linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%))
+      bottom: 0
+
+.mobile
+  @media #{$portrait}
+    .app
+      position: relative
+
+      li.stack
+        float: none
+        margin: $default-margin auto
+        position: relative
+        width: 100%
+
+        h3
+          width: 100%
+
+        &#hours h3,
+        &#minutes h3,
+        &#seconds h3
+          left: auto
+
+        ul
+          margin: 0
+
+          li.current > div
+            min-height: 15px
+            padding-top: 40%
