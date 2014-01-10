@@ -57,15 +57,6 @@ class Timeframe extends Backbone.View
 
     Backbone.history.start()
 
-  getTotalImages: () ->
-    if not @mobile
-      @totalImages = @options.columnImageCounts.reduce (a, b) ->
-        a + b
-    else
-      @totalImages = 10
-
-    @totalImages
-
   setupClockUI: () ->
     $('body').removeClass('no-js')
       .addClass('initialized')
@@ -89,6 +80,15 @@ class Timeframe extends Backbone.View
     $(window)
       .on 'resize', (event) =>
         @clockTextRepaint()
+
+  getTotalImages: () ->
+    if not @mobile
+      @totalImages = @options.columnImageCounts.reduce (a, b) ->
+        a + b
+    else
+      @totalImages = @options.mobileImages
+
+    @totalImages
 
   mobileSetup: () ->
     console.log 'mobileSetup'
