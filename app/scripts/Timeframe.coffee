@@ -175,16 +175,16 @@ class Timeframe extends Backbone.View
     "&format=json&jsoncallback=?"
 
   setLocationTags: () ->
-    currentTagArr = []
+    currentTimeTagArr = []
     currentHour = @clock.current24Hour
     tags = @options.timesOfDay
     numTags = tags.length
 
     i = 0
     while i < numTags
-      currentTagArr = tags[i]
-      if currentHour >= currentTagArr[0] and currentHour < currentTagArr[1]
-        @currentTag = currentTagArr[2]
+      currentTimeTagArr = tags[i]
+      if currentHour >= currentTimeTagArr[0] and currentHour < currentTimeTagArr[1]
+        @currentTimeTag = currentTimeTagArr[2]
         break
       i++
 
@@ -194,7 +194,7 @@ class Timeframe extends Backbone.View
 
       tagParams = "tag_mode=all&tags="
       tags = "#{@inputSearch.encodeTagName()}"
-      tags += ",#{@currentTag}&"
+      tags += ",#{@currentTimeTag}&"
 
       tagParams + tags
 
@@ -264,8 +264,8 @@ class Timeframe extends Backbone.View
   updateDisplay: () ->
     if @mode is 'location'
       @elWrapper.attr 'id', 'locationClock'
-      console.log('showing '+@selectedTagName+' in the '+ @currentTag)
-      @elNowShowing.text "#{@selectedTagName} #{@currentTag}"
+      console.log('showing '+@selectedTagName+' in the '+ @currentTimeTag)
+      @elNowShowing.text "#{@selectedTagName} #{@currentTimeTag}"
     else
       @elWrapper.attr 'id', 'userClock'
       console.log 'showing '+@selectedTagName+"'s photos"
