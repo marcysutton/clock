@@ -18,6 +18,7 @@ class Timeframe extends Backbone.View
     @options =
       apiKey: 'beb8b17f735b6a404dbe120fd7300460'
       columnImageCounts: [12, 60, 60]
+      dateFormat: 'dddd, MMM D YYYY'
       timesOfDay: [
         [0, 4, 'night']
         [4, 12, 'morning']
@@ -274,17 +275,20 @@ class Timeframe extends Backbone.View
     @elLoader.hide()
     @elNowShowing.fadeIn()
     @clock.startInterval()
+    @upDate()
+
+    @clock.on "change:day", (event) =>
+      @upDate()
 
     @clock.on "change:time", (event) =>
       @moveStacks()
-      @upDate()
 
     @clock.on "change:minute", (event) =>
       if not @mobile
         @updateSecondsImages()
 
   upDate: () ->
-    @elDate.text(moment().format('dddd, MMMM Do YYYY, h:mm:ss a'))
+    @elDate.text(@clock.moment.format(@options.dateFormat))
 
   initPhotoStacks: () ->
     @updateStackTime()
