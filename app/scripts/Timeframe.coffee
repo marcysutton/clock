@@ -101,7 +101,7 @@ class Timeframe extends Backbone.View
     @options.positionContext = 'none'
 
   clockTextRepaint: () ->
-    $('.stack').find('h3').css('z-index', 1)
+    $('.stack').find('h3').css('z-index', 2)
 
   updateUIWithTagChange: (selectedTagName) ->
     @elTagLoading.text selectedTagName
