@@ -32,11 +32,14 @@
       display: none
 
     .substantial
-      margin-top: $default_margin
+      bottom: $default_margin
       padding-left: 0
-      position: relative
+      position: absolute
+      text-align: center
+      width: 100%
 
-      .clock-active &
+    &.clock-active
+      .substantial
         display: none
 
     .now-showing

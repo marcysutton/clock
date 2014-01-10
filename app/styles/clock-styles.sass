@@ -9,7 +9,12 @@
 
 .app
   height: 100%
+  overflow: hidden
   width: 100%
+
+  .clock-active &
+    position: absolute
+    top: 0
 
   ul
     margin: 0px auto 0
@@ -94,6 +99,8 @@
 .mobile
   @media #{$portrait}
     .app
+      position: relative
+
       li.stack
         float: none
         margin: $default-margin auto
