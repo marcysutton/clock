@@ -1,13 +1,15 @@
 header
   margin-top: $default_margin * 4
   position: relative
+  text-align: center
   z-index: 3
 
   .clock-active &
     margin-top: 0
+    text-align: left
 
 h1.timeframe-logo
-  display: block
+  display: inline-block
   padding: $default_margin
   text-align: center
 
@@ -34,6 +36,11 @@ h1.timeframe-logo
         left: -50000px
         position: absolute
 
+.date
+  display: inline-block
+  margin-top: 27px
+  vertical-align: top
+
 .loader
   background: transparent url(../images/ajax-loader.gif) no-repeat center 40px
   display: block
@@ -54,3 +61,7 @@ h1.timeframe-logo
   @media #{$portrait}
     header
       margin-top: 0
+
+      .date
+        display: none
+        visibility: hidden

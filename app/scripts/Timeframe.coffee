@@ -47,6 +47,7 @@ class Timeframe extends Backbone.View
     @elSiteCredit = $('.substantial')
     @elTagLoading = @elLoader.find('.tag-loading')
     @elNowShowing = @elTarget.find('.now-showing')
+    @elDate = @elWrapper.find('.date')
 
     if Modernizr.touch and window.matchMedia("(max-width: 64em)").matches
       @mobileSetup()
@@ -274,10 +275,14 @@ class Timeframe extends Backbone.View
 
     @clock.on "change:time", (event) =>
       @moveStacks()
+      @upDate()
 
     @clock.on "change:minute", (event) =>
       if not @mobile
         @updateSecondsImages()
+
+  upDate: () ->
+    @elDate.text(moment().format('dddd, MMMM Do YYYY, h:mm:ss a'))
 
   initPhotoStacks: () ->
     @updateStackTime()
