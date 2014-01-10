@@ -233,8 +233,8 @@ class Timeframe extends Backbone.View
 
     i = 0
     _.each shuffledUrls, (image) ->
-      imageItem = stack.elListItems.eq(i).find('img')
-      imageItem.attr('src', image.url)
+      imageItem = stack.elListItems.eq(i).find('.img')
+      imageItem.css('background-image', 'url('+image.url+')')
       i++
 
   insertImageInStack: (stack, imageUrl) ->
