@@ -299,7 +299,7 @@ class Timeframe extends Backbone.View
       @elNowShowing.html @flickrUserLink @selectedTagName
 
   flickrUserLink: (tagName) ->
-    "<a href='http://www.flickr.com/people/#{@userId}/' target='_blank' title='link opens in a new window'>#{@selectedTagName}'s photos</a>"
+    "<a href='http://www.flickr.com/photos/#{@userId}/' target='_blank' title='link opens in a new window'>#{@selectedTagName}'s photos</a>"
 
   refreshClock: () ->
     Backbone.history.loadUrl Backbone.history.fragment
