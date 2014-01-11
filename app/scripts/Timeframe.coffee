@@ -28,6 +28,7 @@ class Timeframe extends Backbone.View
         'night'
       ]
       minimumImages: 72
+      mobileImages: 10
       positionContext: 'time'
 
     _.defaults(options, @options)
@@ -242,7 +243,7 @@ class Timeframe extends Backbone.View
   startClock: () ->
     @elLoader.hide()
     @elNowShowing.fadeIn()
-    @elDate.fadeIn()
+    @elDate.fadeIn() if not @mobile
     @clock.startInterval()
 
     @upDate()
