@@ -175,9 +175,12 @@ class Timeframe extends Backbone.View
     "per_page=" + @getTotalImages() +
     "&format=json&jsoncallback=?"
 
+  getTimeTag: (hour = @clock.current24Hour) ->
+    currentTimeTagIndex = Math.floor(@options.timesOfDay.length * (hour / 24))
+    @options.timesOfDay[currentTimeTagIndex]
+
   setTimeTag: () ->
-    timeIndex = @options.timesOfDay.length * (@clock.current24Hour / 24)
-    @currentTimeTag = @options.timesOfDay[Math.floor timeIndex]
+    @currentTimeTag = @getTimeTag(@clock.current24Hour)
 
   getParams: () ->
     if @mode is 'location'
@@ -239,7 +242,9 @@ class Timeframe extends Backbone.View
   startClock: () ->
     @elLoader.hide()
     @elNowShowing.fadeIn()
+    @elDate.fadeIn()
     @clock.startInterval()
+
     @upDate()
 
     @clock.on "change:day", (event) =>
@@ -247,6 +252,9 @@ class Timeframe extends Backbone.View
 
     @clock.on "change:time", (event) =>
       @moveStacks()
+
+    @clock.on "change:hour", (event) =>
+      @checkHourForRefresh()
 
     @clock.on "change:minute", (event) =>
       if not @mobile
@@ -260,6 +268,11 @@ class Timeframe extends Backbone.View
 
   upDate: () ->
     @elDate.text(@clock.moment.format(@options.dateFormat))
+
+  checkHourForRefresh: () ->
+    # Refresh clock
+    if @mode is "location" and @getTimeTag(@clock.current24Hour) isnt @currentTimeTag
+      @refreshClock()
 
   initPhotoStacks: () ->
     @updateStackTime()
@@ -283,11 +296,15 @@ class Timeframe extends Backbone.View
       @elWrapper.attr 'id', 'userClock'
       console.log 'showing '+@selectedTagName+"'s photos"
       @elNowShowing.text @selectedTagName+"'s photos"
+
+  refreshClock: () ->
+    Backbone.history.loadUrl Backbone.history.fragment
+
   reloadUI: () ->
     for stack in @stacks
       if stack.elListItems
-        stack.elListItems.detach()
         stack.elLabel.fadeOut()
+        stack.elListItems.detach()
 
   restart: () ->
     @reloadUI()
