@@ -13,7 +13,7 @@ class Router extends Backbone.Router
     @inputSearch = searchView
 
   routeChange: (route, router) ->
-    @app.reload()
+    @app.reloadUI()
 
   searchCity: (param) ->
     @inputSearch.setTagName(@inputSearch.locationMode, param)

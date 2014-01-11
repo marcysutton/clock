@@ -20,13 +20,15 @@ class Timeframe extends Backbone.View
       columnImageCounts: [12, 60, 60]
       dateFormat: 'dddd, MMM D YYYY'
       timesOfDay: [
-        [0, 4, 'night']
-        [4, 12, 'morning']
-        [12, 17, 'afternoon']
-        [17, 20, 'evening']
-        [20, 24, 'night']
+        'night'
+        'morning'
+        'morning'
+        'afternoon'
+        'evening'
+        'night'
       ]
       minimumImages: 72
+      mobileImages: 10
       positionContext: 'time'
 
     _.defaults(options, @options)
@@ -50,7 +52,7 @@ class Timeframe extends Backbone.View
     @elNowShowing = @elTarget.find('.now-showing')
     @elDate = @elWrapper.find('.date')
 
-    if Modernizr.touch and window.matchMedia("(max-width: 64em)").matches
+    if window.matchMedia("(max-width: 64em)").matches and Modernizr.touch
       @mobileSetup()
 
     @setupClockUI()
@@ -174,27 +176,20 @@ class Timeframe extends Backbone.View
     "per_page=" + @getTotalImages() +
     "&format=json&jsoncallback=?"
 
-  setLocationTags: () ->
-    currentTagArr = []
-    currentHour = @clock.current24Hour
-    tags = @options.timesOfDay
-    numTags = tags.length
+  getTimeTag: (hour = @clock.current24Hour) ->
+    currentTimeTagIndex = Math.floor(@options.timesOfDay.length * (hour / 24))
+    @options.timesOfDay[currentTimeTagIndex]
 
-    i = 0
-    while i < numTags
-      currentTagArr = tags[i]
-      if currentHour >= currentTagArr[0] and currentHour < currentTagArr[1]
-        @currentTag = currentTagArr[2]
-        break
-      i++
+  setTimeTag: () ->
+    @currentTimeTag = @getTimeTag(@clock.current24Hour)
 
   getParams: () ->
     if @mode is 'location'
-      @setLocationTags()
+      @setTimeTag()
 
       tagParams = "tag_mode=all&tags="
       tags = "#{@inputSearch.encodeTagName()}"
-      tags += ",#{@currentTag}&"
+      tags += ",#{@currentTimeTag}&"
 
       tagParams + tags
 
@@ -245,36 +240,12 @@ class Timeframe extends Backbone.View
     stack.elList.append $('<li>')
       .append $("<div><div class='img' style='background-image:url(#{imageUrl})'></div></div>")
 
-  reload: () ->
-    for stack in @stacks
-      if stack.elListItems
-        stack.elListItems.detach()
-        stack.elLabel.fadeOut()
-
-  restart: () ->
-    @reload()
-
-    @elLoader.hide()
-    @inputSearch.reset()
-    @elWrapper.removeClass('clock-active')
-    @elNowShowing.hide()
-
-    Backbone.history.navigate '#', trigger: true
-
-  updateDisplay: () ->
-    if @mode is 'location'
-      @elWrapper.attr 'id', 'locationClock'
-      console.log('showing '+@selectedTagName+' in the '+ @currentTag)
-      @elNowShowing.text "#{@selectedTagName} #{@currentTag}"
-    else
-      @elWrapper.attr 'id', 'userClock'
-      console.log 'showing '+@selectedTagName+"'s photos"
-      @elNowShowing.text @selectedTagName+"'s photos"
-
   startClock: () ->
     @elLoader.hide()
     @elNowShowing.fadeIn()
+    @elDate.fadeIn() if not @mobile
     @clock.startInterval()
+
     @upDate()
 
     @clock.on "change:day", (event) =>
@@ -283,12 +254,26 @@ class Timeframe extends Backbone.View
     @clock.on "change:time", (event) =>
       @moveStacks()
 
+    @clock.on "change:hour", (event) =>
+      @checkHourForRefresh()
+
     @clock.on "change:minute", (event) =>
       if not @mobile
         @updateSecondsImages()
 
+  moveStacks: () ->
+    @updateStackTime()
+
+    for stack in @stacks
+      stack.moveStack()
+
   upDate: () ->
     @elDate.text(@clock.moment.format(@options.dateFormat))
+
+  checkHourForRefresh: () ->
+    # Refresh clock
+    if @mode is "location" and @getTimeTag(@clock.current24Hour) isnt @currentTimeTag
+      @refreshClock()
 
   initPhotoStacks: () ->
     @updateStackTime()
@@ -303,10 +288,34 @@ class Timeframe extends Backbone.View
     @minutesStack.setTime @clock.currentMinute, @clock.formattedMinute
     @hoursStack.setTime (@clock.currentHour - 1), @clock.formattedHour
 
-  moveStacks: () ->
-    @updateStackTime()
+  updateDisplay: () ->
+    if @mode is 'location'
+      @elWrapper.attr 'id', 'locationClock'
+      console.log('showing '+@selectedTagName+' in the '+ @currentTimeTag)
+      @elNowShowing.text "#{@selectedTagName} #{@currentTimeTag}"
+    else
+      @elWrapper.attr 'id', 'userClock'
+      console.log 'showing '+@selectedTagName+"'s photos"
+      @elNowShowing.text @selectedTagName+"'s photos"
 
+  refreshClock: () ->
+    Backbone.history.loadUrl Backbone.history.fragment
+
+  reloadUI: () ->
     for stack in @stacks
-      stack.moveStack()
+      if stack.elListItems
+        stack.elLabel.fadeOut()
+        stack.elListItems.detach()
+
+  restart: () ->
+    @reloadUI()
+
+    @elLoader.hide()
+    @inputSearch.reset()
+    @elWrapper.removeClass('clock-active')
+    @elNowShowing.hide()
+    @elDate.hide()
+
+    Backbone.history.navigate '#', trigger: true
 
   module.exports = Timeframe
