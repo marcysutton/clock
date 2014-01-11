@@ -283,14 +283,14 @@ class Timeframe extends Backbone.View
       @elWrapper.attr 'id', 'userClock'
       console.log 'showing '+@selectedTagName+"'s photos"
       @elNowShowing.text @selectedTagName+"'s photos"
-  reload: () ->
+  reloadUI: () ->
     for stack in @stacks
       if stack.elListItems
         stack.elListItems.detach()
         stack.elLabel.fadeOut()
 
   restart: () ->
-    @reload()
+    @reloadUI()
 
     @elLoader.hide()
     @inputSearch.reset()
