@@ -52,7 +52,7 @@ class Timeframe extends Backbone.View
     @elNowShowing = @elTarget.find('.now-showing')
     @elDate = @elWrapper.find('.date')
 
-    if Modernizr.touch and window.matchMedia("(max-width: 64em)").matches
+    if window.matchMedia("(max-width: 64em)").matches and Modernizr.touch
       @mobileSetup()
 
     @setupClockUI()
