@@ -296,7 +296,10 @@ class Timeframe extends Backbone.View
     else
       @elWrapper.attr 'id', 'userClock'
       console.log 'showing '+@selectedTagName+"'s photos"
-      @elNowShowing.text @selectedTagName+"'s photos"
+      @elNowShowing.html @flickrUserLink @selectedTagName
+
+  flickrUserLink: (tagName) ->
+    "<a href='http://www.flickr.com/people/#{@userId}/' target='_blank' title='link opens in a new window'>#{@selectedTagName}'s photos</a>"
 
   refreshClock: () ->
     Backbone.history.loadUrl Backbone.history.fragment

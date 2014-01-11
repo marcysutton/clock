@@ -26,6 +26,12 @@
   right: $default_margin
   z-index: 5
 
+  a
+    text-decoration: none
+
+    &:hover, &:focus
+      color: $c_red
+
 .mobile
   @media #{$portrait}
     .gradient
