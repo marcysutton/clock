@@ -83,8 +83,9 @@ class InputSearchView extends Backbone.View
     @selectedInput.blur()
 
   reset: () ->
-    @elTagPicker.show()
+    @elTagPicker.fadeIn()
     @elInputs.val('')
+    @elTagPickerSubmit.attr 'disabled', 'disabled'
 
   tagToRoute: (mode = @selectedMode, selectedTagName) ->
     Backbone.history.navigate "#/#{mode}/#{@encodeTagName(selectedTagName)}", trigger: true
