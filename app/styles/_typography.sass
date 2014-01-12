@@ -99,8 +99,17 @@ form.tag-input
     font-size: 0.9em
 
     &[type=text]
+      background-color: $c_dkgray
       color: #fff
       font-style: italic
+
+      &:hover, &:focus, &:active
+        background-color: $c_default
+        color: #fff
+        cursor: pointer
+
+      @include placeholder
+        color: $c_ltgray
 
     &#submit
       background-color: $c_default
@@ -118,19 +127,27 @@ form.tag-input
         cursor: pointer
 
   span.or
+    color: $c_ltgray
     font-size: 1em
     font-family: $headline_font
     text-transform: uppercase
 
   .username-help
-    color: $c_default
+    color: $c_ltgray
     font-size: 1em
     font-family: $headline_font
     text-transform: uppercase
     text-decoration: none
 
-    &:hover, &:focus
+    span
+      border-bottom: 1px solid $c_ltgray
+      transition: border-color 0.5s
+
+    &:hover, &:focus, &:active
       color: $c_red
+
+      span
+        border-color: $c_red
 
 .tooltip
   h2

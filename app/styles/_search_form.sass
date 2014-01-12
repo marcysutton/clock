@@ -18,7 +18,6 @@ form.tag-input
       text-align: left
 
   span.or
-    color: #666
     display: inline-block
     margin: 0.5em 0
     position: relative
@@ -29,7 +28,6 @@ form.tag-input
     -webkit-appearance: none
 
     &[type=text]
-      background-color: $c_dkgray
       border: none
       box-sizing: border-box
       display: block
@@ -37,14 +35,6 @@ form.tag-input
       min-width: 15em
       padding: 0.5em
       text-align: center
-
-      &:hover, &:focus, &:active
-        background-color: $c_default
-        color: #fff
-        cursor: pointer
-
-      @include placeholder
-        color: $c_ltgray
 
     &#submit
       border: none
@@ -57,12 +47,7 @@ form.tag-input
   padding: 0.75em
 
   span
-    border-bottom: 1px solid $c_default
     display: inline-block
-
-  &:hover, &:focus, &:active
-    span
-      border-color: $c_red
 
 .tooltip
   background-color: #333
