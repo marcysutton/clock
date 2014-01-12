@@ -41,7 +41,7 @@
       <noscript>requires Javascript.</noscript>
     </h1>
     <div class="date"></div>
-    <p class="offscreen">A Flickr photo clock by Marcy Sutton at Substantial</p>
+    <p class="byline">A Flickr photo clock by Marcy Sutton at Substantial</p>
   </header>
   <figure class="loader">
     <span class="loading-text">loading images from <span class="tag-loading"></span>...</span>
@@ -50,19 +50,21 @@
     <form class="tag-input" method="get">
       <fieldset>
         <legend class="offscreen">Choose a mode</legend>
-        <fieldset>
-          <legend class="form-heading">Location</legend>
-          <label for="location" class="offscreen">e.g. Seattle</label>
-          <input type="text" id="location" name="location" placeholder="e.g. Seattle" class="tag" />
-        </fieldset>
-        <span class="">or</span>
-        <fieldset>
-          <legend class="form-heading">Flickr Username</legend>
-          <label for="username" class="offscreen">e.g. substantialinc</label>
-          <input type="text" id="username" name="username" placeholder="e.g. substantialinc" class="tag" />
-        </fieldset>
-        <input type="submit" value="go" id="submit" />
-        <p class="find-username"><a href="http://www.flickr.com/search/people/" target="_blank" class="username-help" title="Help"><span>Find Flickr Username</span> <span>[?]</span></a></p>
+        <div>
+          <fieldset>
+            <label for="location" class="offscreen">Location</label>
+            <input type="text" id="location" name="location" placeholder="Enter a location..." class="tag" />
+          </fieldset>
+          <div>
+            <span class="or">or</span>
+          </div>
+          <fieldset>
+            <label for="username" class="offscreen">e.g. substantialinc</label>
+            <input type="text" id="username" name="username" placeholder="Flickr username..." class="tag" />
+            <a class="username-help" title="Help" href="http://www.flickr.com/search/people/" target="_blank"><span class="offscreen">Find Username</span><span>[?]</span></a>
+          </fieldset>
+        </div>
+        <input type="submit" value="START" id="submit" disabled />
       </fieldset>
       <div class="offscreen tooltip-content">
         <div class="tooltip">

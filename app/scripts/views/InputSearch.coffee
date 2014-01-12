@@ -11,6 +11,8 @@ class InputSearchView extends Backbone.View
   locationMode: 'location'
 
   events:
+    "keypress": "inputValidation"
+    "focusout": "blurHandler"
     "submit" : "inputSubmitHandler"
 
   el: $('form.tag-input')
@@ -19,6 +21,8 @@ class InputSearchView extends Backbone.View
 
   initialize: () ->
     _.bindAll @, 'inputSubmitHandler'
+    _.bindAll @, 'inputValidation'
+    _.bindAll @, 'blurHandler'
 
     @elTagPicker = $(@el)
 
@@ -31,9 +35,21 @@ class InputSearchView extends Backbone.View
       content: tooltipContent
       position:
         my: "top"
-        at: "bottom-10"
-        of: '.tag-input'
+        at: "bottom"
       "open"
+
+  inputValidation: (e) =>
+    otherInput = @elInputs.not(e.target)
+
+    if otherInput.val()
+      otherInput.val('')
+
+    if @elLocationInput.val() or @elUsernameInput.val()
+      @elTagPickerSubmit.removeAttr 'disabled'
+
+  blurHandler: (e) =>
+    if not @elLocationInput.val() and not @elUsernameInput.val()
+      @elTagPickerSubmit.attr 'disabled', 'disabled'
 
   inputSubmitHandler: (e) =>
     e.preventDefault()
@@ -67,8 +83,9 @@ class InputSearchView extends Backbone.View
     @selectedInput.blur()
 
   reset: () ->
-    @elTagPicker.show()
+    @elTagPicker.fadeIn()
     @elInputs.val('')
+    @elTagPickerSubmit.attr 'disabled', 'disabled'
 
   tagToRoute: (mode = @selectedMode, selectedTagName) ->
     Backbone.history.navigate "#/#{mode}/#{@encodeTagName(selectedTagName)}", trigger: true
