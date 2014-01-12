@@ -1,47 +1,67 @@
 form.tag-input
-  background-color: #ccc
   padding: $default_margin
   line-height: 22px
   height: auto
   margin: ($default_margin * 2) auto
-  max-width: 280px
   position: relative
   z-index: 6
 
   fieldset
-    legend
-      margin-bottom: 2%
+    text-align: center
 
-  span
-    display: block
-    margin: 2% 0
+    fieldset
+      display: inline-block
 
-    &.form-heading
-      margin-bottom: 4%
+    legend.form-heading
+      display: block
+      margin: 2% 4%
+      text-align: left
+
+  span.or
+    color: #666
+    display: inline-block
+    margin: 0.5em 0
+    position: relative
 
   input
-    border: none
-    height: 2em
-    line-height: 1.25em
+    line-height: 1.75em
 
     &[type=text]
+      background-color: $c_dkgray
+      border: none
+      box-sizing: border-box
       display: block
-      float: left
-      margin-bottom: 2%
-      padding: 0 2%
-      width: 96%
+      margin: 0
+      min-width: 15em
+      padding: 0.5em
+      text-align: center
+
+      &:hover, &:focus, &:active
+        background-color: $c_default
+        color: #fff
+        cursor: pointer
+
+      @include placeholder
+        color: $c_ltgray
 
     &#submit
+      border: none
       display: inline-block
-      margin-top: 5%
+      padding: 0.5em 1em
+      margin-top: 0.5em
       -webkit-appearance: none
-      width: 22%
 
-.find-username
+.username-help
   display: block
-  float: right
-  margin-top: 5%
-  text-align: right
+  padding: 0.75em
+
+  span
+    border-bottom: 1px solid $c_default
+    display: inline-block
+
+  &:hover, &:focus, &:active
+    span
+      border-color: $c_red
 
 .tooltip
   background-color: #333

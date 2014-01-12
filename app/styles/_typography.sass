@@ -87,43 +87,46 @@ h1.timeframe-logo
 
   #locationClock &
     text-transform: uppercase
-
 //
 // Input form
 //
 form.tag-input
-  .form-heading
-    font-family: $headline_font
-    font-size: 1.1em
-
   input
     font-size: 0.9em
 
     &[type=text]
+      color: #fff
       font-style: italic
 
     &#submit
       background-color: $c_default
       color: $c_white
-      text-transform: lowercase
+      font-family: $headline_font
+      font-size: 1em
 
-      &:hover
+      &:disabled
+        background-color: #333
+        color: $c_default
+
+      &:hover:not(:disabled)
         background-color: $c_hover
         color: $c_background
         cursor: pointer
 
-  .find-username
-    font-size: 0.75em
+  span.or
+    font-size: 1em
+    font-family: $headline_font
+    text-transform: uppercase
 
-    a
-      text-decoration: none
+  .username-help
+    color: $c_default
+    font-size: 1em
+    font-family: $headline_font
+    text-transform: uppercase
+    text-decoration: none
 
-      &:hover, &:focus
-        color: $c_background
-
-      span
-        display: inline
-        text-decoration: underline
+    &:hover, &:focus
+      color: $c_red
 
 .tooltip
   h2

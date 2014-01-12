@@ -31,8 +31,7 @@ class InputSearchView extends Backbone.View
       content: tooltipContent
       position:
         my: "top"
-        at: "bottom-10"
-        of: '.tag-input'
+        at: "bottom"
       "open"
 
   inputSubmitHandler: (e) =>

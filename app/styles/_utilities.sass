@@ -2,3 +2,16 @@
   display: block
   left: -50000px
   position: absolute
+
+@mixin placeholder
+  &.placeholder
+    @content
+
+  &:-moz-placeholder
+    @content
+
+  &::-moz-placeholder
+    @content
+
+  &::-webkit-input-placeholder
+    @content
