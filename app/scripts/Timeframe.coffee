@@ -317,6 +317,7 @@ class Timeframe extends Backbone.View
     "<a href='http://www.flickr.com/photos/#{@userId}/' target='_blank' title='link opens in a new window'>#{@selectedTagName}'s photos</a>"
 
   refreshClock: () ->
+    console.log 'refreshing clock'
     Backbone.history.loadUrl Backbone.history.fragment
 
   reloadUI: () ->
