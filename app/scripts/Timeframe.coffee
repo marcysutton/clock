@@ -33,6 +33,8 @@ class Timeframe extends Backbone.View
 
     _.defaults(options, @options)
 
+    @started = false
+
     @target = target
     @mobile = false
 
@@ -109,6 +111,8 @@ class Timeframe extends Backbone.View
     @elTagLoading.text selectedTagName
 
   appStart: () ->
+    @started = true
+
     @selectedTagName = @inputSearch.decodeTagName()
     @updateUIWithTagChange @selectedTagName
 
@@ -139,6 +143,8 @@ class Timeframe extends Backbone.View
       @showErrorMessage response
 
   querySearchAPI: () ->
+    return unless @started
+
     $.getJSON @getJSONURL(), (response) =>
       console.log response
 
@@ -206,6 +212,8 @@ class Timeframe extends Backbone.View
       @getTotalImages()
 
   handOutImages: () ->
+    return unless @started
+
     photoUrls = @sortImageQueue @setUrlList()
 
     secondColRangeTop = @options.columnImageCounts[0] + @options.columnImageCounts[1]
@@ -327,6 +335,8 @@ class Timeframe extends Backbone.View
         stack.elListItems.detach()
 
   restart: () ->
+    @started = false
+
     @reloadUI()
 
     @elLoader.hide()
