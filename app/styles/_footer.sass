@@ -31,26 +31,26 @@
 
     &:hover, &:focus
       color: $c_red
-
+//
+// Mobile
+//
 .mobile
-  @media #{$portrait}
-    .gradient
+  .gradient
+    display: none
+
+  .substantial
+    bottom: $default_margin
+    padding-left: 0
+    position: absolute
+    text-align: center
+    width: 100%
+
+  &.clock-active
+    .substantial
       display: none
 
-    .substantial
-      bottom: $default_margin
-      padding-left: 0
-      position: absolute
-      text-align: center
-      width: 100%
-
-    &.clock-active
-      .substantial
-        display: none
-
-    .now-showing
-      padding: 2% 0
-      left: $default_margin
-      right: auto
-      margin-bottom: $default_margin
-      position: relative
+  .now-showing
+    padding: ($default_margin / 2) 0
+    left: $default_margin
+    right: auto
+    position: relative
