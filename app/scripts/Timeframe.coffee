@@ -245,7 +245,7 @@ class Timeframe extends Backbone.View
       stack.currentImg.css('background-image', 'url('+shuffledUrls[i].url+')')
       i++
 
-      stackEl.fadeIn()
+      stackEl.fadeIn(600)
 
   insertImageInStack: (stack, imageUrl) ->
     stack.elList.append $('<li>')
