@@ -1,6 +1,7 @@
 class Router extends Backbone.Router
 
   routes:
+    '': 'home'
     'location/:cityName': 'searchCity'
     'username/:username': 'userPhotos'
     'error': 'error'
@@ -14,6 +15,9 @@ class Router extends Backbone.Router
 
   routeChange: (route, router) ->
     @app.reloadUI()
+
+  home: () ->
+    @app.restart()
 
   searchCity: (param) ->
     @inputSearch.setTagName(@inputSearch.locationMode, param)
