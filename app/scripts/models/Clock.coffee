@@ -41,6 +41,8 @@ class Clock extends Backbone.Model
     @currentSecond = moment().format('s')
     @formattedSecond = moment().format('ss')
 
+    @trigger 'change:seconds10' if (@currentSecond % 10) is 0
+
   setMinutes: () ->
     minute = moment().format('m')
 

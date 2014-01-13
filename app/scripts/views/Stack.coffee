@@ -59,6 +59,7 @@ class StackView extends Backbone.View
     @currentFrame = $(@elListItems[@relevantPosition])
 
     @currentFrame.addClass 'current'
+    @currentImg = @currentFrame.find('.img')
 
   moveStack: () ->
     @setCurrentFrame()
