@@ -28,7 +28,7 @@ class Timeframe extends Backbone.View
         'night'
       ]
       minimumImages: 72
-      mobileImages: 10
+      mobileImages: 36
       positionContext: 'time'
 
     _.defaults(options, @options)
@@ -226,15 +226,26 @@ class Timeframe extends Backbone.View
     @initPhotoStacks()
     @startClock()
 
-  updateSecondsImages: () ->
+  updateStackImages: (stack = @secondsStack) ->
     shuffledUrls = @sortImageQueue(@options.columnImageCounts[2])
-    stack = @secondsStack
 
     i = 0
     _.each shuffledUrls, (image) ->
       imageItem = stack.elListItems.eq(i).find('.img')
       imageItem.css('background-image', 'url('+image.url+')')
       i++
+
+  updateImagesMobile: () ->
+    shuffledUrls = @sortImageQueue(3)
+    i = 0
+    for stack in @stacks
+      stackEl = $(stack.elList)
+      stackEl.hide()
+
+      stack.currentImg.css('background-image', 'url('+shuffledUrls[i].url+')')
+      i++
+
+      stackEl.fadeIn(600)
 
   insertImageInStack: (stack, imageUrl) ->
     stack.elList.append $('<li>')
@@ -259,7 +270,11 @@ class Timeframe extends Backbone.View
 
     @clock.on "change:minute", (event) =>
       if not @mobile
-        @updateSecondsImages()
+        @updateStackImages()
+
+    if @mobile
+      @clock.on "change:seconds10", (event) =>
+        @updateImagesMobile()
 
   moveStacks: () ->
     @updateStackTime()
@@ -302,6 +317,7 @@ class Timeframe extends Backbone.View
     "<a href='http://www.flickr.com/photos/#{@userId}/' target='_blank' title='link opens in a new window'>#{@selectedTagName}'s photos</a>"
 
   refreshClock: () ->
+    console.log 'refreshing clock'
     Backbone.history.loadUrl Backbone.history.fragment
 
   reloadUI: () ->

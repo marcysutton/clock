@@ -61,7 +61,9 @@ h1.timeframe-logo
     background-color: $c_background
     display: inline-block
     margin: $default_margin / 2
-
+//
+// Mobile
+//
 .mobile
   .date
     display: none
@@ -70,9 +72,12 @@ h1.timeframe-logo
   header
     margin-top: $default_margin
 
-    .clock-active &
+  &.clock-active
+    header
       margin-top: 0
 
       h1
+        padding-bottom: 0
+
         a, a:before
           margin: 0

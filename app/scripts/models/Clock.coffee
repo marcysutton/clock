@@ -14,7 +14,6 @@ class Clock extends Backbone.Model
     @time = 0
     @secondsElapsed = 0
 
-
   startInterval: () ->
     timeout = window.setTimeout(=>
       @intervalFunc()
@@ -41,6 +40,8 @@ class Clock extends Backbone.Model
     @currentSecond = moment().format('s')
     @formattedSecond = moment().format('ss')
 
+    @trigger 'change:seconds10' if (@currentSecond % 10) is 0
+
   setMinutes: () ->
     minute = moment().format('m')
 
@@ -58,6 +59,7 @@ class Clock extends Backbone.Model
       @formattedHour = moment().format('hh')
 
       @trigger 'change:hour'
+      console.log 'hour change'
 
     @current24Hour = moment().format('H')
 
