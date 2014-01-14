@@ -184,8 +184,9 @@ form.tag-input
 // Mobile
 //
 .mobile
-  .stack
-    &#hours h3,
-    &#minutes h3,
-    &#seconds h3
-      font-size: 30vw
+  @media #{$portrait}
+    .stack
+      &#hours h3,
+      &#minutes h3,
+      &#seconds h3
+        font-size: 30vw
