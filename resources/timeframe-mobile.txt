@@ -1,0 +1,18 @@
+MOBILE
+
+refresh images:
+
+1
+1
+1
+
+switch image every 10 seconds: 
+
+60 / 10 = 6 images per minute
+
+6 images * 3 stacks = 18 images
+
+18 images * 3 = 54 images
+
+Entire bucket:
+ 36 or 54 images for random shuffle

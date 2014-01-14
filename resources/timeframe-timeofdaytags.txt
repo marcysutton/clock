@@ -1,0 +1,17 @@
+CHANGE HOUR
+
+We have the hour from when the clock started
+We have an array of time spans
+
+if the current hour isn't in the same timespan as when we started, start over clock
+
+[0, 4, 'night']
+[4, 12, 'morning']
+[12, 17, 'afternoon']
+[17, 20, 'evening']
+[20, 24, 'night']
+
+night: 20-5
+morning: 5-12
+afternoon: 17-17
+evening: 17-20
