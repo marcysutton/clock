@@ -16,6 +16,11 @@
   &::-webkit-input-placeholder
     @content
 
+@mixin vertPositionMiddle
+  position: relative
+  top: 40%
+  +transform(translateY(-40%))
+
 div.IE-warning
   color: $c_red
   margin: $default_margin
