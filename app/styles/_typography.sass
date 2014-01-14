@@ -112,32 +112,36 @@ h1.timeframe-logo
 //
 form.tag-input
   input
+    background-color: $c_default
+    color: $c_background
     font-size: 0.9em
 
+    @include placeholder
+      color: $c_mdgray
+
     &[type=text]
-      background-color: $c_background
-      color: $c_white
+      border: 2px solid $c_default
       font-style: italic
 
       &:hover, &:focus, &:active
-        background-color: $c_default
-        color: $c_background
+        border-color: $c_red
+        color: $c_dkgray
         cursor: text
+        outline: none
 
         @include placeholder
-          color: $c_dkgray
+          color: $c_mdgray
 
     &#submit
-      background-color: $c_background
-      color: $c_white
-      font-family: $headline_font
       font-size: 1em
+      transition: all 0.5s
 
       &:disabled
-        color: #666
+        background-color: #999
+        color: $c_dkgray
 
       &:hover:not(:disabled)
-        color: $c_default
+        background-color: $c_white
         cursor: pointer
 
   span.or
@@ -162,6 +166,7 @@ form.tag-input
 
       span
         border-color: $c_red
+
 
 .tooltip
   h2
