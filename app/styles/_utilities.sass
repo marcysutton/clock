@@ -16,10 +16,10 @@
   &::-webkit-input-placeholder
     @content
 
-@mixin vertPositionMiddle
+@mixin vertPositionMiddle($percent: 40%)
   position: relative
-  top: 40%
-  +transform(translateY(-40%))
+  top: $percent
+  +transform(translateY(-($percent)))
 
 div.IE-warning
   color: $c_red

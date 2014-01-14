@@ -133,28 +133,48 @@ html, body
 // Mobile
 //
 .mobile
-  .app
-    padding-bottom: $default_margin * 2
-    position: relative
-    top: 0
+  .gradient
+    display: none
 
-    li.stack
-      float: none
-      margin: $default-margin auto
+  @media #{$portrait}
+    .app
+      padding-bottom: $default_margin * 2
       position: relative
-      width: 100%
+      top: 0
 
-      h3
+      li.stack
+        float: none
+        margin: $default-margin auto
+        position: relative
         width: 100%
 
-      &#hours h3,
-      &#minutes h3,
-      &#seconds h3
-        left: auto
+        h3
+          width: 100%
 
-      ul
-        margin: 0
+        &#hours h3,
+        &#minutes h3,
+        &#seconds h3
+          left: auto
 
-        li.current > div
-          min-height: 15px
-          padding-top: 34%
+        ul
+          margin: 0
+
+          li.current > div
+            min-height: 15px
+            padding-top: 34%
+
+  @media #{$landscape}
+    &.clock-active
+      .app-wrapper
+        height: 100%
+        min-height: 100%
+        position: relative
+        top: 0
+
+      .app
+        height: 100%
+        min-height: 100%
+        top: 0
+
+        ul.imgStacks
+          +vertPositionMiddle($percent: 30%)

@@ -35,23 +35,21 @@
 // Mobile
 //
 .mobile
-  .gradient
-    display: none
-
-  .substantial
-    bottom: 0
-    padding-left: 0
-    padding-top: $default_margin
-    position: absolute
-    text-align: center
-    width: 100%
-
-  &.clock-active
+  @media #{$portrait}
     .substantial
-      display: none
+      bottom: 0
+      padding-left: 0
+      padding-top: $default_margin
+      position: absolute
+      text-align: center
+      width: 100%
 
-  .now-showing
-    padding: ($default_margin / 2) 0
-    left: $default_margin
-    right: auto
-    position: relative
+    &.clock-active
+      .substantial
+        display: none
+
+    .now-showing
+      padding: ($default_margin / 2) 0
+      left: $default_margin
+      right: auto
+      position: relative
