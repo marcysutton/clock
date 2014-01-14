@@ -13,11 +13,20 @@ a:link, a:visited
   color: $c_default
   transition: color 0.5s
 
-noscript, a:hover, a:focus
-  color: $c_hover
+  &:hover, &:focus
+    color: $c_hover
 
-a:active
-  color: $c_red
+  &:active
+    color: $c_red
+
+  .clock-active &
+    color: $c_mdgray
+
+    &:hover
+      color: $c_white
+
+noscript
+  color: $c_default
 
 h1.timeframe-logo
   font-family: $headline_font
@@ -36,23 +45,24 @@ h1.timeframe-logo
     span
       text-transform: uppercase
 
-    &:hover, &:focus
-      color: $c_hover
-
-      &:before
-        color: $c_hover
-
-    &:active, &:active:before
-      color: $c_red
+    &:hover, &:focus, &:hover:before
+      color: $c_white
 
     .clock-active &
       &:before
+        color: $c_mdgray
         font-size: 1em
+
+      &:hover:before
+        color: $c_white
 
 .date
   color: $c_default
   font-family: $headline_font
   font-size: 1.15em
+
+  .clock-active &
+    color: $c_mdgray
 
 .byline
   font-family: $headline_font
@@ -64,11 +74,15 @@ h1.timeframe-logo
     font-family: $icon_font
     letter-spacing: 0.23em
 
+    .clock-active &
+      &:hover
+        color: $c_red
+
 //
 // Active Clock
 //
 .loader span.loading-text
-  color: $c_default
+  color: $c_mdgray
   font-family: $headline_font
   font-size: 1em
   text-transform: uppercase
@@ -86,6 +100,13 @@ h1.timeframe-logo
 
   #locationClock &
     text-transform: uppercase
+
+  .clock-active &
+    color: $c_mdgray
+
+    a:hover
+      color: $c_red
+
 //
 // Input form
 //
