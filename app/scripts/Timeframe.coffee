@@ -282,7 +282,7 @@ class Timeframe extends Backbone.View
 
     if @mobile
       @clock.on "change:seconds10", (event) =>
-        @updateImagesMobile()
+        @updateImagesMobile() if @clock.secondsSinceRefresh >= 5
 
   moveStacks: () ->
     @updateStackTime()
