@@ -35,66 +35,72 @@
  -->
 </head>
 <body class="no-js timeframe">
-  <header>
-    <h1 class="timeframe-logo">
-      <a href="#/" title="timeframe start"><span>TimeFrame</span></a>
-      <noscript>requires Javascript.</noscript>
-      <!--[if lt IE 9]>
-      <div class="IE-warning">Sorry, you need a modern browser for this experience. Try IE9+, Chrome, Firefox or Safari.</div>
-      <![endif]-->
-    </h1>
-    <div class="date"></div>
-    <p class="byline">A Flickr Photo Clock</p>
-  </header>
-  <figure class="loader">
-    <span class="loading-text">loading images from <span class="tag-loading"></span>...</span>
-  </figure>
-  <section class="app">
-    <form class="tag-input" method="get">
-      <fieldset>
-        <legend class="offscreen">Choose a mode</legend>
-        <div>
+  <div class="bg-img"></div>
+  <div class="cover"></div>
+  <div class="table">
+    <div class="table-cell">
+      <header>
+        <h1 class="timeframe-logo">
+          <a href="#/" title="timeframe start"><span>TimeFrame</span></a>
+          <noscript>requires Javascript.</noscript>
+          <!--[if lt IE 9]>
+          <div class="IE-warning">Sorry, you need a modern browser for this experience. Try IE9+, Chrome, Firefox or Safari.</div>
+          <![endif]-->
+        </h1>
+        <div class="date"></div>
+        <p class="byline">A Flickr Photo Clock</p>
+      </header>
+      <figure class="loader">
+        <span class="loading-text">loading images from <span class="tag-loading"></span>...</span>
+      </figure>
+      <section class="app">
+        <form class="tag-input" method="get">
           <fieldset>
-            <label for="location" class="offscreen">Enter Place Name</label>
-            <input type="text" id="location" name="location" placeholder="Enter a place name" class="tag" />
+            <legend class="offscreen">Choose a mode</legend>
+            <div>
+              <fieldset>
+                <label for="location" class="offscreen">Enter Place Name</label>
+                <input type="text" id="location" name="location" placeholder="Enter a place name" class="tag" />
+              </fieldset>
+              <div>
+                <span class="or">or</span>
+              </div>
+              <fieldset>
+                <label for="username" class="offscreen">Enter Flickr Username</label>
+                <input type="text" id="username" name="username" placeholder="a Flickr username" class="tag" />
+                <a class="username-help" title="Help" href="http://www.flickr.com/search/people/" target="_blank"><span class="offscreen">Find Username</span><span>[?]</span></a>
+              </fieldset>
+            </div>
+            <input type="submit" value="START" id="submit" disabled />
           </fieldset>
-          <div>
-            <span class="or">or</span>
+          <div class="offscreen tooltip-content">
+            <div class="tooltip">
+              <h2>Finding a Flickr username</h2>
+              <ol>
+                <li>Click to open link in new window.</li>
+                <li>Search for people on Flickr.com.</li>
+                <li>Usernames appear in bold text. Copy and paste into the text field above.</li>
+              </ol>
+              <div class="username-img"></div>
+            </div>
           </div>
-          <fieldset>
-            <label for="username" class="offscreen">Enter Flickr Username</label>
-            <input type="text" id="username" name="username" placeholder="a Flickr username" class="tag" />
-            <a class="username-help" title="Help" href="http://www.flickr.com/search/people/" target="_blank"><span class="offscreen">Find Username</span><span>[?]</span></a>
-          </fieldset>
-        </div>
-        <input type="submit" value="START" id="submit" disabled />
-      </fieldset>
-      <div class="offscreen tooltip-content">
-        <div class="tooltip">
-          <h2>Finding a Flickr username</h2>
-          <ol>
-            <li>Click to open link in new window.</li>
-            <li>Search for people on Flickr.com.</li>
-            <li>Usernames appear in bold text. Copy and paste into the text field above.</li>
-          </ol>
-          <div class="username-img"></div>
-        </div>
-      </div>
-    </form>
-    <div class="gradient top"></div>
-    <div class="gradient bottom"></div>
-    <ul class="imgStacks">
-      <li id="hours" class="stack"></li>
-      <li id="minutes" class="stack"></li>
-      <li id="seconds" class="stack"></li>
-    </ul>
-    <p class="now-showing"></p>
-  </section>
-  <footer class="substantial">
-    <h2>
-      <a href="http://substantial.com" target="_blank" title="Link opens in a new window">SUBSTANTIAL</a>
-    </h2>
-  </footer>
+        </form>
+        <div class="gradient top"></div>
+        <div class="gradient bottom"></div>
+        <ul class="imgStacks">
+          <li id="hours" class="stack"></li>
+          <li id="minutes" class="stack"></li>
+          <li id="seconds" class="stack"></li>
+        </ul>
+        <p class="now-showing"></p>
+      </section>
+      <footer class="substantial">
+        <h2>
+          <a href="http://substantial.com" target="_blank" title="Link opens in a new window">SUBSTANTIAL</a>
+        </h2>
+      </footer>
+    </div>
+  </div>
 <!-- Google Analytics -->
 <script>
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
