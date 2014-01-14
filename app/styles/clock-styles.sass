@@ -7,6 +7,11 @@
 @import search_form
 @import jquery-ui
 
+html, body
+  height: 100%
+  min-height: 100%
+  overflow: auto
+
 .bg-img
   background: #000 url(../images/flickr/clock-grayscale.gif)
   background-size: cover
@@ -25,6 +30,13 @@
   height: 100%
   top: 0
   width: 100%
+
+.app-wrapper
+  +vertPositionMiddle
+
+  .clock-active &
+    position: static
+    +transform(none)
 
 .app
   height: 97%
