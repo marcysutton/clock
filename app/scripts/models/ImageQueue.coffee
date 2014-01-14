@@ -8,13 +8,15 @@ class ImageQueue extends Backbone.Collection
 
   urlArray: []
 
+  imageSize: 'z'
+
   initialize: () ->
     @app = window.timeframeApp
 
   getPhotoURL: (photo) ->
     "http://farm#{photo.farm}.static.flickr.com/" +
     "#{photo.server}/" +
-    "#{photo.id}_#{photo.secret}_z.jpg"
+    "#{photo.id}_#{photo.secret}_#{@imageSize}.jpg"
 
   fetchImages: (response) ->
     @urlArray.length = 0
