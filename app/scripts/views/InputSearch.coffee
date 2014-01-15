@@ -42,8 +42,9 @@ class InputSearchView extends Backbone.View
   inputValidation: (e) =>
     otherInput = @elInputs.not(e.target)
 
-    if otherInput.val()
-      otherInput.val('')
+    if e.keyCode isnt 9
+      if otherInput.val()
+        otherInput.val('')
 
     if @elLocationInput.val() or @elUsernameInput.val()
       @elTagPickerSubmit.removeAttr 'disabled'
