@@ -123,6 +123,7 @@ form.tag-input
     &[type=text]
       border: 2px solid $c_default
       font-style: italic
+      +transition(border-color, 0.5s)
 
       &:hover, &:focus, &:active
         border-color: $c_red
@@ -135,7 +136,7 @@ form.tag-input
 
     &#submit
       font-size: 1em
-      transition: all 0.5s
+      +transition(all, 0.5s)
 
       &:disabled
         background-color: #999

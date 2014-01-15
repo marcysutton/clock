@@ -42,7 +42,11 @@ class Timeframe extends Backbone.View
     @imageQueue = new ImageQueue()
 
   initialize: () ->
-    @inputSearch = new InputSearchView()
+    if window.matchMedia("(max-width: 64em)").matches and Modernizr.touch
+      @mobileSetup()
+
+    @inputSearch = new InputSearchView({mobile: @mobile})
+
     @router = new Router(@inputSearch)
 
     @elWrapper = $(@target)
@@ -53,9 +57,6 @@ class Timeframe extends Backbone.View
     @elTagLoading = @elLoader.find('.tag-loading')
     @elNowShowing = @elTarget.find('.now-showing')
     @elDate = @elWrapper.find('.date')
-
-    if window.matchMedia("(max-width: 64em)").matches and Modernizr.touch
-      @mobileSetup()
 
     @setupClockUI()
 

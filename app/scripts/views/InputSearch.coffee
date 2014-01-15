@@ -11,16 +11,18 @@ class InputSearchView extends Backbone.View
   locationMode: 'location'
 
   events:
-    "focusout": "blurHandler"
-    "submit" : "inputSubmitHandler"
+    "submit": "inputSubmitHandler"
+    "focusout input.tag": "blurHandler"
+    "keypress input.tag": "inputValidation"
 
   el: $('form.tag-input')
 
   elInputs: $('input.tag')
 
-  initialize: () ->
+  initialize: (options) ->
+    @options = options || {}
+
     _.bindAll @, 'inputSubmitHandler'
-    _.bindAll @, 'blurHandler'
 
     @elTagPicker = $(@el)
 
@@ -28,15 +30,14 @@ class InputSearchView extends Backbone.View
     @elUsernameInput = @elTagPicker.find('input#username')
     @elTagPickerSubmit = @elTagPicker.find('input[type=submit]')
 
-    @elInputs.on 'keypress', @inputValidation
-
-    tooltipContent = $('.tooltip-content').html()
-    $('.username-help').tooltip
-      content: tooltipContent
-      position:
-        my: "top"
-        at: "bottom"
-      "open"
+    if not @options.mobile
+      tooltipContent = $('.tooltip-content').html()
+      $('.username-help').tooltip
+        content: tooltipContent
+        position:
+          my: "top"
+          at: "bottom"
+        "open"
 
   inputValidation: (e) =>
     otherInput = @elInputs.not(e.target)
