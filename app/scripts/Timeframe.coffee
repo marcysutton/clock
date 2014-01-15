@@ -296,8 +296,9 @@ class Timeframe extends Backbone.View
 
   checkHourForRefresh: () ->
     # Refresh clock
-    if @mode is "location" and @getTimeTag(@clock.current24Hour) isnt @currentTimeTag
-      @refreshClock()
+    if window.navigator.onLine isnt false
+      if @mode is "location" and @getTimeTag(@clock.current24Hour) isnt @currentTimeTag
+        @refreshClock()
 
   initPhotoStacks: () ->
     @updateStackTime()
