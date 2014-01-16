@@ -1,7 +1,9 @@
 Timeframe
 ===========
 
-Flickr-based web clock: http://timeframe.marcysutton.com/
+Flickr-based web clock by Marcy Sutton at Substantial: http://substantial.com/timeframe/
+
+This project is a redesign and build of POP Clock, a personal project by Marcy Sutton and Nick Thiel at POP Agency in January 2011.
 
 ##Project Setup##
 
