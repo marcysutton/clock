@@ -121,18 +121,20 @@ form.tag-input
       color: $c_mdgray
 
     &[type=text]
-      border: 2px solid $c_default
+      border: 0px solid $c_default
+      box-shadow: 0 0 2px 2px transparent
       font-style: italic
-      +transition(border-color, 0.5s)
+      +transition(all, 0.5s)
 
       &:hover, &:focus, &:active
-        border-color: $c_red
-        color: $c_dkgray
+        background-color: $c_background
+        box-shadow: 0 0 2px 2px $c_default
+        color: $c_white
         cursor: text
         outline: none
 
         @include placeholder
-          color: $c_mdgray
+          color: $c_white
 
     &#submit
       font-size: 1em
@@ -143,7 +145,8 @@ form.tag-input
         color: $c_dkgray
 
       &:hover:enabled, &:focus:enabled
-        background-color: $c_white
+        background-color: $c_background
+        color: $c_white
         cursor: pointer
 
   span.or
