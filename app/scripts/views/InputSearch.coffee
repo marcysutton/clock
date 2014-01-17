@@ -13,7 +13,7 @@ class InputSearchView extends Backbone.View
   events:
     "submit": "inputSubmitHandler"
     "focusout input.tag": "blurHandler"
-    "keypress input.tag": "inputValidation"
+    "keydown input.tag": "inputValidation"
 
   el: $('form.tag-input')
 
