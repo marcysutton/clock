@@ -12,6 +12,7 @@ h1.timeframe-logo
   display: inline-block
   padding: $default_margin
   text-align: center
+  vertical-align: top
 
   a
     padding-bottom: 1px
@@ -46,6 +47,24 @@ h1.timeframe-logo
   margin-top: 27px
   vertical-align: top
 
+.share
+  display: inline-block
+  font-size: 2.25em
+
+  a
+    color: $c_default
+    display: block
+    font-family: $icon_font
+    text-decoration: none
+
+    &.twitter
+      &:before
+        content: "\e602"
+
+    .clock-active &
+      margin-left: $default_margin
+      margin-top: $default_margin * 1.5
+
 .loader
   background: transparent url(../images/ajax-loader.gif) no-repeat center 40px
   display: block
@@ -70,7 +89,9 @@ h1.timeframe-logo
 
   &.clock-active
     .date
+      font-size: 1.25em
       margin-top: $default_margin * 2
+
     header
       margin-top: 0
 
@@ -79,3 +100,11 @@ h1.timeframe-logo
 
         a, a:before
           margin: 0
+
+      .share
+        display: block
+        float: right
+        font-size: 1.5em
+
+        a
+          margin-top: 5px

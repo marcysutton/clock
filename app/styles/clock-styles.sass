@@ -39,6 +39,9 @@ html, body
     position: static
     +transform(none)
 
+  .mobile:not(.clock-active) &
+    margin-top: -($default_margin * 4)
+
 .app
   height: 97%
   overflow: hidden

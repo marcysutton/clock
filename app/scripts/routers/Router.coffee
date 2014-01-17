@@ -1,3 +1,6 @@
+config = require '../config'
+Sharing = require '../views/Sharing'
+
 class Router extends Backbone.Router
 
   routes:
@@ -15,6 +18,14 @@ class Router extends Backbone.Router
 
   routeChange: (route, router) ->
     @app.reloadUI()
+
+    @setShareUrl()
+
+  setShareUrl: () ->
+    @shareUrl = encodeURIComponent config.urlRoot + '/#/' + Backbone.history.fragment
+
+  getShareUrl: () ->
+    @shareUrl
 
   home: () ->
     @app.restart()

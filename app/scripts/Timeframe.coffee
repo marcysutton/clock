@@ -7,11 +7,13 @@
 
 # global $, Modernizr, Backbone
 
+config = require './config'
 Router = require './routers/Router'
 InputSearchView = require './views/InputSearch'
 StackView = require './views/Stack'
 ImageQueue = require './models/ImageQueue'
 Clock = require './models/Clock'
+Sharing = require './views/Sharing'
 
 class Timeframe extends Backbone.View
   constructor: (target, options = {}) ->
@@ -59,6 +61,8 @@ class Timeframe extends Backbone.View
     @elDate = @elWrapper.find('.date')
 
     @setupClockUI()
+
+    @sharing = new Sharing(@router)
 
     Backbone.history.start()
 
@@ -129,6 +133,7 @@ class Timeframe extends Backbone.View
       @handOutImages()
 
     @querySearchAPI()
+    @sharing.$el.fadeOut()
 
   getFlickrUserId: (username) ->
     $.getJSON @getUserURL(username), (response) =>
@@ -263,10 +268,11 @@ class Timeframe extends Backbone.View
   startClock: () ->
     @elLoader.hide()
     @elNowShowing.fadeIn()
-    @elDate.fadeIn() if not @mobile
+    @elDate.fadeIn()
     @clock.startInterval()
 
     @upDate()
+    @sharing.$el.fadeIn()
 
     @clock.on "change:day", (event) =>
       @upDate()
