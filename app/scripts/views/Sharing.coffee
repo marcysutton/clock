@@ -10,8 +10,8 @@ class Sharing extends Backbone.View
     scrollbars: 'yes'
     status: 'no'
     resizable: 'yes'
-    popupHeight: 300
-    popupWidth: 500
+    popupHeight: 490
+    popupWidth: 600
 
   url: null
 
