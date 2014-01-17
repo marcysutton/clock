@@ -121,19 +121,21 @@ class Timeframe extends Backbone.View
     @selectedTagName = @inputSearch.decodeTagName()
     @updateUIWithTagChange @selectedTagName
 
-    @inputSearch.elTagPicker.fadeOut()
-    @elLoader.fadeIn()
-    @elWrapper.addClass('clock-active')
-
     @clock = new Clock(@selectedTagName)
-    @clock.setTime()
-
     @imageQueue = new ImageQueue()
-    @imageQueue.on 'imagesloaded', () =>
-      @handOutImages()
 
-    @querySearchAPI()
     @sharing.$el.fadeOut()
+
+    @inputSearch.elTagPicker.fadeOut 400, () =>
+      @elLoader.fadeIn()
+      @elWrapper.addClass('clock-active')
+
+      @clock.setTime()
+
+      @imageQueue.on 'imagesloaded', () =>
+        @handOutImages()
+
+      @querySearchAPI()
 
   getFlickrUserId: (username) ->
     $.getJSON @getUserURL(username), (response) =>
@@ -348,6 +350,7 @@ class Timeframe extends Backbone.View
     @reloadUI()
 
     @elLoader.hide()
+    @sharing.$el.fadeIn()
     @inputSearch.reset()
     @elWrapper.removeClass('clock-active')
     @elNowShowing.hide()
