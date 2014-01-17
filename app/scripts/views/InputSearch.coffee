@@ -84,6 +84,8 @@ class InputSearchView extends Backbone.View
     @tagToRoute(@selectedMode, selectedTagName)
     @selectedInput.blur()
 
+    window.scrollTo(0, 0)
+
   reset: () ->
     @elTagPicker.fadeIn()
     @elInputs.val('')
