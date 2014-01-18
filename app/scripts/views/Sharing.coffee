@@ -4,12 +4,8 @@ class Sharing extends Backbone.View
 
   options:
     twitterUrl: 'https://twitter.com/share?url='
+    facebookUrl: 'https://www.facebook.com/sharer/sharer.php?s=100&p[url]='
     id: 'ShareTimeframe'
-    menubar: 'yes'
-    location: 'yes'
-    scrollbars: 'yes'
-    status: 'no'
-    resizable: 'yes'
     popupHeight: 490
     popupWidth: 600
 
@@ -29,10 +25,29 @@ class Sharing extends Backbone.View
 
     @setPopupOptions()
 
-  getUrl: () ->
+  getUrl: (linkId) ->
+    if linkId is "twitter"
+      shareUrl = @getTwitterUrl()
+    else
+      shareUrl = @getFacebookUrl()
+
+    shareUrl
+
+  getTwitterUrl: () ->
+    text = config.tweetText
+
     @options.twitterUrl +
-    '&text=' + encodeURI config.tweetText
     @router.getPageUrl() +
+    '&text=' + encodeURI text
+
+  getFacebookUrl: () ->
+    text = config.facebookText
+
+    @options.facebookUrl +
+    @router.getPageUrl() +
+    '&p[title]=' + config.title +
+    '&p[summary]=' + encodeURI text +
+    '&p[images][0]=' + encodeURIComponent config.image
 
   setPopupOptions: (options) ->
     @optionsString = "width=#{@options.popupWidth},height=#{@options.popupHeight}"
@@ -42,6 +57,7 @@ class Sharing extends Backbone.View
 
   openWindow: (e) ->
     e.preventDefault()
-    window.open(@getUrl(), @options.id, @getPopupOptions())
+
+    window.open(@getUrl(e.target.id), @options.id, @getPopupOptions())
 
 module.exports = Sharing

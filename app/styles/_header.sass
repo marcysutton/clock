@@ -53,17 +53,42 @@ h1.timeframe-logo
 
   a
     color: $c_default
-    display: block
+    display: inline-block
     font-family: $icon_font
     text-decoration: none
+    vertical-align: middle
 
-    &.twitter
+    &#facebook
+      background-color: $c_dkgray
+      font-size: 0.65em
+      max-height: 22px
+
+      &:hover, &:focus
+        background-color: $c_white
+        color: $c_facebook
+        opacity: 1
+
+      &:before
+        content: '\e603'
+
+    &#twitter
       &:before
         content: "\e602"
 
+      &:hover, &:focus
+        color: $c_twitter
+
     .clock-active &
+      opacity: 0.8
       margin-left: $default_margin
       margin-top: $default_margin * 1.5
+
+      &#twitter
+        color: $c_twitter
+
+      &#facebook
+        background-color: $c_default
+        color: $c_facebook
 
 .loader
   background: transparent url(../images/ajax-loader.gif) no-repeat center 40px
