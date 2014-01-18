@@ -19,12 +19,12 @@ class Router extends Backbone.Router
   routeChange: (route, router) ->
     @app.reloadUI()
 
-    @setShareUrl()
+    @setPageUrl()
 
-  setShareUrl: () ->
+  setPageUrl: () ->
     @shareUrl = encodeURIComponent config.urlRoot + '/#/' + Backbone.history.fragment
 
-  getShareUrl: () ->
+  getPageUrl: () ->
     @shareUrl
 
   home: () ->

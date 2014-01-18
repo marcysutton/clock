@@ -31,8 +31,8 @@ class Sharing extends Backbone.View
 
   getUrl: () ->
     @options.twitterUrl +
-    @router.getShareUrl() +
     '&text=' + encodeURI config.tweetText
+    @router.getPageUrl() +
 
   setPopupOptions: (options) ->
     @optionsString = "width=#{@options.popupWidth},height=#{@options.popupHeight}"
