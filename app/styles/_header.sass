@@ -55,7 +55,7 @@ h1.timeframe-logo
     display: inline-block
     font-family: $icon_font
     height: 24px
-    margin: ($default_margin / 2)
+    margin: $default_margin
     position: relative
     text-decoration: none
     vertical-align: top
@@ -98,23 +98,32 @@ h1.timeframe-logo
       &:hover:before, &:focus:before
         color: $c_twitter
 
-    .clock-active &
+  .clock-active &
+    margin-left: $default_margin * 1.25
+
+    a
       font-size: 1em
-      margin-left: $default_margin
       margin-top: $default_margin * 2.25
       opacity: 0.8
 
       &:hover, &:focus
         opacity: 1
 
-      &#twitter:before
+      &#twitter:before, &#facebook:before
+        color: $c_mdgray
+
+      &#twitter:hover:before, &#twitter:focus:before
         color: $c_twitter
 
       &#facebook
-        &:before
-          color: $c_facebook
         &:after
-          background-color: $c_default
+          background-color: $c_background
+
+        &:hover, &:focus
+          &:before
+            color: $c_facebook
+          &:after
+            background-color: $c_default
 
 .loader
   background: transparent url(../images/ajax-loader.gif) no-repeat center 40px
@@ -157,4 +166,4 @@ h1.timeframe-logo
         float: right
 
         a
-          margin-top: 8px
+          margin: 14px 5px 0
