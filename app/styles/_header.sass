@@ -49,46 +49,72 @@ h1.timeframe-logo
 
 .share
   display: inline-block
-  font-size: 2.25em
+  font-size: 1.5em
 
   a
-    color: $c_default
     display: inline-block
     font-family: $icon_font
+    height: 24px
+    margin: ($default_margin / 2)
+    position: relative
     text-decoration: none
-    vertical-align: middle
+    vertical-align: top
+    width: 24px
+
+    &:before, &:after
+      display: block
+      position: absolute
+      top: 0
+      +transition(all, 0.5s)
+
+    &:hover, &:focus
+      color: transparent
 
     &#facebook
-      background-color: $c_dkgray
-      font-size: 0.65em
-      max-height: 22px
+      &:before
+        color: $c_default
+        content: '\e602'
+        z-index: 1
+
+      &:after
+        background-color: $c_dkgray
+        content: ''
+        height: 97%
+        overflow: hidden
+        width: 100%
 
       &:hover, &:focus
-        background-color: $c_white
-        color: $c_facebook
-        opacity: 1
+        &:before
+          color: $c_facebook
 
-      &:before
-        content: '\e603'
+        &:after
+          background-color: $c_white
 
     &#twitter
       &:before
-        content: "\e602"
+        color: $c_default
+        content: "\e603"
 
-      &:hover, &:focus
+      &:hover:before, &:focus:before
         color: $c_twitter
 
     .clock-active &
-      opacity: 0.8
+      font-size: 1em
       margin-left: $default_margin
-      margin-top: $default_margin * 1.5
+      margin-top: $default_margin * 2.25
+      opacity: 0.8
 
-      &#twitter
+      &:hover, &:focus
+        opacity: 1
+
+      &#twitter:before
         color: $c_twitter
 
       &#facebook
-        background-color: $c_default
-        color: $c_facebook
+        &:before
+          color: $c_facebook
+        &:after
+          background-color: $c_default
 
 .loader
   background: transparent url(../images/ajax-loader.gif) no-repeat center 40px
