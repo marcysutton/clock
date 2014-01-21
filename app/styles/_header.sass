@@ -47,84 +47,6 @@ h1.timeframe-logo
   margin-top: 27px
   vertical-align: top
 
-.share
-  display: inline-block
-  font-size: 1.5em
-
-  a
-    display: inline-block
-    font-family: $icon_font
-    height: 24px
-    margin: $default_margin
-    position: relative
-    text-decoration: none
-    vertical-align: top
-    width: 24px
-
-    &:before, &:after
-      display: block
-      position: absolute
-      top: 0
-      +transition(all, 0.5s)
-
-    &:hover, &:focus
-      color: transparent
-
-    &#facebook
-      &:before
-        color: $c_default
-        content: '\e602'
-        z-index: 1
-
-      &:after
-        background-color: $c_dkgray
-        content: ''
-        height: 97%
-        overflow: hidden
-        width: 100%
-
-      &:hover, &:focus
-        &:before
-          color: $c_facebook
-
-        &:after
-          background-color: $c_white
-
-    &#twitter
-      &:before
-        color: $c_default
-        content: "\e603"
-
-      &:hover:before, &:focus:before
-        color: $c_twitter
-
-  .clock-active &
-    margin-left: $default_margin * 1.25
-
-    a
-      font-size: 1em
-      margin-top: $default_margin * 2.25
-      opacity: 0.8
-
-      &:hover, &:focus
-        opacity: 1
-
-      &#twitter:before, &#facebook:before
-        color: $c_mdgray
-
-      &#twitter:hover:before, &#twitter:focus:before
-        color: $c_twitter
-
-      &#facebook
-        &:after
-          background-color: $c_background
-
-        &:hover, &:focus
-          &:before
-            color: $c_facebook
-          &:after
-            background-color: $c_default
-
 .loader
   background: transparent url(../images/ajax-loader.gif) no-repeat center 40px
   display: block
@@ -160,10 +82,3 @@ h1.timeframe-logo
 
         a, a:before
           margin: 0
-
-      .share
-        display: block
-        float: right
-
-        a
-          margin: 14px 5px 0
