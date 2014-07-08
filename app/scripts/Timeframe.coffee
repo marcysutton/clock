@@ -177,13 +177,13 @@ class Timeframe extends Backbone.View
     console.log response
 
   getUserURL: (username) ->
-    "http://api.flickr.com/services/rest/?method=flickr.people.findByUsername&" +
+    "https://api.flickr.com/services/rest/?method=flickr.people.findByUsername&" +
     "api_key=#{@options.apiKey}&" +
     "username=#{username}&" +
     "format=json&nojsoncallback=1"
 
   getJSONURL: () ->
-    "http://api.flickr.com/services/rest/?method=flickr.photos.search&" +
+    "https://api.flickr.com/services/rest/?method=flickr.photos.search&" +
     "api_key=#{@options.apiKey}&" +
     @getParams() +
     "sort=interestingness-desc&" +
